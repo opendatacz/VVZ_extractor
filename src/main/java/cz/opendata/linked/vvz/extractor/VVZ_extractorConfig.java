@@ -1,4 +1,4 @@
-package cz.cuni.mff.xrg.odcs.extractor;
+package cz.opendata.linked.vvz.extractor;
 
 import cz.cuni.mff.xrg.odcs.commons.configuration.DPUConfigObject;
 
