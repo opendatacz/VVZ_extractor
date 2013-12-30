@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><root xmlns="http://www.ness.cz/schemas/isvzus/v11.1">
+  <verze_formulare>0300</verze_formulare>
+  <subverze>7.2</subverze>
+  <KontaktniMisto_I_1>M Bov nad Teplou</KontaktniMisto_I_1>
+  <Telefon_I_1>+420 353999318</Telefon_I_1>
+  <KRukam_I_1>Olga Halkov</KRukam_I_1>
+  <Email_I_1>olga.halakova@becov.cz</Email_I_1>
+  <ObecnaAdresaVerejnehoZadavatele_I_1>http://www.becov.cz/</ObecnaAdresaVerejnehoZadavatele_I_1>
+  <ElektronickyPristupKInformacim_I_1>https://www.vhodne-uverejneni.cz/profil/00254410</ElektronickyPristupKInformacim_I_1>
+  <SluzbyProSirokouVerejnost_I_3>true</SluzbyProSirokouVerejnost_I_3>
+  <StrucnyPopis_II1_4>Pozen zametacho vozu.</StrucnyPopis_II1_4>
+  <HlavniSlovnikHp_II_1_5>34144430-1</HlavniSlovnikHp_II_1_5>
+  <Nazev_I_1>Msto Beov nad Teplou</Nazev_I_1>
+  <IdentifikacniCislo_1>00254410</IdentifikacniCislo_1>
+  <Adresa_I_1>nm. 5. kvtna 1/0</Adresa_I_1>
+  <Obec_I_1>Beov nad Teplou</Obec_I_1>
+  <Psc_I_1>36464</Psc_I_1>
+  <NazevPridelenyZakazce_II_1_1>Omezen pranosti z plonch zdroj ve mst Beov nad Teplou  pozen zametacho vozu</NazevPridelenyZakazce_II_1_1>
+  <Hodnota_II_2_1>1 639 000</Hodnota_II_2_1>
+  <Email1_VI_3_1>posta@compet.cz</Email1_VI_3_1>
+  <Telefon1_VI_3_1>+420 542167811</Telefon1_VI_3_1>
+  <Adresa1Internet_VI_3_1>http://www.compet.cz</Adresa1Internet_VI_3_1>
+  <Fax1_VI_3_1>+420 542167115</Fax1_VI_3_1>
+  <SubjInfoOdvolani_VI_3_3>ad pro ochranu hospodsk soute</SubjInfoOdvolani_VI_3_3>
+  <Adresa_VI_3_3>T. kpt. Jaroe 7</Adresa_VI_3_3>
+  <Obec_VI_3_3>Brno</Obec_VI_3_3>
+  <Psc_VI_3_3>604 55</Psc_VI_3_3>
+  <FinancovaniSpolecenstvi_odkaz_VI_2>Tento projekt je spolufinancovn Evropskou uni  Fondem soudrnosti a Sttnm fondem ivotnho prosted R v rmci Operanho programu ivotn prosted.</FinancovaniSpolecenstvi_odkaz_VI_2>
+  <NazevSubjOdvolani_VI_3_1>ad pro ochranu hospodsk soute</NazevSubjOdvolani_VI_3_1>
+  <Adresa1_VI_3_1>T. kpt. Jaroe 7</Adresa1_VI_3_1>
+  <Obec1_VI_3_1>Brno</Obec1_VI_3_1>
+  <Psc1_VI_3_1>604 55</Psc1_VI_3_1>
+  <Email_VI_3_3>posta@compet.cz</Email_VI_3_3>
+  <Telefon_VI_3_3>+420 542167811</Telefon_VI_3_3>
+  <AdresaURL_VI_3_3>http://www.compet.cz</AdresaURL_VI_3_3>
+  <Fax_VI_3_3>+420 542167115</Fax_VI_3_3>
+  <DatumOdeslani_VI_4>27/12/2013</DatumOdeslani_VI_4>
+  <VerejnyZadavatelZadavaVerejnouZakazkuJmenemJinychZadavatelu_I_4>false</VerejnyZadavatelZadavaVerejnouZakazkuJmenemJinychZadavatelu_I_4>
+  <DruhVerejnehoZadavatele_I_2>REGIONAL_AUTHORITY</DruhVerejnehoZadavatele_I_2>
+  <NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_6>false</NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_6>
+  <ElDrazba_IV_2_2>false</ElDrazba_IV_2_2>
+  <Dph1_II_2_1>false</Dph1_II_2_1>
+  <FinancovaniSpolecenstvi_VI_1>true</FinancovaniSpolecenstvi_VI_1>
+  <KriteriaTyp_IV_2_1>true</KriteriaTyp_IV_2_1>
+  <DruhZakazky_II_1_2>SUPPLIES</DruhZakazky_II_1_2>
+  <Stat_I_1>CZ</Stat_I_1>
+  <Stat_VI_3_3>CZ</Stat_VI_3_3>
+  <Stat1_VI_3_1>CZ</Stat1_VI_3_1>
+  <Mena_II_2_1>CZK</Mena_II_2_1>
+  <Dodavky_II_1_2>PURCHASE</Dodavky_II_1_2>
+  <DruhRizeni_IV_1_1>OPEN</DruhRizeni_IV_1_1>
+  <skup_priloha>
+    <hlavicka>
+      <VvzNumber>7303010077717</VvzNumber>
+      <VvzFormId>466470</VvzFormId>
+      <VvzPublished>30/12/2013</VvzPublished>
+      <CocoCode>377717</CocoCode>
+      <TypFormulare>RADNY</TypFormulare>
+      <IcoZadavatel>00254410</IcoZadavatel>
+      <IcoDodavatel>43845045</IcoDodavatel>
+    </hlavicka>
+    <oddil_5>
+      <ZakazkaNazev_V>Omezen pranosti z plonch zdroj ve mst Beov nad Teplou  pozen zametacho vozu</ZakazkaNazev_V>
+      <Datum_V_1>17/12/2013</Datum_V_1>
+      <PocetNabidek_V_2>2</PocetNabidek_V_2>
+      <NazevDodavatele_V_3>Tom Mike</NazevDodavatele_V_3>
+      <Adresa_V_3>B. Nmcov 117</Adresa_V_3>
+      <Obec_V_3>Blatn</Obec_V_3>
+      <Psc_V_3>388 01</Psc_V_3>
+      <Stat_V_3>CZ</Stat_V_3>
+      <Hodnota1_V_4>1 700 000</Hodnota1_V_4>
+      <Mena1_V_4>CZK</Mena1_V_4>
+      <Dph1_V_4>false</Dph1_V_4>
+      <Hodnota2_V_4>1 639 000</Hodnota2_V_4>
+      <Mena2_V_4>CZK</Mena2_V_4>
+      <Dph2_V_4>false</Dph2_V_4>
+      <Subdodavatelsky_V_5>false</Subdodavatelsky_V_5>
+    </oddil_5>
+  </skup_priloha>
+</root>

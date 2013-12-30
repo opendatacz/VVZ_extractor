@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><root xmlns="http://www.ness.cz/schemas/isvzus/v11.1">
+  <verze_formulare>0300</verze_formulare>
+  <subverze>7.2</subverze>
+  <Telefon_I_1>+420 774402202</Telefon_I_1>
+  <KRukam_I_1>Mgr. Macek</KRukam_I_1>
+  <Email_I_1>macek@aksovakova.cz</Email_I_1>
+  <ObecnaAdresaVerejnehoZadavatele_I_1>http://www.mendelu.cz/</ObecnaAdresaVerejnehoZadavatele_I_1>
+  <AdresaProfiluZadavatele_I_1>https://zakazky.mendelu.cz/</AdresaProfiluZadavatele_I_1>
+  <Skolstvi_I_3>true</Skolstvi_I_3>
+  <StrucnyPopis_II1_4>Jedn se o stavebn pravy v suternu stvajcho objektu menzy v arelu Tauferovch kolej na ulici Jana Babka 3. Objekt je dle P v zastavn sti msta. V souasn dob se v mst stavby nachz nevyuvan prostory bval varny pro menzu v 1.NP. Nejedn se o novostavbu, stavenit tlocviny se nachz ve stvajcm objektu - uzavenm arelu Tauferovch kolej. Dle P msta Brna se stavenit nachz v ploe pro veejnou vybavenost OS  kolstv. Popis veejn zakzky je dle rozveden v technick zprv, je je k datu zahjen zadvacho zen zveejnna na profilu zadavatele.</StrucnyPopis_II1_4>
+  <HlavniSlovnikHp_II_1_5>45212000-6</HlavniSlovnikHp_II_1_5>
+  <HlavniSlovnikDp1_II_1_5>45454000-4</HlavniSlovnikDp1_II_1_5>
+  <Nazev_I_1>Mendelova univerzita v Brn</Nazev_I_1>
+  <IdentifikacniCislo_1>62156489</IdentifikacniCislo_1>
+  <Adresa_I_1>Zemdlsk 1665/1</Adresa_I_1>
+  <Obec_I_1>Brno</Obec_I_1>
+  <NazevPridelenyZakazce_II_1_1>Rekonstrukce (stavebn pravy) prostor SKM  vybudovn tlocviny</NazevPridelenyZakazce_II_1_1>
+  <HlavniMisto_II_1_2>Tauferovy koleje, Brno</HlavniMisto_II_1_2>
+  <Hodnota_II_2_1>4 442 871,00</Hodnota_II_2_1>
+  <Kriteria1_IV_2_1>Celkov nabdkov cena bez DPH</Kriteria1_IV_2_1>
+  <Kriteria2_IV_2_1>Doba realizace stavby v kalendnch dnech od pedn stavenit</Kriteria2_IV_2_1>
+  <Vaha1_IV_2_1>90</Vaha1_IV_2_1>
+  <Vaha2_IV_2_1>10</Vaha2_IV_2_1>
+  <Email1_VI_3_1>posta@compet.cz</Email1_VI_3_1>
+  <Telefon1_VI_3_1>+420 542167111</Telefon1_VI_3_1>
+  <Adresa1Internet_VI_3_1>http://www.compet.cz</Adresa1Internet_VI_3_1>
+  <Fax1_VI_3_1>+420 542167115</Fax1_VI_3_1>
+  <SubjInfoOdvolani_VI_3_3>ad pro ochranu hospodsk soute</SubjInfoOdvolani_VI_3_3>
+  <Adresa_VI_3_3>t. Kpt. Jaroe 7</Adresa_VI_3_3>
+  <Obec_VI_3_3>Brno</Obec_VI_3_3>
+  <Psc_VI_3_3>604 55</Psc_VI_3_3>
+  <DalsiInfo_VI_2>Jedn se o zjednoduen podlimitn zen dle  38 ZVZ.</DalsiInfo_VI_2>
+  <NazevSubjOdvolani_VI_3_1>ad pro ochranu hospodsk soute</NazevSubjOdvolani_VI_3_1>
+  <Adresa1_VI_3_1>t. Kpt. Jaroe 7</Adresa1_VI_3_1>
+  <Obec1_VI_3_1>Brno</Obec1_VI_3_1>
+  <Psc1_VI_3_1>604 55</Psc1_VI_3_1>
+  <Email_VI_3_3>posta@compet.cz</Email_VI_3_3>
+  <Telefon_VI_3_3>+420 542167111</Telefon_VI_3_3>
+  <AdresaURL_VI_3_3>http://www.compet.cz</AdresaURL_VI_3_3>
+  <Fax_VI_3_3>+420 542167115</Fax_VI_3_3>
+  <DatumOdeslani_VI_4>27/12/2013</DatumOdeslani_VI_4>
+  <VerejnyZadavatelZadavaVerejnouZakazkuJmenemJinychZadavatelu_I_4>false</VerejnyZadavatelZadavaVerejnouZakazkuJmenemJinychZadavatelu_I_4>
+  <DruhVerejnehoZadavatele_I_2>BODY_PUBLIC</DruhVerejnehoZadavatele_I_2>
+  <NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_6>false</NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_6>
+  <ElDrazba_IV_2_2>false</ElDrazba_IV_2_2>
+  <Dph1_II_2_1>false</Dph1_II_2_1>
+  <FinancovaniSpolecenstvi_VI_1>false</FinancovaniSpolecenstvi_VI_1>
+  <PredchoziZverejneni_IV_3_2>false</PredchoziZverejneni_IV_3_2>
+  <KriteriaTyp_IV_2_1>false</KriteriaTyp_IV_2_1>
+  <DruhZakazky_II_1_2>WORKS</DruhZakazky_II_1_2>
+  <StavebniPraceProvadeni_II_1_2>true</StavebniPraceProvadeni_II_1_2>
+  <Stat_I_1>CZ</Stat_I_1>
+  <Stat_VI_3_3>CZ</Stat_VI_3_3>
+  <Stat1_VI_3_1>CZ</Stat1_VI_3_1>
+  <Mena_II_2_1>CZK</Mena_II_2_1>
+  <DruhRizeni_IV_1_1>OPEN</DruhRizeni_IV_1_1>
+  <skup_priloha>
+    <hlavicka>
+      <VvzNumber>7303010077716</VvzNumber>
+      <VvzFormId>466469</VvzFormId>
+      <VvzPublished>30/12/2013</VvzPublished>
+      <CocoCode>377716</CocoCode>
+      <TypFormulare>RADNY</TypFormulare>
+      <IcoZadavatel>62156489</IcoZadavatel>
+      <IcoDodavatel>49436589</IcoDodavatel>
+    </hlavicka>
+    <oddil_5>
+      <Datum_V_1>05/12/2013</Datum_V_1>
+      <PocetNabidek_V_2>10</PocetNabidek_V_2>
+      <NazevDodavatele_V_3>DIRS Brno s.r.o.</NazevDodavatele_V_3>
+      <Adresa_V_3>Jihlavsk 731/38</Adresa_V_3>
+      <Obec_V_3>Brno</Obec_V_3>
+      <Psc_V_3>642 00</Psc_V_3>
+      <Stat_V_3>CZ</Stat_V_3>
+      <Hodnota1_V_4>6 000 000,00</Hodnota1_V_4>
+      <Mena1_V_4>CZK</Mena1_V_4>
+      <Dph1_V_4>false</Dph1_V_4>
+      <Hodnota2_V_4>4 442 871,00</Hodnota2_V_4>
+      <Mena2_V_4>CZK</Mena2_V_4>
+      <Dph2_V_4>false</Dph2_V_4>
+      <Subdodavatelsky_V_5>false</Subdodavatelsky_V_5>
+    </oddil_5>
+    <priloha_D1>
+      <JineOduvodneniZadaniZakazky_1>CONTRACT_SERVICES_OUTSIDE_DIRECTIVE</JineOduvodneniZadaniZakazky_1>
+    </priloha_D1>
+  </skup_priloha>
+</root>

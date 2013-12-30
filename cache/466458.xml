@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><root xmlns="http://www.ness.cz/schemas/isvzus/v11.1">
+  <verze_formulare>0300</verze_formulare>
+  <subverze>7.2</subverze>
+  <KontaktniMisto_I_1>Mstsk ad Mikulov</KontaktniMisto_I_1>
+  <Telefon_I_1>+420 519444600</Telefon_I_1>
+  <KRukam_I_1>JUDr. Ji Veea</KRukam_I_1>
+  <Email_I_1>podatelna@mikulov.cz</Email_I_1>
+  <Fax_I_1>+420 519444555</Fax_I_1>
+  <ObecnaAdresaVerejnehoZadavatele_I_1>http://www.mikulov.cz</ObecnaAdresaVerejnehoZadavatele_I_1>
+  <SluzbyProSirokouVerejnost_I_3>true</SluzbyProSirokouVerejnost_I_3>
+  <StrucnyPopis_II1_4>Pedmtem zakzky jsou sdruen sluby dodvky plynu do vech odbrnch mst centrlnho zadavatele a povujcch zadavatel se zvazkem odebrat plyn z distribun soustavy .
+Pedmtem plnn je i zajitn regulovanho pstupu k penosov a distribun soustav a zajitn systmovch slueb.</StrucnyPopis_II1_4>
+  <HlavniSlovnikHp_II_1_5>09123000-7</HlavniSlovnikHp_II_1_5>
+  <Nazev_I_1>Msto Mikulov</Nazev_I_1>
+  <IdentifikacniCislo_1>00283347</IdentifikacniCislo_1>
+  <Adresa_I_1>Nmst 1</Adresa_I_1>
+  <Obec_I_1>Mikulov</Obec_I_1>
+  <Psc_I_1>69201</Psc_I_1>
+  <NazevPridelenyZakazce_II_1_1>Dodvka zemnho plynu pro mstem Mikulov zzen pspvkov organizace a zaloen spolenosti, ve kterch m msto Mikulov majetkov podl</NazevPridelenyZakazce_II_1_1>
+  <HlavniMisto_II_1_2>Mikulov</HlavniMisto_II_1_2>
+  <Email1_VI_3_1>posta@compet.cz</Email1_VI_3_1>
+  <Telefon1_VI_3_1>+420 542167111</Telefon1_VI_3_1>
+  <Adresa1Internet_VI_3_1>http://www.uohs.cz</Adresa1Internet_VI_3_1>
+  <Fax1_VI_3_1>+420 542167112</Fax1_VI_3_1>
+  <SubjInfoOdvolani_VI_3_3>Msto Mikulov</SubjInfoOdvolani_VI_3_3>
+  <Adresa_VI_3_3>Mstsk ad Mikulov, Nmst 1,</Adresa_VI_3_3>
+  <Obec_VI_3_3>Mikulov</Obec_VI_3_3>
+  <Psc_VI_3_3>69220</Psc_VI_3_3>
+  <NazevSubjOdvolani_VI_3_1>ad pro ochranu hospodsk sosute</NazevSubjOdvolani_VI_3_1>
+  <Adresa1_VI_3_1>Tda Kpt. Jaroe 7</Adresa1_VI_3_1>
+  <Obec1_VI_3_1>Brno</Obec1_VI_3_1>
+  <Psc1_VI_3_1>60455</Psc1_VI_3_1>
+  <Email_VI_3_3>vecera@mikulov.cz</Email_VI_3_3>
+  <Telefon_VI_3_3>+420 519444600</Telefon_VI_3_3>
+  <AdresaURL_VI_3_3>http://www.mikulov.cz</AdresaURL_VI_3_3>
+  <Fax_VI_3_3>+420 519444555</Fax_VI_3_3>
+  <DatumOdeslani_VI_4>27/12/2013</DatumOdeslani_VI_4>
+  <VerejnyZadavatelZadavaVerejnouZakazkuJmenemJinychZadavatelu_I_4>false</VerejnyZadavatelZadavaVerejnouZakazkuJmenemJinychZadavatelu_I_4>
+  <DruhVerejnehoZadavatele_I_2>REGIONAL_AUTHORITY</DruhVerejnehoZadavatele_I_2>
+  <NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_6>false</NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_6>
+  <FinancovaniSpolecenstvi_VI_1>false</FinancovaniSpolecenstvi_VI_1>
+  <PredchoziZverejneni_IV_3_2>false</PredchoziZverejneni_IV_3_2>
+  <KriteriaTyp_IV_2_1>true</KriteriaTyp_IV_2_1>
+  <DruhZakazky_II_1_2>SUPPLIES</DruhZakazky_II_1_2>
+  <Stat_I_1>CZ</Stat_I_1>
+  <Stat_VI_3_3>CZ</Stat_VI_3_3>
+  <Stat1_VI_3_1>CZ</Stat1_VI_3_1>
+  <Dodavky_II_1_2>PURCHASE</Dodavky_II_1_2>
+  <DruhRizeni_IV_1_1>OPEN</DruhRizeni_IV_1_1>
+  <skup_priloha>
+    <hlavicka>
+      <VvzNumber>7303010077713</VvzNumber>
+      <VvzFormId>466458</VvzFormId>
+      <VvzPublished>30/12/2013</VvzPublished>
+      <CocoCode>377713</CocoCode>
+      <TypFormulare>RADNY</TypFormulare>
+      <IcoZadavatel>00283347</IcoZadavatel>
+      <IcoDodavatel>26078201</IcoDodavatel>
+    </hlavicka>
+    <oddil_5>
+      <ZakazkaNazev_V>Dodvka zemnho plynu pro mstem Mikulov zzen pspvkov organizace a zaloen spolenosti, ve kterch m msto Mikulov majetkov podl</ZakazkaNazev_V>
+      <Datum_V_1>16/12/2013</Datum_V_1>
+      <PocetNabidek_V_2>5</PocetNabidek_V_2>
+      <NazevDodavatele_V_3>E.ON Energie, a.s.</NazevDodavatele_V_3>
+      <Adresa_V_3>F.A. Gerstnera 2151/16</Adresa_V_3>
+      <Obec_V_3>esk Budjovice</Obec_V_3>
+      <Psc_V_3>37049</Psc_V_3>
+      <Stat_V_3>CZ</Stat_V_3>
+      <Hodnota2_V_4>2 549 029</Hodnota2_V_4>
+      <Mena2_V_4>CZK</Mena2_V_4>
+      <Dph2_V_4>false</Dph2_V_4>
+      <Subdodavatelsky_V_5>false</Subdodavatelsky_V_5>
+    </oddil_5>
+  </skup_priloha>
+</root>

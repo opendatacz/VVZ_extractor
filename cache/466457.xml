@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><root xmlns="http://www.ness.cz/schemas/isvzus/v11.1">
+  <verze_formulare>0300</verze_formulare>
+  <subverze>7.2</subverze>
+  <Telefon_I_1>+420 731598825</Telefon_I_1>
+  <Email_I_1>melichar.p@pro-charitu.cz</Email_I_1>
+  <ProsimUpresnete_I_2>Pro.Charitu s.r.o.</ProsimUpresnete_I_2>
+  <SluzbyProSirokouVerejnost_I_3>true</SluzbyProSirokouVerejnost_I_3>
+  <SocialniSluzby_I_3>true</SocialniSluzby_I_3>
+  <StrucnyPopis_II1_4>stavebn rekonstrukce objektu - vybudovn zzem socilnho podniku</StrucnyPopis_II1_4>
+  <HlavniSlovnikHp_II_1_5>45000000-7</HlavniSlovnikHp_II_1_5>
+  <Nazev_I_1>Pro-Charitu s.r.o.</Nazev_I_1>
+  <Adresa_I_1>Manel Burdychovch 245</Adresa_I_1>
+  <Obec_I_1>erven Kostelec</Obec_I_1>
+  <Psc_I_1>549 41</Psc_I_1>
+  <NazevPridelenyZakazce_II_1_1>Vybudovn zzem socilnho podniku</NazevPridelenyZakazce_II_1_1>
+  <HlavniMisto_II_1_2>ire u Dvora Krlov nad Labem, arel Domova sv. Josefa, st.p..89/1</HlavniMisto_II_1_2>
+  <FinancovaniSpolecenstvi_odkaz_VI_2>http://www.mpsv.cz/cs/13074</FinancovaniSpolecenstvi_odkaz_VI_2>
+  <DatumOdeslani_VI_4>27/12/2013</DatumOdeslani_VI_4>
+  <VerejnyZadavatelZadavaVerejnouZakazkuJmenemJinychZadavatelu_I_4>false</VerejnyZadavatelZadavaVerejnouZakazkuJmenemJinychZadavatelu_I_4>
+  <DruhVerejnehoZadavatele_I_2>OTHER</DruhVerejnehoZadavatele_I_2>
+  <FinancovaniSpolecenstvi_VI_1>true</FinancovaniSpolecenstvi_VI_1>
+  <DruhZakazky_II_1_2>WORKS</DruhZakazky_II_1_2>
+  <StavebniPraceProvadeniSouladPozadavky_II_1_2>true</StavebniPraceProvadeniSouladPozadavky_II_1_2>
+  <Stat_I_1>CZ</Stat_I_1>
+  <DruhRizeni_IV_1_1>OPEN</DruhRizeni_IV_1_1>
+  <skup_priloha>
+    <hlavicka>
+      <VvzNumber>7303010077714</VvzNumber>
+      <VvzFormId>466457</VvzFormId>
+      <VvzPublished>30/12/2013</VvzPublished>
+      <CocoCode>377714</CocoCode>
+      <TypFormulare>RADNY</TypFormulare>
+      <IcoZadavatel>28810619</IcoZadavatel>
+      <IcoDodavatel>49814851</IcoDodavatel>
+    </hlavicka>
+  </skup_priloha>
+</root>

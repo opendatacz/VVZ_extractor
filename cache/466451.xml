@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><root xmlns="http://www.ness.cz/schemas/isvzus/v11.1">
+  <verze_formulare>0200</verze_formulare>
+  <subverze>7.2</subverze>
+  <KontaktniMista_I_1>Obec echy pod Kosem</KontaktniMista_I_1>
+  <KRukam_I_1>Ing. Milana Kiebela</KRukam_I_1>
+  <Tel_I_1>+420 582373726</Tel_I_1>
+  <E_Mail_I_1>ou@cechypk.cz</E_Mail_I_1>
+  <Fax_I_1>+420 582373726</Fax_I_1>
+  <ObecnaAdresaVerejnehoZadavatele_I_1>http://www.cechypk.cz/</ObecnaAdresaVerejnehoZadavatele_I_1>
+  <AdresaProfiluKupujiciho_I_1>https://www.kdv.cz/profil.php?ic=00288128</AdresaProfiluKupujiciho_I_1>
+  <NaVyseUvedenychKontaktnichMistech1_I_1>false</NaVyseUvedenychKontaktnichMistech1_I_1>
+  <NaVyseUvedenychKontaktnichMistech2_I_1>false</NaVyseUvedenychKontaktnichMistech2_I_1>
+  <NaVyseUvedenychKontaktnichMistech3_I_1>false</NaVyseUvedenychKontaktnichMistech3_I_1>
+  <Hpc_SluzbyProSirokouVerejnost_I_3>true</Hpc_SluzbyProSirokouVerejnost_I_3>
+  <Ic_I_1>00288128</Ic_I_1>
+  <UredniNazev_I_1>Obec echy pod Kosem</UredniNazev_I_1>
+  <PostovniAdresa_I_1>Nmst Svobody 289</PostovniAdresa_I_1>
+  <Obec_I_1>echy pod Kosem</Obec_I_1>
+  <Psc_I_1>798 58</Psc_I_1>
+  <NazevPridelenyZakazceVerejnymZadavatelem_II_1_1>Intenzifikace a rozen OV v obci echy pod Kosem</NazevPridelenyZakazceVerejnymZadavatelem_II_1_1>
+  <HlavniMistoProvadeniStavebnichPraci_II_1_2>OV echy pod Kosem</HlavniMistoProvadeniStavebnichPraci_II_1_2>
+  <KodNuts1_II_1_2>CZ071</KodNuts1_II_1_2>
+  <StrucnyPopisZakazky_II_1_5>Projekt e intenzifikaci a rozen stvajc OV v obci echy pod Kosem. Stvajc OV je poddimenzovan a neumouje tak adekvtn itn pivdnch odpadnch vod. Nov vybudovan OV s celkovou nvrhovou kapacitou 1200 EO nahrad stvajc a z hlediska innosti nevyhovujc zazen a bude vybudovna ve stejnm arelu v sousedstv stvajcch objekt OV .</StrucnyPopisZakazky_II_1_5>
+  <HlavniSlovnikHp_II_1_6>45000000-7</HlavniSlovnikHp_II_1_6>
+  <HlavniSlovnikDp1_II_1_6>45232420-2</HlavniSlovnikDp1_II_1_6>
+  <HlavniSlovnikDp2_II_1_6>45232421-9</HlavniSlovnikDp2_II_1_6>
+  <HlavniSlovnikDp3_II_1_6>45252000-8</HlavniSlovnikDp3_II_1_6>
+  <HlavniSlovnikDp4_II_1_6>45252100-9</HlavniSlovnikDp4_II_1_6>
+  <Opce_II_2_2>false</Opce_II_2_2>
+  <NeboZahajeni_II_3>15/02/2014</NeboZahajeni_II_3>
+  <Dokonceni_II_3>30/11/2015</Dokonceni_II_3>
+  <PozadovaneZalohyAZaruky_III_1_1>Zadavatel poaduje, aby dodavatel, kte pedlo nabdku, poskytli k zajitn plnn svch povinnost vyplvajcch z asti v zadvacm zen jistotu podle ustanoven  67 zkona. Vi jistoty stanov zadavatel v stce 100.000,- K .</PozadovaneZalohyAZaruky_III_1_1>
+  <HlavniPodminkyFinancovaniAPlatebniPodminky_III_1_2>Podkladem pro hradu smluvn ceny dla je daov doklad (dle jen faktura), vystaven v K vdy za obdob kalendnho msce (fakturan obdob), kter bude mt nleitosti daovho dokladu dle ust. zkona . 235/2004 Sb., o dani z pidan hodnoty, ve znn pozdjch pedpis.Lhta splatnosti faktur in 30 kalendnch dn ode dne jejich doruen zadavateli ; v ppad, e bude perueno erpn finannch prostedk z dotace OPP v prbhu realizace pedmtu dla, oznm zadavatel tuto skutenost neprodlen dodavateli. Ode dne, kdy dodavatel toto oznmen obdr, peruuje se bh lht splatnosti a u daovch doklad vystavench po doruen oznmen lhta splatnosti nepone bet (dle odklad plateb), a to na dobu max. 60 dn. Po tuto dobu nen zadavatel v prodlen.
+Podrobn podmnky viz zadvac dokumentace</HlavniPodminkyFinancovaniAPlatebniPodminky_III_1_2>
+  <ZvlastniPodminky_III_1_4>true</ZvlastniPodminky_III_1_4>
+  <PopisTechtoZvlastnichPodminek_III_1_4>Dodavatel me realizovat st VZ prostednictvm subdodavatel. 
+Zadavatel nepipust, aby subdodavatel plnil st VZ spovajc v nsledujcch vcn vymezench dlech prac a dodvek stavebnch prac -  prce a dodvky HSV u objekt:
+- SO 01  Provozn potrub OV
+- SO 02  Objekt OV
+- SO 03  Deov zdr
+Za subdodvku je pro tento el povaovna realizace dlch zakzek stavebnch prac jinmi subjekty pro vtze zadvacho zen.</PopisTechtoZvlastnichPodminek_III_1_4>
+  <InformaceADokladyNezbytneKPosouzeni_III_2_1>Zadavatel poaduje prokzn zkladnch kvalifikanch pedpoklad a dle tyto profesn kvalifikan pedpoklady:
+i) vpis z obchodnho rejstku, pokud je v nm zapsn, i vpis z jin obdobn evidence, pokud je v n zapsn;
+ii) doklad o oprvnn k podnikn podle zvltnch prvnch pedpis v rozsahu odpovdajcmu pedmtu veejn zakzky  ivnostensk oprvnn pro pedmt innosti:
+- provdn staveb, jejich zmna a odstraovn i licence, 
+- projektovou innost ve vstavb 
+- vkon zemmiskch innost
+iii) prokzn odborn zpsobilosti  osvden o autorizaci - ve smyslu zkona .360/1992 Sb., o vkonu povoln autorizovanch architekt a o vkonu povoln autorizovanch inenr a technik innch ve vstavb, tj. osvden o vzdln a profesn kvalifikaci uchazee  autorizovan inenr v nsledujcch oborech (postauje vdy 1 odborn zpsobil osoba pro kad z poadovanch obor):
+ IP00  Pozemn stavby
+ IV00 - Stavby vodnho hospodstv a krajinnho inenrstv</InformaceADokladyNezbytneKPosouzeni_III_2_1>
+  <InformaceADokladyNezbytneKPosouzeni_III_2_2>Dodavatel pedlo estn prohlen o sv ekonomick a finann zpsobilosti splnit veejnou zakzku dle  50 odst. 1 psm. c) zkona, podepsan oprvnnou osobou.</InformaceADokladyNezbytneKPosouzeni_III_2_2>
+  <InformaceADokladyNezbytneKPosouzeni_III_2_3>i. seznamem stavebnch prac za poslednch 5 let. Zadavatel stanovuje prokzn alespo 3 nejvznamnjch stavebnch zakzek tj. investin akce ec vstavbu nov nebo rekonstrukci vodohospodsk infrastruktury v oblasti nakldn s odpadnmi vodami: vybudovn nov komunln OV o kapacit min. 600 EO (ekvivalentnch obyvatel), nebo a/nebo  rekonstrukce, rozen, modernizace nebo intenzifikace existujc komunln OV o kapacit min. 600 EO (ekvivalentnch obyvatel),  a to dn provedench a ukonench v poslednch 5 letech. Minimln stavebn nklady kad z nejvznamnjch stavebnch zakzek zadavatel stanovuje na 7 000 000 K bez DPH. Dal podrobnosti jsou uvedeny v zadvac dokumentaci; ii. seznamem technik - odbornch pracovnk, kte budou osobn odpovdni za poskytovn pslunch slueb pi plnn pedmtu veejn zakzky. Dodavatel je povinen uvst alespo tyi (4) odborn pracovnky na pozice: - hlavn stavbyvedouc, - stavbyvedoucho, - technolog, - pprav, rozpot</InformaceADokladyNezbytneKPosouzeni_III_2_3>
+  <MinimalniUrovenPripadnePozadovanychNorem_III_2_3>Pro pracovnky dodavatel proke relev. doklady (diplom, osvden o zvren zkouce, struktur. CV v. est. prohl. o pravdivosti daj, doklady o autorizaci, est. prohl. pro prokzn vkonu na poadovan pozici na stavbch obdob. charakteru, ad.) tyto podmnky:
+- vzdln V tech. smru min. u stavbyvedoucho a technologa
+- min.dlka odborn praxe 7 let min. 2 z pracovnk, z toho vdy u stavbyvedoucho
+- vkon na pozici stavbyvedoucho, resp. zstupce stavbyvedoucho pi realizaci min. 1 stavby obdob. charakteru u min. 1 z pracovnk (stavbyvedoucho n. zstupce stavbyvedoucho)
+- vkon na pozici technologa pi realizaci alespo 1 stavby obdobnho charakteru 
+- vkon na pozici pprave, rozpote pi realizaci alespo 1 stavby obdobnho charakteru 
+- alespo jeden z pracovnk je autorizovanm inenrem v oboru Stavby vodnho hospodstv a krajinnho hospodstv 
+- alespo jeden z pracovnk je autorizovanm inenrem v oboru Pozemn stavby</MinimalniUrovenPripadnePozadovanychNorem_III_2_3>
+  <PoskytovaniDaneSluzbyJeVyhrazeno_III_3_1>false</PoskytovaniDaneSluzbyJeVyhrazeno_III_3_1>
+  <BudePouzitaElektronickaAukce_IV_2_2>false</BudePouzitaElektronickaAukce_IV_2_2>
+  <PredchoziZverejneniTykajiciSeStejneZakazky_IV_3_2>true</PredchoziZverejneniTykajiciSeStejneZakazky_IV_3_2>
+  <OznameniPredbeznychInformaci_IV_3_2>true</OznameniPredbeznychInformaci_IV_3_2>
+  <CisloOznameniVUrvest_IV_3_2>2013/S 189-325142</CisloOznameniVUrvest_IV_3_2>
+  <ZeDne_IV_3_2>28/09/2013</ZeDne_IV_3_2>
+  <Datum_IV_3_3>20/01/2014</Datum_IV_3_3>
+  <Cas_IV_3_3>15:00</Cas_IV_3_3>
+  <Datum_IV_3_4>20/01/2014</Datum_IV_3_4>
+  <Cas_IV_3_4>15:00</Cas_IV_3_4>
+  <JazykNeboJazyky_IV_3_6>false</JazykNeboJazyky_IV_3_6>
+  <Cs_IV_3_6>true</Cs_IV_3_6>
+  <NeboDnech_IV_3_7>150</NeboDnech_IV_3_7>
+  <Datum_IV_3_8>20/01/2014</Datum_IV_3_8>
+  <Cas_IV_3_8>15:00</Cas_IV_3_8>
+  <Misto_IV_3_8>sdlo zadavatele</Misto_IV_3_8>
+  <TotoOznameniSeTykaVerejneZakazky_II_1_3>true</TotoOznameniSeTykaVerejneZakazky_II_1_3>
+  <RozdeleniZakazkyNaCasti_II_1_8>false</RozdeleniZakazkyNaCasti_II_1_8>
+  <UvedtePredpokladanouHodnotuBezDph_II_2_1>15 172 005,00</UvedtePredpokladanouHodnotuBezDph_II_2_1>
+  <OsobyPriOteviraniNabidek_IV_3_8>Zstupci zadavatele, zstupci poven osoby, zstupci uchaze.</OsobyPriOteviraniNabidek_IV_3_8>
+  <JdeOOpakovanouZakazku_VI_1>false</JdeOOpakovanouZakazku_VI_1>
+  <FinancovaniZProstredkuSpolecenstvi_VI_2>true</FinancovaniZProstredkuSpolecenstvi_VI_2>
+  <OdkazNaTytoProjekty_VI_2>Projekt je podpoen z prostedk Operanho programu ivotn prosted.</OdkazNaTytoProjekty_VI_2>
+  <DalsiInformace_VI_3>Projekt je podpoen z prostedk Operanho programu ivotn prosted (identifikan slo projektu 18502282), prioritn osa 1 "Zlepovn vodohospodsk infrastruktury a sniovn rizika povodn". Oblast podpory 1.1 "Snen zneitn vod", podoblast podpory 1.1.1 "Snen zneistn z komunlnch zdroj". Jde o oteven podlimitn zen. 
+Zadavatel umouje, aby dodavatel realizoval st VZ prostednictvm subdodavatel. Dal podrobnosti ke splnn tto podmnky jsou definovny v zadvac dokumentaci.
+Prohldka msta plnn: 8.1.2014 od 11:00 v arelu OV echy pod Kosem.</DalsiInformace_VI_3>
+  <UredniNazev_VI_4_1_1>ad pro ochranu hospodsk soute</UredniNazev_VI_4_1_1>
+  <PostovniAdresa_VI_4_1_1>t. Kpt. Jaroe 7</PostovniAdresa_VI_4_1_1>
+  <Obec_VI_4_1_1>Brno</Obec_VI_4_1_1>
+  <Psc_VI_4_1_1>604 55</Psc_VI_4_1_1>
+  <E_Mail_VI_4_1_1>posta@compet.cz</E_Mail_VI_4_1_1>
+  <Tel_VI_4_1_1>+420 542167111</Tel_VI_4_1_1>
+  <InternetovaAdresa_VI_4_1_1>http://www.uohs.cz</InternetovaAdresa_VI_4_1_1>
+  <Fax_VI_4_1_1>+420 542167115</Fax_VI_4_1_1>
+  <UredniNazev_VI_4_3>ad pro ochranu hospodsk soute</UredniNazev_VI_4_3>
+  <PostovniAdresa_VI_4_3>t. Kpt. Jaroe 7</PostovniAdresa_VI_4_3>
+  <Obec_VI_4_3>Brno</Obec_VI_4_3>
+  <Psc_VI_4_3>604 55</Psc_VI_4_3>
+  <E_Mail_VI_4_3>posta@compet.cz</E_Mail_VI_4_3>
+  <Tel_VI_4_3>+420 542167111</Tel_VI_4_3>
+  <InternetovaAdresa_VI_4_3>http://www.uohs.cz</InternetovaAdresa_VI_4_3>
+  <Fax_VI_4_3>+420 542167115</Fax_VI_4_3>
+  <DatumOdeslaniTohotoOznameni_VI_4_5>19/12/2013</DatumOdeslaniTohotoOznameni_VI_4_5>
+  <Dvz_DruhVerejnehoZadavatele_I_2>REGIONAL_AUTHORITY</Dvz_DruhVerejnehoZadavatele_I_2>
+  <ZakazkaJmenemJinych_I_4>false</ZakazkaJmenemJinych_I_4>
+  <JmenaAProfesniKvalifikaceZamestnancu_III_3_2>true</JmenaAProfesniKvalifikaceZamestnancu_III_3_2>
+  <NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_7>false</NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_7>
+  <Osoby_IV_3_8>true</Osoby_IV_3_8>
+  <DokumentaceZaUplatu_IV_3_3>false</DokumentaceZaUplatu_IV_3_3>
+  <BudouPrijimanyVarianty_II_1_9>false</BudouPrijimanyVarianty_II_1_9>
+  <TutoZakazkuLzeObnovit_II_2_3>false</TutoZakazkuLzeObnovit_II_2_3>
+  <NejnizsiNabidkovaCena_IV_2_1>true</NejnizsiNabidkovaCena_IV_2_1>
+  <DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2>WORKS</DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2>
+  <StavebniPraceProjektProvadeni_II_1_2>true</StavebniPraceProjektProvadeni_II_1_2>
+  <Stat_I_1>CZ</Stat_I_1>
+  <Stat_VI_4_1_1>CZ</Stat_VI_4_1_1>
+  <Stat_VI_4_3>CZ</Stat_VI_4_3>
+  <MenaHodnota_II_2_1>CZK</MenaHodnota_II_2_1>
+  <DruhRizeni_IV_1_1>OPEN</DruhRizeni_IV_1_1>
+  <skup_priloha>
+    <hlavicka>
+      <VvzNumber>7302012067916</VvzNumber>
+      <VvzFormId>466451</VvzFormId>
+      <VvzPublished>30/12/2013</VvzPublished>
+      <CocoCode>367916</CocoCode>
+      <TedSent>30/12/2013</TedSent>
+      <TypFormulare>RADNY</TypFormulare>
+    </hlavicka>
+    <priloha_A>
+      <UredniNazev_I>EU Via, a.s.</UredniNazev_I>
+      <IdentifikacniCislo_I>28244117</IdentifikacniCislo_I>
+      <Adresa_I>Nad Bunkami II 1841/17</Adresa_I>
+      <Obec_I>Praha 5</Obec_I>
+      <Psc_I>150 00</Psc_I>
+      <Stat_I>CZ</Stat_I>
+      <KontaktniMista_I>EU Via, a.s.</KontaktniMista_I>
+      <Telefon_I>+420 602370331</Telefon_I>
+      <Krukam_I>Mgr. Jana Pilae</Krukam_I>
+      <Email_I>jan.pilar@euvia.cz</Email_I>
+      <InternetovaAdresa_I>http://www.euvia.cz/</InternetovaAdresa_I>
+      <UredniNazev_II>EU Via, a.s.</UredniNazev_II>
+      <IdentifikacniCislo_II>28244117</IdentifikacniCislo_II>
+      <Adresa_II>Nad Bunkami II 1841/17</Adresa_II>
+      <Obec_II>Praha 5</Obec_II>
+      <Psc_II>150 00</Psc_II>
+      <Stat_II>CZ</Stat_II>
+      <KontaktniMista_II>EU Via, a.s.</KontaktniMista_II>
+      <Telefon_II>+420 602370331</Telefon_II>
+      <Krukam_II>Mgr. Jana Pilae</Krukam_II>
+      <Email_II>jan.pilar@euvia.cz</Email_II>
+      <InternetovaAdresa_II>http://www.euvia.cz/</InternetovaAdresa_II>
+      <UredniNazev_III>Obec echy pod Kosem</UredniNazev_III>
+      <IdentifikacniCislo_III>00288128</IdentifikacniCislo_III>
+      <Adresa_III>Nmst Svobody 289</Adresa_III>
+      <Obec_III>echy pod Kosem</Obec_III>
+      <Psc_III>798 58</Psc_III>
+      <Stat_III>CZ</Stat_III>
+      <KontaktniMista_III>Obec echy pod Kosem</KontaktniMista_III>
+      <Telefon_III>+420 58237726</Telefon_III>
+      <Krukam_III>Ing.Milana Kiebela</Krukam_III>
+      <Email_III>ou@cechypk.cz</Email_III>
+      <InternetovaAdresa_III>http://www.cechypk.cz/</InternetovaAdresa_III>
+    </priloha_A>
+  </skup_priloha>
+</root>
