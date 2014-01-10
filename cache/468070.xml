@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><root xmlns="http://www.ness.cz/schemas/isvzus/v11.1">
+  <verze_formulare>0200</verze_formulare>
+  <subverze>7.2</subverze>
+  <KontaktniMista_I_1>Náměstí 71</KontaktniMista_I_1>
+  <KRukam_I_1>Jan Havelka</KRukam_I_1>
+  <Tel_I_1>+420 311684121</Tel_I_1>
+  <E_Mail_I_1>ou@obecliten.cz</E_Mail_I_1>
+  <Fax_I_1>+420 311684121</Fax_I_1>
+  <ObecnaAdresaVerejnehoZadavatele_I_1>http://www.liten.cz/</ObecnaAdresaVerejnehoZadavatele_I_1>
+  <AdresaProfiluKupujiciho_I_1>http://www.e-zakazky.cz/Profil-Zadavatele/fec941c1-20dc-44d3-ae7e-2131074eb1f8</AdresaProfiluKupujiciho_I_1>
+  <NaVyseUvedenychKontaktnichMistech1_I_1>false</NaVyseUvedenychKontaktnichMistech1_I_1>
+  <NaVyseUvedenychKontaktnichMistech2_I_1>false</NaVyseUvedenychKontaktnichMistech2_I_1>
+  <NaVyseUvedenychKontaktnichMistech3_I_1>false</NaVyseUvedenychKontaktnichMistech3_I_1>
+  <Hpc_SluzbyProSirokouVerejnost_I_3>true</Hpc_SluzbyProSirokouVerejnost_I_3>
+  <Ic_I_1>00233501</Ic_I_1>
+  <UredniNazev_I_1>Městys Liteň</UredniNazev_I_1>
+  <PostovniAdresa_I_1>Náměstí 71/0</PostovniAdresa_I_1>
+  <Obec_I_1>Liteň</Obec_I_1>
+  <Psc_I_1>26727</Psc_I_1>
+  <NazevPridelenyZakazceVerejnymZadavatelem_II_1_1>Kanalizace a ČOV Liteň</NazevPridelenyZakazceVerejnymZadavatelem_II_1_1>
+  <HlavniMistoProvadeniStavebnichPraci_II_1_2>Městys Liteň</HlavniMistoProvadeniStavebnichPraci_II_1_2>
+  <KodNuts1_II_1_2>CZ020</KodNuts1_II_1_2>
+  <StrucnyPopisZakazky_II_1_5>Předmětem projektu je výstavba nové sítě splaškové kanalizace a nové obecní („centrální“) čistírny odpadních vod - ČOV Liteň. V ČOV obce resp. městyse Liteň.
+Novou sítí kanalizace splaškové gravitační budou komunální, splaškové odpadní vody z domů a objektů v obci Liteň odváděny na novou ČOV, situovanou východně pod obcí Liteň - u upraveného koryta potoka "od Litně".
+Předmětem veřejné zakázky na stavební práce je odkanalizování a čištění splaškových odpadních vod v obci resp. městysi Liteň. 
+
+Veřejná zakázka dle projektové dokumentace zpracované firmou PROfi Jihlava, spol. s r.o., Pod Příkopem 6, 586 01 Jihlava sestává z několika stavebních objektů (SO) a provozních souborů (PS):
+
+SO 01 Stavební část ČOV - 1 495 m3 obestav. prostoru, pozemní část půdorysných rozměrů 15,4 x 10,0 m, hluboká 6,6 m; nadzemní část půdorysných rozměrů 15,4 x 10,0 m, vysoká 3,0 m; sedlová střecha vysoká 2,0 m
+PS 01 Strojně-technologická část ČOV - strojně-technologická zařízení pro čištění splaškových pad. vod pro 1200 EO vč. terciálního stupně čištění - bubnového mikrosítového filtru. 
+PS 02 Strojní elektroinstalace ČOV  - silové elektroinstalace, elektrorozvody, elektrorozvaděče, napojení strojních. zařízení
+SO 02 Terénní úpravy a oplocení ČOV - terénní úpravy kolem staveb. části ČOV na ploše 310 m2 vč. manipulační plochy u objektu  ČOV; oplocení z drát. pletiva na ocel. sloup. s vjezdovou bránou o celkové délce 95 m.
+SO 03 Čerpací stanice ČS I a ČS II - jímka a šachta z beton. skruží D 2,0 m, hl. 4,2m,/resp. 6,2m zakrytá, vybavená (2 čerpadla, armatury ad.) 
+SO 04.1 Účelové komunikace - příjezdy k ČOV a ČS I - pozemní komunikace šíř. 6,0 m a 3,0 m s živičným povrchem; součástí je propustek a obratiště; celková výměra je 3 725 m2
+SO 04.2 Účelová komunikace - příjezd k ČS I - pozemní komunikace šíř. 3,0 m, 31 m2
+SO 05 Vodovodní přípojka pro ČOV - Vodovod z trubek PE D 90 mm (DN 80) a PE D 32 mm (DN 25) v celkové délce 633 m
+SO 06 Přípojky elektrické energie NN pro ČOV, ČS I a ČS II - kabelová vedení NN k ČOV AYKY 4 x 125, AYKY 4 x 50 v délce 610 m; k ČS I kabelem AYKY 4x16 v délce 25 m; k ČS II kabelem AYKY 4x16 v délce 10 m 
+SO 07 Kanalizace:
+- odtok z ČOV, obtok z ČOV, přítok (PP DN 250 a DN 200) v celkové délce 39,3 m 
+- uliční stoky - DN 400 mm  PP v délce 952,7 m; DN 300 mm PP v délce 2 503,8 m; DN 250 mm PP v délce 2 858,4 m
+- odbočení pro přípojky DN 200 mm - 80,0 m a DN 150 mm - 1 190,0 m 
+- výtlaky z ČS I a ČS II - PE D 63 mm / D 50 mm  - 168,0 m / 136,0 m
+
+Stavba bude prováděna jako jeden celek. Stavba nebude zadávána po částech a nabídky nebude možno podávat na jednotlivé stavební objekty samostatně.</StrucnyPopisZakazky_II_1_5>
+  <HlavniSlovnikHp_II_1_6>45232400-6</HlavniSlovnikHp_II_1_6>
+  <HlavniSlovnikDp1_II_1_6>45252130-8</HlavniSlovnikDp1_II_1_6>
+  <Opce_II_2_2>false</Opce_II_2_2>
+  <VMesicich_II_3>15</VMesicich_II_3>
+  <PozadovaneZalohyAZaruky_III_1_1>Zadavatel požaduje, aby uchazeč k zajištění svých povinností vyplývajících z účasti v zadávacím řízení poskytl jistotu ve smyslu § 67 zákona. Výše jistoty je stanovena na částku 1 000 000 Kč.</PozadovaneZalohyAZaruky_III_1_1>
+  <HlavniPodminkyFinancovaniAPlatebniPodminky_III_1_2>VZ bude realizována v rámci OPŽP, financovaného z prostředků ERDF/FS EU. Splatnost daňových dokladů je  60 kalendářních dní ode dne řádného předání faktury – daňového dokladu (a povinných příloh k faktuře) zhotovitelem objednateli.</HlavniPodminkyFinancovaniAPlatebniPodminky_III_1_2>
+  <ZvlastniPodminky_III_1_4>false</ZvlastniPodminky_III_1_4>
+  <InformaceADokladyNezbytneKPosouzeni_III_2_1>Základní kvalifikační předpoklady dle § 53 uchazeč prokáže předložením: a)výpisu z evidence Rejstříku trestů [(§ 53 odst. 1 písm. a) a b)];b)potvrzení příslušného finančního úřadu a ve vztahu ke spotřební dani čestného prohlášení [(§53 odst. 1 písm. f)],c)potvrzení příslušného orgánu či instituce [§ 53 odst. 1 písm. h)],d)čestného prohlášení [(§ 53 odst. 1 písm. c) až e) a g), i) až k)Profesní kvalifikační předpoklady uchazeč prokáže předložením:dle § 54 písmene a) zákona zájemce doloží výpisem z obchodního rejstříku či jiné evidence, má-li v ní být zapsán podle zvláštních předpisů, ne starším 90 dnů, dle § 54 písmene b) zákona zájemce doloží dokladem o oprávnění k podnikání:Provádění staveb, jejich změn a odstraňování,Výkon zeměměřičských činností,dle § 54 písmene d) zákona zájemce doloží doklad osvědčující odbornou způsobilost,Osvědčením o autorizaci vydaným dle zákona č. 360/1992 Sb., o výkonu povolání autorizovaných architektů a o výkonu povolání autorizovaných inženýrů a techniků činných ve výstavbě, ve znění pozdějších předpisů:autorizovaný inženýr pro stavby vodního a krajinného inženýrství a nebo osvědčení o registraci v případě osob usazených nebo hostujících,autorizovaný inženýr a nebo technik  v oboru pozemních staveb a nebo osvědčení o registraci v případě osob usazených nebo hostujících,autorizovaný inženýr a nebo technik v oboru dopravních staveb a nebo osvědčení o registraci v případě osob usazených nebo hostujících,Osvědčením úředně oprávněného zeměměřického inženýra s oprávněním pro ověřování výsledků zeměměřických činností dle § 13 odst. 1 písm. a) a c) zákona č. 200/1994 Sb., o zeměměřičství, ve znění pozdějších předpisů</InformaceADokladyNezbytneKPosouzeni_III_2_1>
+  <InformaceADokladyNezbytneKPosouzeni_III_2_2>Uchazeč předloží prohlášení o ekonomické a finanční způsobilosti v souladu se zákonem.</InformaceADokladyNezbytneKPosouzeni_III_2_2>
+  <InformaceADokladyNezbytneKPosouzeni_III_2_3>Technické kvalifikační předpoklady dle § 56 zákona uchazeč prokáže:dle§56odst.1písm. a)seznamemNejvýznamStavPracíObdob.CharakteruTzn.StavebKanalizacíReal.ZaPosl5LetAkTěmtoVseznamuUvedenýmStavbámOsvědčeníObjednatelůOřádnémPlněníStav.Prací.OsvědčeníMusíZahrnovatCenu,DobuAmístoProváděníStavPracíAmusíObsahovatÚdajeOtom,zdaBylyTytoStavPráceProvedenyŘádněAodborně.ZadavatelStanovujeMINpožadovanouÚroveňPro5požadovanýchNejvýznam.Stav.pracíNásledovně;a)3stavbyGravitačníKanSítěRealVzastavěnémÚzemíMěstaAneboObceZnichžKaždáBudeVhodnotě25mil.KčbezDPHAsoučasnéBudeObsahovatOdbočeníProDomovníPřípojkyVpočtuMin.90ks;b)2stavbyČistírnyOdpadVod(ČOV)pro1000EO,c)1stavbaVozidlovéKomCharakteruMěstskéKomunikace,sŽivičným povrchem,přičemžVýměraKomMusíBýtAlesp1000m2.Vpřípadě,žeReferenčníStavbyBylyRealJakoSoučástKomplexuStavebMusíBýtVosvědčeníUvedenyVčleněníInvestNákladůNapožadČástStavbyAostatníČásti.ZadavatelUpozorňujeDodavatele,žeSohledemNaOmezeníMožnostiPlnitČástPředmětuZakázkySubdodavatelemUvedenéVčl7.6.4TétoZD,konkČástPředmětuPlnění„realizaceVeškerýchStavPracíNaLiniovýchČástechKanalBezRozdíluUmístěníAprofilu“,neníMožnéProkazovatVýšeUvedenéRealStavebOdpovídajícíTétoČástiPředmětuPlněníProstředSubdodavateleDle§51odst.4zákona. Dodavatelé však mohou podat společnou nabídku dle §  51 odst. 5 a 6 zákona.dle § 56 odst. 3 písm. c)osvědčení o odborné kvalifikaci osob odpovědných za vedení realizace příslušných stav prací, kteří se budou podílet na VZ:min 1 autorizovaný inženýr v oboru staveb vodního a krajinného inženýrství na pozici hlavního stavby vedoucího, který realizoval min. 2 stavby kanalizace s investičními náklady min. 30 mil. Kč a min 1 autorizovaný technik v oboru staveb vodního hospodářství a krajinného inženýrství, staveb zdravotně technických na pozici stavbyvedoucího, který  realizoval min. 2 stavby kanalizace s investičními náklady min. 30 mil. Kč Osvědčení o odborné kvalifikaci osob odpovědných za vedení realizace přísl. stavebních prací bude doloženo formou profesních životopisů</InformaceADokladyNezbytneKPosouzeni_III_2_3>
+  <PoskytovaniDaneSluzbyJeVyhrazeno_III_3_1>false</PoskytovaniDaneSluzbyJeVyhrazeno_III_3_1>
+  <BudePouzitaElektronickaAukce_IV_2_2>false</BudePouzitaElektronickaAukce_IV_2_2>
+  <SpisoveCisloPrideleneVerejnymZadavatelem_IV_3_1>2011-000046</SpisoveCisloPrideleneVerejnymZadavatelem_IV_3_1>
+  <PredchoziZverejneniTykajiciSeStejneZakazky_IV_3_2>false</PredchoziZverejneniTykajiciSeStejneZakazky_IV_3_2>
+  <Datum_IV_3_3>22/01/2014</Datum_IV_3_3>
+  <Cas_IV_3_3>10:00</Cas_IV_3_3>
+  <PodminkyAZpusobPlatby_IV_3_3>NaProfiluZadZveřejníTextovouČástZDaKomplZDBudePoskytnutaNaZákl.písemnéŽádosti(objednávky)AdministrátoroviVZdle§48,odst.(1)aodst.(2)zákona,kdeBudeOsobněPředánaZa8.000KčbezDPHnaAdreseProvozovnyAdmin</PodminkyAZpusobPlatby_IV_3_3>
+  <Datum_IV_3_4>22/01/2014</Datum_IV_3_4>
+  <Cas_IV_3_4>10:00</Cas_IV_3_4>
+  <JazykNeboJazyky_IV_3_6>false</JazykNeboJazyky_IV_3_6>
+  <Cs_IV_3_6>true</Cs_IV_3_6>
+  <Sk_IV_3_6>true</Sk_IV_3_6>
+  <NeboDnech_IV_3_7>240</NeboDnech_IV_3_7>
+  <Datum_IV_3_8>22/01/2014</Datum_IV_3_8>
+  <Cas_IV_3_8>10:00</Cas_IV_3_8>
+  <Misto_IV_3_8>v jednací místnosti provozovny firmy IS engineering s.r.o., 8. března 2a, 586 01 Jihlava</Misto_IV_3_8>
+  <TotoOznameniSeTykaVerejneZakazky_II_1_3>true</TotoOznameniSeTykaVerejneZakazky_II_1_3>
+  <RozdeleniZakazkyNaCasti_II_1_8>false</RozdeleniZakazkyNaCasti_II_1_8>
+  <UvedtePredpokladanouHodnotuBezDph_II_2_1>89 795 360</UvedtePredpokladanouHodnotuBezDph_II_2_1>
+  <UvedteCenu_IV_3_3>8 000</UvedteCenu_IV_3_3>
+  <OsobyPriOteviraniNabidek_IV_3_8>Otevírání obálek se může účastnit nejvýše jeden zástupce uchazeče; uchazeč nebo zástupce uchazeče se musí před zahájením otevírání obálek prokázat příslušným pověřením (plnou mocí) podepsaným osobou oprávněnou jednat za uchazeče.</OsobyPriOteviraniNabidek_IV_3_8>
+  <JdeOOpakovanouZakazku_VI_1>false</JdeOOpakovanouZakazku_VI_1>
+  <FinancovaniZProstredkuSpolecenstvi_VI_2>true</FinancovaniZProstredkuSpolecenstvi_VI_2>
+  <OdkazNaTytoProjekty_VI_2>Operační program Životní prostředí, 39. VÝZVA, PRIORITNÍ OSA 1 - Zlepšování vodohospodářské infrastruktury a snižování rizika povodní, 1.1 - Snížení znečištění vod - 1.1.1. Snížení znečištění z komunálních zdrojů - Projekt pod 2000 EO - ČOV a kanalizace</OdkazNaTytoProjekty_VI_2>
+  <DalsiInformace_VI_3>Výkonem zadavatelské činnosti je pověřena firma IS enginnering s.r.o., 8. března 4812/2a, 586 01 Jihlava</DalsiInformace_VI_3>
+  <UredniNazev_VI_4_1_1>Úřad pro ochranu hospodářské soutěže</UredniNazev_VI_4_1_1>
+  <PostovniAdresa_VI_4_1_1>tř. Kpt. Jaroše 7</PostovniAdresa_VI_4_1_1>
+  <Obec_VI_4_1_1>Brno</Obec_VI_4_1_1>
+  <Psc_VI_4_1_1>604 55</Psc_VI_4_1_1>
+  <E_Mail_VI_4_1_1>posta@compet.cz</E_Mail_VI_4_1_1>
+  <Tel_VI_4_1_1>+420 542167811</Tel_VI_4_1_1>
+  <InternetovaAdresa_VI_4_1_1>http://www.compet.cz</InternetovaAdresa_VI_4_1_1>
+  <Fax_VI_4_1_1>+420 542167115</Fax_VI_4_1_1>
+  <PresneInformaceOLhutachProPodaniOdvolani_VI_4_2>PodmínkouProPodáníNávrhuKÚOHSjePodáníNámitekKzadavateli,kteréJeNutnéDoručitDo15dnůOdeDne,kdySeStěžovatelDozvědělOúkonuZadavatele,kterýNapadá,popř. jedná-liSe o námitky proti zadávacím podmínkám, do 5 dnů od konce lhůty pro podání nabídek.  Zadavatel je povinen námitky vyřídit do 10 dnů. Návrh je nutné doručit ÚOHS i zadavateli do 10 dnů od doručení rozhodnutí zadavatele o námitkách, nebo do 25 dnů od odeslání námitek stěžovatelem, pokud zadavatel o námitkách nerozhodl podle § 111 odst. 1 zákona.</PresneInformaceOLhutachProPodaniOdvolani_VI_4_2>
+  <UredniNazev_VI_4_3>Úřad pro ochranu hospodářské soutěže</UredniNazev_VI_4_3>
+  <PostovniAdresa_VI_4_3>tř. Kpt. Jaroše 7</PostovniAdresa_VI_4_3>
+  <Obec_VI_4_3>Brno</Obec_VI_4_3>
+  <Psc_VI_4_3>604 55</Psc_VI_4_3>
+  <E_Mail_VI_4_3>posta@compet.cz</E_Mail_VI_4_3>
+  <Tel_VI_4_3>+420 542167811</Tel_VI_4_3>
+  <InternetovaAdresa_VI_4_3>http://www.compet.cz</InternetovaAdresa_VI_4_3>
+  <Fax_VI_4_3>+420 542167115</Fax_VI_4_3>
+  <DatumOdeslaniTohotoOznameni_VI_4_5>09/01/2014</DatumOdeslaniTohotoOznameni_VI_4_5>
+  <Dvz_DruhVerejnehoZadavatele_I_2>REGIONAL_AUTHORITY</Dvz_DruhVerejnehoZadavatele_I_2>
+  <ZakazkaJmenemJinych_I_4>false</ZakazkaJmenemJinych_I_4>
+  <JmenaAProfesniKvalifikaceZamestnancu_III_3_2>false</JmenaAProfesniKvalifikaceZamestnancu_III_3_2>
+  <NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_7>false</NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_7>
+  <Osoby_IV_3_8>true</Osoby_IV_3_8>
+  <DokumentaceZaUplatu_IV_3_3>true</DokumentaceZaUplatu_IV_3_3>
+  <BudouPrijimanyVarianty_II_1_9>false</BudouPrijimanyVarianty_II_1_9>
+  <TutoZakazkuLzeObnovit_II_2_3>false</TutoZakazkuLzeObnovit_II_2_3>
+  <PouzitiVicekolovehoRizeni_IV_1_3>false</PouzitiVicekolovehoRizeni_IV_1_3>
+  <NejnizsiNabidkovaCena_IV_2_1>true</NejnizsiNabidkovaCena_IV_2_1>
+  <DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2>WORKS</DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2>
+  <StavebniPraceProvadeni_II_1_2>true</StavebniPraceProvadeni_II_1_2>
+  <Stat_I_1>CZ</Stat_I_1>
+  <Stat_VI_4_1_1>CZ</Stat_VI_4_1_1>
+  <Stat_VI_4_3>CZ</Stat_VI_4_3>
+  <Mena_IV_3_3>CZK</Mena_IV_3_3>
+  <MenaHodnota_II_2_1>CZK</MenaHodnota_II_2_1>
+  <DruhRizeni_IV_1_1>OPEN</DruhRizeni_IV_1_1>
+  <skup_priloha>
+    <hlavicka>
+      <VvzNumber>7402020067575</VvzNumber>
+      <VvzFormId>468070</VvzFormId>
+      <VvzPublished>10/01/2014</VvzPublished>
+      <CocoCode>367575</CocoCode>
+      <TypFormulare>OPRAVNY</TypFormulare>
+    </hlavicka>
+    <priloha_A>
+      <UredniNazev_I>IS engineering s.r.o.</UredniNazev_I>
+      <IdentifikacniCislo_I>25975609</IdentifikacniCislo_I>
+      <Adresa_I>8. března</Adresa_I>
+      <Obec_I>Jihlava</Obec_I>
+      <Psc_I>586 01</Psc_I>
+      <Stat_I>CZ</Stat_I>
+      <KontaktniMista_I>kancelář v 1. poschodí</KontaktniMista_I>
+      <Telefon_I>+420 569433042</Telefon_I>
+      <Krukam_I>Alena Hubená</Krukam_I>
+      <Email_I>info@iseng.cz</Email_I>
+      <Fax_I>+420 569433042</Fax_I>
+      <UredniNazev_II>IS engineering s.r.o.</UredniNazev_II>
+      <IdentifikacniCislo_II>25975609</IdentifikacniCislo_II>
+      <Adresa_II>8. března</Adresa_II>
+      <Obec_II>Jihlava</Obec_II>
+      <Psc_II>586 01</Psc_II>
+      <Stat_II>CZ</Stat_II>
+      <KontaktniMista_II>kancelář v 1. poschodí</KontaktniMista_II>
+      <Telefon_II>+420 569433042</Telefon_II>
+      <Krukam_II>Alena Hubená</Krukam_II>
+      <Email_II>info@iseng.cz</Email_II>
+      <Fax_II>+420 569433042</Fax_II>
+      <UredniNazev_III>IS engineering s.r.o.</UredniNazev_III>
+      <IdentifikacniCislo_III>25975609</IdentifikacniCislo_III>
+      <Adresa_III>8. března</Adresa_III>
+      <Obec_III>Jihlava</Obec_III>
+      <Psc_III>586 01</Psc_III>
+      <Stat_III>CZ</Stat_III>
+      <KontaktniMista_III>kancelář v 1. poschodí</KontaktniMista_III>
+      <Telefon_III>+420 569433042</Telefon_III>
+      <Krukam_III>Alena Hubená</Krukam_III>
+      <Email_III>info@iseng.cz</Email_III>
+      <Fax_III>+420 569433042</Fax_III>
+    </priloha_A>
+  </skup_priloha>
+</root>

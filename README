@@ -1,2 +1,16 @@
-VVZ extractor DPU for intlib
-This file was modified by IntelliJ IDEA 12.1.6 for binding GitHub repository
+VVZ extractor DPU for ODCleanStore
+==================================
+
+using:
+
+Public contracts receiver
+-------------------------
+Receiving public contracts from vestnikverejnychzakazek.cz using SOAP Web Services.
+
+XSLT for public contract form
+-----------------------------
+Transformation from XML TO RDF/XML.
+Transform form type 2 - public contract notation.
+
+
+XML interface and XML Schema for public contract notation form can be found [here](http://www.vestnikverejnychzakazek.cz/cs/PublishAForm/XMLInterfaceForISVZUS)

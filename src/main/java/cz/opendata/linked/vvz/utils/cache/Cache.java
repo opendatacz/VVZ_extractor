@@ -1,4 +1,4 @@
-package cz.opendata.linked.vvz.utils;
+package cz.opendata.linked.vvz.utils.cache;
 
 import java.io.*;
 
@@ -13,33 +13,52 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.slf4j.Logger;
-
 /**
  *  Document cache. It stores downloaded files to hard drive.
  *
  *
  */
-public class Cache {
+public class Cache extends cz.opendata.linked.vvz.utils.Object {
+
+	private static Cache instance = null;
+
+	protected Cache() {
+		// defeat instantiation.
+	}
+
+	public static Cache getInstance() {
+		if(instance == null) {
+			instance = new Cache();
+		}
+		return instance;
+	}
 
 	private String cacheDir =  "./";
 	private String basePath = "cache";
 
-	public boolean rewriteCache = false;
 
-	public Logger logger;
-
+	/**
+	 * Dir location where documents will be cached
+	 * @param cacheDir
+	 */
 	public void setCacheDir(String cacheDir) {
 		this.cacheDir = cacheDir;
 	}
 
+	/**
+	 *
+	 * @return cache dir location
+	 */
 	public File getCacheDir() {
 
 		return new File(this.basePath,this.cacheDir);
 
 	}
 
-
+	/**
+	 * Check if is document already cached
+	 * @param documentId
+	 */
 	public boolean isCached(String documentId) {
 
 		File doc = new File(this.getCacheDir(), documentId + ".xml");
@@ -47,7 +66,12 @@ public class Cache {
 		return doc.exists();
 	}
 
-	public Document getDocument(String documentId) throws IOException, InterruptedException {
+	/**
+	 * @param documentId
+	 * @throws CacheException
+	 * @return cached document by id
+	 */
+	public Document getDocument(String documentId) throws CacheException {
 
 		Document doc = null;
 
@@ -60,14 +84,20 @@ public class Cache {
 				doc = db.parse(xml);
 
 			} catch(Exception e) {
-				e.printStackTrace();
+				throw new CacheException("Could not get cached document. " + e.getMessage(), e);
 			}
 		}
 
 		return doc;
 	}
 
-	public void storeDocument(Document doc, String documentId) {
+	/**
+	 * Store document in document cache
+	 * @param doc
+	 * @param documentId
+	 * @throws CacheException
+	 */
+	public void storeDocument(Document doc, String documentId) throws CacheException {
 
 		try {
 
@@ -76,19 +106,14 @@ public class Cache {
 
 			newDoc.createNewFile();
 
-			try {
-				Transformer transformer = TransformerFactory.newInstance().newTransformer();
-				Result output = new StreamResult(newDoc);
-				Source input = new DOMSource(doc);
+			Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			Result output = new StreamResult(newDoc);
+			Source input = new DOMSource(doc);
 
-				transformer.transform(input, output);
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
+			transformer.transform(input, output);
 
-		} catch(IOException e) {
-			e.printStackTrace();
-			// todo Logger
+		} catch(Exception e) {
+			throw new CacheException("Could not store document " + e.getMessage(), e);
 		}
 
 

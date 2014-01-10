@@ -19,33 +19,29 @@ import org.xml.sax.InputSource;
 import java.io.StringReader;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import cz.opendata.linked.vvz.utils.Object;
+import org.xml.sax.SAXException;
 
-
-
-public class PCReceiver {
+/**
+ * Receives public contract from vestnikverejnychzakazek.cz using SOAP Web Services
+ */
+public class PCReceiver extends Object {
 
 	private SOAPConnection connection;
+
 	private String serverURL = "http://import.vestnikverejnychzakazek.cz/ExportForms.svc";
 	private String userId = "396b47ba-0246-469f-9f29-b550976d7d65";
 
+	private String URLExportForms = "http://www.ness.cz/schemas/isvzus/ExportForms";
+	private String URLisvzus = "http://www.ness.cz/schemas/isvzus";
 
-	public Logger logger;
-
-	private SOAPConnection getConnection() {
+	private SOAPConnection getConnection() throws SOAPException {
 
 		if(this.connection == null) {
 
-			try {
-				// Create SOAP Connection
-				SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
-				this.connection = soapConnectionFactory.createConnection();
-				this.logger.info("PC list downloaded");
-
-			} catch (Exception e) {
-				System.err.println("Error occurred while creating SOAP connection");
-				e.printStackTrace();
-			}
-
+			// Create SOAP Connection
+			SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
+			this.connection = soapConnectionFactory.createConnection();
 		}
 
 		return this.connection;
@@ -53,155 +49,180 @@ public class PCReceiver {
 	}
 
 
-	// String[] params
-	public List<String> loadPublicContractsList(QueryParameters params) throws Exception {
-
-
-		MessageFactory messageFactory = MessageFactory.newInstance();
-		SOAPMessage soapMessage = messageFactory.createMessage();
-		SOAPPart soapPart = soapMessage.getSOAPPart();
-
-		String serverURI = "http://www.ness.cz/schemas/isvzus/ExportForms";
-		String serverURI2 = "http://www.ness.cz/schemas/isvzus";
-
-		// SOAP Envelope
-		SOAPEnvelope envelope = soapPart.getEnvelope();
-
-		envelope.addNamespaceDeclaration("ex", serverURI);
-		envelope.addNamespaceDeclaration("isv", serverURI2);
-
-		// SOAP Body
-		SOAPBody soapBody = envelope.getBody();
-
-		SOAPElement getFormDocumentEl = soapBody.addChildElement("ListForms","ex");
-		SOAPElement requestEl = getFormDocumentEl.addChildElement("request","ex");
-
-		SOAPElement userIdEl = requestEl.addChildElement("UserId","isv");
-		userIdEl.addTextNode(this.userId);
-
-		SOAPElement queryParamsEl = requestEl.addChildElement("QueryParameters","isv");
-
-		// todo provest kontrolu predanych parametru
-
-		if(params.selectedFormType.isEmpty()) {
-			throw new Exception("selectedFormType parameter must be filled.");
-		} else {
-			SOAPElement queryParamEl = queryParamsEl.addChildElement("QueryParameter","isv");
-			queryParamEl.addChildElement("Name","isv").addTextNode("SelectedFormType");
-			queryParamEl.addChildElement("Value","isv").addTextNode(params.selectedFormType);
-
-			queryParamEl = queryParamsEl.addChildElement("QueryParameter","isv");
-			queryParamEl.addChildElement("Name","isv").addTextNode("DateTimePublicationFrom");
-			queryParamEl.addChildElement("Value","isv").addTextNode(params.dateFrom);
-
-			if(!params.dateTo.isEmpty()) {
-				queryParamEl = queryParamsEl.addChildElement("QueryParameter","isv");
-				queryParamEl.addChildElement("Name","isv").addTextNode("DateTimePublicationTo");
-				queryParamEl.addChildElement("Value","isv").addTextNode(params.dateTo);
-			}
-		}
-
-		MimeHeaders headers = soapMessage.getMimeHeaders();
-		headers.addHeader("SOAPAction", "http://www.ness.cz/schemas/isvzus/ExportForms/IExportForms/ListForms");
-
-		soapMessage.saveChanges();
-
-		SOAPBody responseBody = this.soapCall(soapMessage).getSOAPBody();
-
-		// todo provest kontrolu navratoveho kodu SOAP zpravy
-
-		NodeList formsList = responseBody.getElementsByTagNameNS(serverURI2,"FormInfo");
+	/**
+	 * Makes SOAP connection to vestnikverejnychzakazek.cz and receive list of public contracts by given parameters
+	 * @param params dateTo, dateFrom, context, formType
+	 * @return list of public contracts
+	 * @throws PCReceiveException
+	 */
+	public List<String> loadPublicContractsList(QueryParameters params) throws PCReceiveException {
 
 		List<String> PCIds = new ArrayList<>();
 
-		for(int i=0; i<formsList.getLength();i++) {
+		try {
+			MessageFactory messageFactory = MessageFactory.newInstance();
+			SOAPMessage soapMessage = messageFactory.createMessage();
+			SOAPPart soapPart = soapMessage.getSOAPPart();
 
-			PCIds.add(formsList.item(i).getTextContent());
+			// SOAP Envelope
+			SOAPEnvelope envelope = soapPart.getEnvelope();
+
+			envelope.addNamespaceDeclaration("ex", this.URLExportForms);
+			envelope.addNamespaceDeclaration("isv", this.URLisvzus);
+
+			// SOAP Body
+			SOAPBody soapBody = envelope.getBody();
+
+			SOAPElement getFormDocumentEl = soapBody.addChildElement("ListForms","ex");
+			SOAPElement requestEl = getFormDocumentEl.addChildElement("request","ex");
+
+			SOAPElement userIdEl = requestEl.addChildElement("UserId","isv");
+			userIdEl.addTextNode(this.userId);
+
+			SOAPElement queryParamsEl = requestEl.addChildElement("QueryParameters","isv");
+
+
+			if(params.getSelectedFormType().isEmpty()) {
+				throw new PCReceiveException("selectedFormType parameter must be filled.");
+			} else {
+
+				SOAPElement queryParamEl = queryParamsEl.addChildElement("QueryParameter", "isv");
+				queryParamEl.addChildElement("Name","isv").addTextNode("SelectedFormType");
+				queryParamEl.addChildElement("Value","isv").addTextNode(params.getSelectedFormType());
+
+				if(!params.getDateFrom().isEmpty()) {
+					queryParamEl = queryParamsEl.addChildElement("QueryParameter","isv");
+					queryParamEl.addChildElement("Name","isv").addTextNode("DateTimePublicationFrom");
+					queryParamEl.addChildElement("Value","isv").addTextNode(params.getDateFrom());
+				}
+
+				if(!params.getDateTo().isEmpty()) {
+					queryParamEl = queryParamsEl.addChildElement("QueryParameter","isv");
+					queryParamEl.addChildElement("Name","isv").addTextNode("DateTimePublicationTo");
+					queryParamEl.addChildElement("Value","isv").addTextNode(params.getDateTo());
+				}
+
+			}
+
+			MimeHeaders headers = soapMessage.getMimeHeaders();
+			headers.addHeader("SOAPAction", "http://www.ness.cz/schemas/isvzus/ExportForms/IExportForms/ListForms");
+
+			soapMessage.saveChanges();
+
+			try {
+				SOAPBody responseBody = this.soapCall(soapMessage).getSOAPBody();
+
+				String code = responseBody.getElementsByTagNameNS(this.URLisvzus,"Code").item(0).getTextContent();
+				if(code.equals("0")) {
+					log("Public contracts list received.");
+				} else if(code.equals("1")) {
+					throw new PCReceiveException("Loading public contracts list failed. Code " + code + " - Bad query parameters.");
+				} else if(code.equals("3")) {
+					throw new PCReceiveException("Loading public contracts list failed. Code " + code + " - Identification failed. Wrong GUID.");
+				} else if(code.equals("99")) {
+					throw new PCReceiveException("Loading public contracts list failed. Code " + code + " - Unknown reason.");
+				}
+
+				NodeList formsList = responseBody.getElementsByTagNameNS(this.URLisvzus,"FormInfo");
+
+				for(int i=0; i<formsList.getLength();i++) {
+
+					PCIds.add(formsList.item(i).getTextContent());
+				}
+			} catch(SOAPException e) {
+				throw new PCReceiveException("Error while loading public contracts list.", e);
+			}
+
+		} catch(SOAPException e) {
+			throw new PCReceiveException("Error while creating public contracts load request.", e);
 		}
 
 		return PCIds;
 
 	}
 
-	public Document loadPublicContractForm(String id) throws Exception{
+	/**
+	 * Makes SOAP connection to vestnikverejnychzakazek.cz and receive public contract form by given form id
+	 * @param id form id
+	 * @return public contract XML document
+	 * @throws PCReceiveException
+	 */
+	public Document loadPublicContractForm(String id) throws PCReceiveException {
 
-		MessageFactory messageFactory = MessageFactory.newInstance();
-		SOAPMessage soapMessage = messageFactory.createMessage();
-		SOAPPart soapPart = soapMessage.getSOAPPart();
+		Document xml = null;
 
-		String serverURI = "http://www.ness.cz/schemas/isvzus/ExportForms";
-		String serverURI2 = "http://www.ness.cz/schemas/isvzus";
+		try {
+			MessageFactory messageFactory = MessageFactory.newInstance();
+			SOAPMessage soapMessage = messageFactory.createMessage();
+			SOAPPart soapPart = soapMessage.getSOAPPart();
 
-		// SOAP Envelope
-		SOAPEnvelope envelope = soapPart.getEnvelope();
+			// SOAP Envelope
+			SOAPEnvelope envelope = soapPart.getEnvelope();
 
-		envelope.addNamespaceDeclaration("ex", serverURI);
-		envelope.addNamespaceDeclaration("isv", serverURI2);
+			envelope.addNamespaceDeclaration("ex", this.URLExportForms);
+			envelope.addNamespaceDeclaration("isv", this.URLisvzus);
 
-		SOAPBody soapBody = envelope.getBody();
+			SOAPBody soapBody = envelope.getBody();
 
-		SOAPElement getFormDocumentEl = soapBody.addChildElement("GetFormDocument","ex");
-		SOAPElement requestEl = getFormDocumentEl.addChildElement("request","ex");
-		SOAPElement userIdEl = requestEl.addChildElement("UserId","isv");
-		SOAPElement formIdEl = requestEl.addChildElement("FormId","isv");
-		SOAPElement formatVersionEl = requestEl.addChildElement("FormatVersion","isv");
+			SOAPElement getFormDocumentEl = soapBody.addChildElement("GetFormDocument","ex");
+			SOAPElement requestEl = getFormDocumentEl.addChildElement("request","ex");
+			SOAPElement userIdEl = requestEl.addChildElement("UserId","isv");
+			SOAPElement formIdEl = requestEl.addChildElement("FormId","isv");
+			SOAPElement formatVersionEl = requestEl.addChildElement("FormatVersion","isv");
 
+			userIdEl.addTextNode(this.userId);
+			formIdEl.addTextNode(id);
+			formatVersionEl.addTextNode("7.2");
 
-		userIdEl.addTextNode(this.userId);
-		formIdEl.addTextNode(id);
-		formatVersionEl.addTextNode("7.2");
+			MimeHeaders headers = soapMessage.getMimeHeaders();
+			headers.addHeader("SOAPAction", "http://www.ness.cz/schemas/isvzus/ExportForms/IExportForms/GetFormDocument");
 
-		MimeHeaders headers = soapMessage.getMimeHeaders();
-		headers.addHeader("SOAPAction", "http://www.ness.cz/schemas/isvzus/ExportForms/IExportForms/GetFormDocument");
+			soapMessage.saveChanges();
 
+			try {
+				SOAPBody responseBody = this.soapCall(soapMessage).getSOAPBody();
+				String doc = responseBody.getElementsByTagNameNS(this.URLisvzus,"FormDocument").item(0).getTextContent();
 
-		soapMessage.saveChanges();
+				doc = new String(DatatypeConverter.parseBase64Binary(doc),"UTF-8").substring(1);
 
-		SOAPBody responseBody = this.soapCall(soapMessage).getSOAPBody();
-		String doc = responseBody.getElementsByTagNameNS(serverURI2,"FormDocument").item(0).getTextContent();
+				DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
 
-		doc = new String(DatatypeConverter.parseBase64Binary(doc),"UTF-8").replaceAll("[^\\x20-\\x7e\\x0A]", "");
+				xml = docBuilder.parse(new InputSource(new StringReader(doc)));
+			} catch(Exception e) {
+				throw new PCReceiveException("Error while parsing public contract form response.", e);
+			}
 
-
-		DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
-
-		Document xml = docBuilder.parse(new InputSource(new StringReader(doc)));
+		} catch(SOAPException e) {
+			throw new PCReceiveException("Error while creating public contract get form request.", e);
+		}
 
 		return xml;
 
 	}
 
 	/**
-	 * Starting point for the SAAJ - SOAP Client Testing
+	 * Send SOAP Message to SOAP Server and return the SOAP Response
 	 */
-	public SOAPMessage soapCall(SOAPMessage request) {
-		try {
-			// Send SOAP Message to SOAP Server and Process the SOAP Response
-			return this.getConnection().call(request, serverURL);
+	private SOAPMessage soapCall(SOAPMessage request) throws SOAPException {
 
-		} catch (Exception e) {
-			System.err.println("Error occurred while sending SOAP Request to Server");
-			e.printStackTrace();
-		}
+		return this.getConnection().call(request, this.serverURL);
 
-		return null;
 	}
 
-	public void close() {
+	public void close() throws PCReceiveException {
 
 		try {
 			this.connection.close();
-		} catch (Exception e) {
-			System.err.println("Error occurred while closing SOAP connection");
-			e.printStackTrace();
+		} catch (SOAPException e) {
+			throw new PCReceiveException("Could not close connection.", e);
 		}
 	}
 
 	/**
 	 * Method used to print the SOAP Response
 	 */
-	private static void printSOAPResponse(SOAPMessage soapResponse) throws Exception {
+	private void printSOAPResponse(SOAPMessage soapResponse) throws Exception {
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		Source sourceContent = soapResponse.getSOAPPart().getContent();

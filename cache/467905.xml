@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><root xmlns="http://www.ness.cz/schemas/isvzus/v11.1">
+  <verze_formulare>0200</verze_formulare>
+  <subverze>7.2</subverze>
+  <KontaktniMista_I_1>Centrum sociálních služeb Děčín, příspěvková organizace</KontaktniMista_I_1>
+  <KRukam_I_1>Vladimíra Chmelařová</KRukam_I_1>
+  <Tel_I_1>+420 412591328</Tel_I_1>
+  <E_Mail_I_1>ekonom@cssdecin.cz</E_Mail_I_1>
+  <ObecnaAdresaVerejnehoZadavatele_I_1>http://www.cssdecin.cz</ObecnaAdresaVerejnehoZadavatele_I_1>
+  <ElektronickyPristupKInformacim_I_1>https://zakazky.mmdecin.cz/vz00000297</ElektronickyPristupKInformacim_I_1>
+  <ElektronickePodaniNabidekAZadostiOUcast_I_1>https://zakazky.mmdecin.cz/vz00000297</ElektronickePodaniNabidekAZadostiOUcast_I_1>
+  <AdresaProfiluKupujiciho_I_1>https://zakazky.mmdecin.cz/vz00000297</AdresaProfiluKupujiciho_I_1>
+  <NaVyseUvedenychKontaktnichMistech1_I_1>true</NaVyseUvedenychKontaktnichMistech1_I_1>
+  <NaVyseUvedenychKontaktnichMistech2_I_1>true</NaVyseUvedenychKontaktnichMistech2_I_1>
+  <NaVyseUvedenychKontaktnichMistech3_I_1>true</NaVyseUvedenychKontaktnichMistech3_I_1>
+  <Hpc_SocialniSluzby_I_3>true</Hpc_SocialniSluzby_I_3>
+  <Ic_I_1>71235868</Ic_I_1>
+  <UredniNazev_I_1>Centrum sociálních služeb Děčín, příspěvková organizace</UredniNazev_I_1>
+  <PostovniAdresa_I_1>28. října  1155/2</PostovniAdresa_I_1>
+  <Obec_I_1>Děčín  - Děčín 1</Obec_I_1>
+  <Psc_I_1>40502</Psc_I_1>
+  <NazevPridelenyZakazceVerejnymZadavatelem_II_1_1>Dodávky drogistického zboží</NazevPridelenyZakazceVerejnymZadavatelem_II_1_1>
+  <HlavniMistoProvadeniStavebnichPraci_II_1_2>Centrum sociálních služeb Děčín, příspěvková organizace, 28. října 1155/2, 405 02 Děčín</HlavniMistoProvadeniStavebnichPraci_II_1_2>
+  <KodNuts1_II_1_2>CZ</KodNuts1_II_1_2>
+  <RamcovaSmlouvaSNekolikaUcastniky_II_1_4>false</RamcovaSmlouvaSNekolikaUcastniky_II_1_4>
+  <DobaTrvaniRamcoveSmlouvyVLetech_II_1_4>2</DobaTrvaniRamcoveSmlouvyVLetech_II_1_4>
+  <OdhadovanaHodnotaBezDph_II_1_4>960 000</OdhadovanaHodnotaBezDph_II_1_4>
+  <StrucnyPopisZakazky_II_1_5>Předmětem veřejné zakázky jsou dodávky drogistického zboží a oschranných prostředků v sortimentu a kvalitě dle zadávací dokumentace, včetně dovozu do míst určených zadavatelem na území města Děčín.</StrucnyPopisZakazky_II_1_5>
+  <HlavniSlovnikHp_II_1_6>39830000-9</HlavniSlovnikHp_II_1_6>
+  <Opce_II_2_2>false</Opce_II_2_2>
+  <VMesicich_II_3>24</VMesicich_II_3>
+  <ZvlastniPodminky_III_1_4>false</ZvlastniPodminky_III_1_4>
+  <InformaceADokladyNezbytneKPosouzeni_III_2_1>Základní kvalifikační předpoklady uchazeče dle ust. §53 odstavec 1 ZVZ. Profesní kvalifikační předpoklady uchazeče dle ust. §54 písm. a) a ust. §54 písm. b) ZVZ..</InformaceADokladyNezbytneKPosouzeni_III_2_1>
+  <PoskytovaniDaneSluzbyJeVyhrazeno_III_3_1>false</PoskytovaniDaneSluzbyJeVyhrazeno_III_3_1>
+  <BudePouzitaElektronickaAukce_IV_2_2>false</BudePouzitaElektronickaAukce_IV_2_2>
+  <SpisoveCisloPrideleneVerejnymZadavatelem_IV_3_1>CSS120/2014</SpisoveCisloPrideleneVerejnymZadavatelem_IV_3_1>
+  <PredchoziZverejneniTykajiciSeStejneZakazky_IV_3_2>false</PredchoziZverejneniTykajiciSeStejneZakazky_IV_3_2>
+  <Datum_IV_3_3>31/01/2014</Datum_IV_3_3>
+  <Cas_IV_3_3>10:00</Cas_IV_3_3>
+  <Datum_IV_3_4>06/02/2014</Datum_IV_3_4>
+  <Cas_IV_3_4>13:00</Cas_IV_3_4>
+  <JazykNeboJazyky_IV_3_6>false</JazykNeboJazyky_IV_3_6>
+  <Cs_IV_3_6>true</Cs_IV_3_6>
+  <Do_IV_3_7>06/03/2014</Do_IV_3_7>
+  <Datum_IV_3_8>06/02/2014</Datum_IV_3_8>
+  <Cas_IV_3_8>13:00</Cas_IV_3_8>
+  <Misto_IV_3_8>V sídle zadavatele, 3. nadzemní podlaží budovy Magistrátu města Děčín, místnost 403</Misto_IV_3_8>
+  <KodNuts2_II_1_2>CZ0</KodNuts2_II_1_2>
+  <KodNuts3_II_1_2>CZ04</KodNuts3_II_1_2>
+  <KodNuts4_II_1_2>CZ042</KodNuts4_II_1_2>
+  <TotoOznameniSeTykaRamcoveSmlouvy_II_1_3>true</TotoOznameniSeTykaRamcoveSmlouvy_II_1_3>
+  <RozdeleniZakazkyNaCasti_II_1_8>true</RozdeleniZakazkyNaCasti_II_1_8>
+  <UvedtePredpokladanouHodnotuBezDph_II_2_1>960 000</UvedtePredpokladanouHodnotuBezDph_II_2_1>
+  <JdeOOpakovanouZakazku_VI_1>false</JdeOOpakovanouZakazku_VI_1>
+  <FinancovaniZProstredkuSpolecenstvi_VI_2>false</FinancovaniZProstredkuSpolecenstvi_VI_2>
+  <UredniNazev_VI_4_1_1>Úřad pro ochranu hospodářské soutěže</UredniNazev_VI_4_1_1>
+  <PostovniAdresa_VI_4_1_1>tř. KPT Jaroše 7</PostovniAdresa_VI_4_1_1>
+  <Obec_VI_4_1_1>Brno</Obec_VI_4_1_1>
+  <Psc_VI_4_1_1>604 55</Psc_VI_4_1_1>
+  <E_Mail_VI_4_1_1>posta@compet.cz</E_Mail_VI_4_1_1>
+  <Tel_VI_4_1_1>+420 542167811</Tel_VI_4_1_1>
+  <InternetovaAdresa_VI_4_1_1>http://www.compet.cz</InternetovaAdresa_VI_4_1_1>
+  <Fax_VI_4_1_1>+420 542167115</Fax_VI_4_1_1>
+  <PresneInformaceOLhutachProPodaniOdvolani_VI_4_2>Podmínkou pro podání návrhu k ÚHOZ je podání námitek k Zadavateli, které je nutné doručit do 15 dnů ode dne, kdy se dodavatel dozvěděl o úkonu Zadavatele, který napadá. Zadavatel je povinen námitky vyřídit do 10 dnů. Návrh je nutné doručit ÚHOS i Zadavateli do 10 dnů od doručení rozhodnutí Zadavatele o námitkách nebo do 25 dnů od odeslání námitek, pokud Zadavatel o námitkách nerozhodl.</PresneInformaceOLhutachProPodaniOdvolani_VI_4_2>
+  <DatumOdeslaniTohotoOznameni_VI_4_5>09/01/2014</DatumOdeslaniTohotoOznameni_VI_4_5>
+  <Dvz_DruhVerejnehoZadavatele_I_2>REGIONAL_AGENCY</Dvz_DruhVerejnehoZadavatele_I_2>
+  <ZakazkaJmenemJinych_I_4>false</ZakazkaJmenemJinych_I_4>
+  <JmenaAProfesniKvalifikaceZamestnancu_III_3_2>false</JmenaAProfesniKvalifikaceZamestnancu_III_3_2>
+  <NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_7>false</NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_7>
+  <Osoby_IV_3_8>false</Osoby_IV_3_8>
+  <DokumentaceZaUplatu_IV_3_3>false</DokumentaceZaUplatu_IV_3_3>
+  <BudouPrijimanyVarianty_II_1_9>false</BudouPrijimanyVarianty_II_1_9>
+  <TutoZakazkuLzeObnovit_II_2_3>false</TutoZakazkuLzeObnovit_II_2_3>
+  <NejnizsiNabidkovaCena_IV_2_1>true</NejnizsiNabidkovaCena_IV_2_1>
+  <DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2>SUPPLIES</DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2>
+  <Stat_I_1>CZ</Stat_I_1>
+  <Stat_VI_4_1_1>CZ</Stat_VI_4_1_1>
+  <MenaHodnota_II_2_1>CZK</MenaHodnota_II_2_1>
+  <MenaOdhadovanaHodnota_II_1_4>CZK</MenaOdhadovanaHodnota_II_1_4>
+  <NabidkyByMelyBytPredkladanyPro_II_1_8>ONE_OR_MORE_LOT</NabidkyByMelyBytPredkladanyPro_II_1_8>
+  <Dodavky_II_1_2>PURCHASE</Dodavky_II_1_2>
+  <DruhRizeni_IV_1_1>OPEN</DruhRizeni_IV_1_1>
+  <skup_priloha>
+    <hlavicka>
+      <VvzNumber>7402010078359</VvzNumber>
+      <VvzFormId>467905</VvzFormId>
+      <VvzPublished>10/01/2014</VvzPublished>
+      <CocoCode>478359</CocoCode>
+      <TypFormulare>RADNY</TypFormulare>
+    </hlavicka>
+  </skup_priloha>
+</root>

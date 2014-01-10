@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><root xmlns="http://www.ness.cz/schemas/isvzus/v11.1">
+  <verze_formulare>0200</verze_formulare>
+  <subverze>7.2</subverze>
+  <KontaktniMista_I_1>OTIDEA a.s., Václavské náměstí 11, 110 00  Praha 1</KontaktniMista_I_1>
+  <KRukam_I_1>Mgr. Kateřina Koláčková</KRukam_I_1>
+  <Tel_I_1>+420 603230115</Tel_I_1>
+  <E_Mail_I_1>zakazky@otidea.cz</E_Mail_I_1>
+  <ElektronickyPristupKInformacim_I_1>http://www.e-zakazky.cz/Profil-Zadavatele/9717b303-345e-44dc-b940-4405967a49b2</ElektronickyPristupKInformacim_I_1>
+  <AdresaProfiluKupujiciho_I_1>http://www.e-zakazky.cz/Profil-Zadavatele/9717b303-345e-44dc-b940-4405967a49b2</AdresaProfiluKupujiciho_I_1>
+  <NaVyseUvedenychKontaktnichMistech1_I_1>false</NaVyseUvedenychKontaktnichMistech1_I_1>
+  <NaVyseUvedenychKontaktnichMistech2_I_1>false</NaVyseUvedenychKontaktnichMistech2_I_1>
+  <NaVyseUvedenychKontaktnichMistech3_I_1>false</NaVyseUvedenychKontaktnichMistech3_I_1>
+  <Dvz_Upresneni_I_2>Univerzita</Dvz_Upresneni_I_2>
+  <Hpc_Skolstvi_I_3>true</Hpc_Skolstvi_I_3>
+  <Ic_I_1>00216208</Ic_I_1>
+  <UredniNazev_I_1>Univerzita Karlova v Praze, Lékařská fakulta v Plzni</UredniNazev_I_1>
+  <PostovniAdresa_I_1>Ovocný trh 3/5</PostovniAdresa_I_1>
+  <Obec_I_1>Praha 1</Obec_I_1>
+  <Psc_I_1>116 36</Psc_I_1>
+  <NazevPridelenyZakazceVerejnymZadavatelem_II_1_1>UniMeC - Přístrojové vybavení - 2. vlna</NazevPridelenyZakazceVerejnymZadavatelem_II_1_1>
+  <HlavniMistoProvadeniStavebnichPraci_II_1_2>Plzeň</HlavniMistoProvadeniStavebnichPraci_II_1_2>
+  <KodNuts1_II_1_2>CZ032</KodNuts1_II_1_2>
+  <StrucnyPopisZakazky_II_1_5>1.	Předmětem veřejné zakázky je dodávka přístrojového vybavení dle technické specifikace uvedené v příloze č. 1 část B - Podrobnosti předmětu veřejné zakázky (technické podmínky) této zadávací dokumentace. Veřejná zakázka je rozdělena na jednotlivé části ve smyslu ust. § 98 odst. 1 zákona, a to konkrétně:
+Číslo a název části
+1. část - Skladování
+2. část - Vybavení operačních sálů I
+3. část - Vybavení operačních sálů II
+4. část - Vybavení operačních sálů III
+5. část - Vybavení operačních sálů IV
+6. část - Genetické analyzátory
+7. část - Proteomika I
+8. část - Proteomika II
+9. část - Cytometrie
+10. část - Fluorescenční mikroskopie a časosběrné zobrazování
+11. část - Biochemické analyzátory
+12. část - Zařízení biofyzikálních laboratoří
+13. část - Ultrazvuk
+14. část - Buněčná biologie
+15. část - Molekulární biologie
+16. část - Fyziologie zvířat
+17. část - Měření tkáňové perfuze a metabolismu
+18. část - Fluorospot
+19. část - Mitochondriální analýza
+20. část - Lednice a mrazáky
+21. část - Laboratorní vybavení a příslušenství
+22. část - Technické vybavení
+23. část - Zařízení pro medicinální plyny
+24. část - Chirurgická komplexní věž
+25. část - Měření tkáňové perfuze a metabolismu
+26. část - ELISA
+27. část - Kryozařízení</StrucnyPopisZakazky_II_1_5>
+  <HlavniSlovnikHp_II_1_6>38510000-3</HlavniSlovnikHp_II_1_6>
+  <HlavniSlovnikDp1_II_1_6>42990000-2</HlavniSlovnikDp1_II_1_6>
+  <HlavniSlovnikDp2_II_1_6>38434000-6</HlavniSlovnikDp2_II_1_6>
+  <HlavniSlovnikDp3_II_1_6>33160000-9</HlavniSlovnikDp3_II_1_6>
+  <HlavniSlovnikDp4_II_1_6>33162000-3</HlavniSlovnikDp4_II_1_6>
+  <Opce_II_2_2>false</Opce_II_2_2>
+  <HlavniPodminkyFinancovaniAPlatebniPodminky_III_1_2>Platební podmínky jsou uvedeny v čl. IV. návrhu kupní smlouvy, která je přílohou č. 4 zadávací dokumentace.</HlavniPodminkyFinancovaniAPlatebniPodminky_III_1_2>
+  <InformaceADokladyNezbytneKPosouzeni_III_2_1>Základní kvalifikační předpoklady dle § 53 ZVZ Uchazeč prokazuje splnění základních kvalifikačních předpokladů předložením:
+a)	výpisu z evidence Rejstříku trestů pro body 3.1 písm. a), b) zadávací dokumentace. Výpis z evidence Rejstříků trestů uchazeč doloží, jde-li o právnickou osobu, jak za právnickou osobu, tak za statutární orgán nebo všechny členy statutárního orgánu. Podává-li nabídku zahraniční právnická osoba prostřednictvím organizační složky, doloží uchazeč výpisy z evidence Rejstříku trestů za vedoucího organizační složky, jakož i za statutární orgán nebo všechny členy statutárního orgánu zahraniční osoby. Výpis z Rejstříku trestů nesmí být starší 90-ti kalendářních dnů ke dni podání nabídky.
+b)	potvrzení příslušného finančního úřadu a ve vztahu ke spotřební dani čestné prohlášení pro bod 3.1 písm. f) zadávací dokumentace, které nesmějí být starší 90 dnů ke dni podání nabídky.
+c)	potvrzení příslušného orgánu České správy sociálního zabezpečení pro bod 3.1 písm. h) zadávací dokumentace, které nesmí být starší 90 dnů ke dni podání nabídky.
+d)	čestným prohlášením pro body 3.1 písm. c), d), e), g), i), j), k), této zadávací dokumentace, čestné prohlášení - příloha č. 3 této zadávací dokumentace.
+Profesní kvalifikační předpoklady prokáže dodavatel který:
+a)	předloží výpis z obchodního rejstříku, pokud je v něm zapsán, či výpis z jiné obdobné evidence, pokud je v ní zapsán. Výpis z obchodního rejstříku nesmí být starší 90 kalendářních dnů ke dni podání nabídky.
+b)	doklad o oprávnění k podnikání podle zvláštních právních předpisů v rozsahu odpovídajícím předmětu veřejné zakázky, zejména doklad prokazující příslušné živnostenské oprávnění. Doklady o oprávnění k podnikání musí prokazatelně pokrývat veškeré činnosti, které jsou předmětem plnění veřejné zakázky. 
+Bližší specifikace je uvedena v rámci zadávacích podmínek.</InformaceADokladyNezbytneKPosouzeni_III_2_1>
+  <InformaceADokladyNezbytneKPosouzeni_III_2_2>čestné prohlášení o své ekonomické a finanční způsobilosti splnit veřejnou zakázku</InformaceADokladyNezbytneKPosouzeni_III_2_2>
+  <MinimalniUrovenPripadnePozadovanychNorem_III_2_2>čestné prohlášení o své ekonomické a finanční způsobilosti splnit veřejnou zakázku</MinimalniUrovenPripadnePozadovanychNorem_III_2_2>
+  <InformaceADokladyNezbytneKPosouzeni_III_2_3>V souladu s § 56 odst. 1, písm. a) zákona zadavatel požaduje, že uchazeč ve své nabídce uvede seznam významných dodávek realizovaných dodavatelem v posledních 3 letech s uvedením jejich rozsahu a doby plnění.Dodavatel prokáže splnění tohoto kvalifikačního předpokladu doložením seznamu ve formě čestného prohlášení včetně příloh, z nichž bude patrné, že dodavatel v posledních třech letech realizoval významnou dodávku na přístroje pro jednoho odběratele na přístrojové vybavení odpovídající dané části, do které uchazeč podává svou nabídku, a to pro část.V souladu s § 56 odst. 1, písm. e) zákona zadavatel požaduje, aby uchazeč předložil popisy a u částí 1 - 19 a 24 - 27 i fotografie zboží určeného k dodání. Dodavatel prokáže splnění tohoto kvalifikačního předpokladu tím, že doloží podrobný popis a u částí 1 - 19 a 24 - 27 nejméně tři barevné fotografie dodávaného zařízení  různých pohledů na toto zařízení. V souladu s § 56 odst. 1, písm. f) zákona zadavatel požaduje, aby uchazeč předložil doklad prokazující shodu požadovaného výrobku vydaného příslušným orgánem. Dodavatel prokáže splnění tohoto kvalifikačního předpokladu tím, že doloží prostou kopii dokladu prokazující shodu požadovaného výrobku vydaného příslušným orgánem. Bližší specifikace v rámci ZD.</InformaceADokladyNezbytneKPosouzeni_III_2_3>
+  <MinimalniUrovenPripadnePozadovanychNorem_III_2_3>Bližší specifikace v rámci ZD.</MinimalniUrovenPripadnePozadovanychNorem_III_2_3>
+  <PredchoziZverejneniTykajiciSeStejneZakazky_IV_3_2>true</PredchoziZverejneniTykajiciSeStejneZakazky_IV_3_2>
+  <OznameniPredbeznychInformaci_IV_3_2>true</OznameniPredbeznychInformaci_IV_3_2>
+  <CisloOznameniVUrvest_IV_3_2>2013/S 188-323802</CisloOznameniVUrvest_IV_3_2>
+  <ZeDne_IV_3_2>27/09/2013</ZeDne_IV_3_2>
+  <Datum_IV_3_3>03/03/2014</Datum_IV_3_3>
+  <Cas_IV_3_3>10:00</Cas_IV_3_3>
+  <Datum_IV_3_4>03/03/2014</Datum_IV_3_4>
+  <Cas_IV_3_4>10:00</Cas_IV_3_4>
+  <JazykNeboJazyky_IV_3_6>false</JazykNeboJazyky_IV_3_6>
+  <Cs_IV_3_6>true</Cs_IV_3_6>
+  <NeboDobaTrvaniVMesicich_IV_3_7>6</NeboDobaTrvaniVMesicich_IV_3_7>
+  <Datum_IV_3_8>03/03/2014</Datum_IV_3_8>
+  <Cas_IV_3_8>10:20</Cas_IV_3_8>
+  <Misto_IV_3_8>specifikováno v rámci ZD.</Misto_IV_3_8>
+  <RozdeleniZakazkyNaCasti_II_1_8>true</RozdeleniZakazkyNaCasti_II_1_8>
+  <UvedtePredpokladanouHodnotuBezDph_II_2_1>99 470 000</UvedtePredpokladanouHodnotuBezDph_II_2_1>
+  <OsobyPriOteviraniNabidek_IV_3_8>specifikováno v rámci ZD.</OsobyPriOteviraniNabidek_IV_3_8>
+  <FinancovaniZProstredkuSpolecenstvi_VI_2>true</FinancovaniZProstredkuSpolecenstvi_VI_2>
+  <OdkazNaTytoProjekty_VI_2>Operačního programu Výzkum a vývoj pro inovace pro období 2007 - 2013</OdkazNaTytoProjekty_VI_2>
+  <UredniNazev_VI_4_1_1>Úřad pro ochranu hospodářské soutěže</UredniNazev_VI_4_1_1>
+  <PostovniAdresa_VI_4_1_1>tř. kpt. Jaroše</PostovniAdresa_VI_4_1_1>
+  <Obec_VI_4_1_1>Brno</Obec_VI_4_1_1>
+  <Psc_VI_4_1_1>601 56</Psc_VI_4_1_1>
+  <E_Mail_VI_4_1_1>posta@compet.cz</E_Mail_VI_4_1_1>
+  <DatumOdeslaniTohotoOznameni_VI_4_5>08/01/2014</DatumOdeslaniTohotoOznameni_VI_4_5>
+  <Dvz_DruhVerejnehoZadavatele_I_2>OTHER</Dvz_DruhVerejnehoZadavatele_I_2>
+  <ZakazkaJmenemJinych_I_4>false</ZakazkaJmenemJinych_I_4>
+  <NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_7>true</NaZakazkuSeVztahujeDohodaOVerejnychZakazkach_II_1_7>
+  <Osoby_IV_3_8>true</Osoby_IV_3_8>
+  <DokumentaceZaUplatu_IV_3_3>false</DokumentaceZaUplatu_IV_3_3>
+  <BudouPrijimanyVarianty_II_1_9>false</BudouPrijimanyVarianty_II_1_9>
+  <TutoZakazkuLzeObnovit_II_2_3>false</TutoZakazkuLzeObnovit_II_2_3>
+  <NejnizsiNabidkovaCena_IV_2_1>true</NejnizsiNabidkovaCena_IV_2_1>
+  <DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2>SUPPLIES</DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2>
+  <Stat_I_1>CZ</Stat_I_1>
+  <Stat_VI_4_1_1>CZ</Stat_VI_4_1_1>
+  <MenaHodnota_II_2_1>CZK</MenaHodnota_II_2_1>
+  <NabidkyByMelyBytPredkladanyPro_II_1_8>ONE_OR_MORE_LOT</NabidkyByMelyBytPredkladanyPro_II_1_8>
+  <Dodavky_II_1_2>PURCHASE</Dodavky_II_1_2>
+  <DruhRizeni_IV_1_1>OPEN</DruhRizeni_IV_1_1>
+  <skup_priloha>
+    <hlavicka>
+      <VvzNumber>7402011067699</VvzNumber>
+      <VvzFormId>467903</VvzFormId>
+      <VvzPublished>10/01/2014</VvzPublished>
+      <CocoCode>367699</CocoCode>
+      <TedSent>10/01/2014</TedSent>
+      <TypFormulare>RADNY</TypFormulare>
+    </hlavicka>
+    <priloha_A>
+      <UredniNazev_I>OTIDEA a.s.</UredniNazev_I>
+      <IdentifikacniCislo_I>27142442</IdentifikacniCislo_I>
+      <Adresa_I>Václavské náměstí 11</Adresa_I>
+      <Obec_I>Praha 1</Obec_I>
+      <Psc_I>110 00</Psc_I>
+      <Stat_I>CZ</Stat_I>
+      <Telefon_I>+420 603230115</Telefon_I>
+      <Krukam_I>Mgr. Kateřina Koláčková</Krukam_I>
+      <Email_I>zakazky@otidea.cz</Email_I>
+      <UredniNazev_II>OTIDEA a.s.</UredniNazev_II>
+      <IdentifikacniCislo_II>27142442</IdentifikacniCislo_II>
+      <Adresa_II>Václavské náměstí 11</Adresa_II>
+      <Obec_II>Praha 1</Obec_II>
+      <Psc_II>110 00</Psc_II>
+      <Stat_II>CZ</Stat_II>
+      <Krukam_II>Mgr. Kateřina Koláčková</Krukam_II>
+      <Email_II>zakazky@otidea.cz</Email_II>
+      <UredniNazev_III>Univerzita Karlova v Praze</UredniNazev_III>
+      <IdentifikacniCislo_III>00216208</IdentifikacniCislo_III>
+      <Adresa_III>Ovocný trh 3/5</Adresa_III>
+      <Obec_III>Praha 1</Obec_III>
+      <Psc_III>116 36</Psc_III>
+      <Stat_III>CZ</Stat_III>
+    </priloha_A>
+    <priloha_B>
+      <CastZakazkyC_0_0>1</CastZakazkyC_0_0>
+      <Nazev_0_0>Skladování</Nazev_0_0>
+      <StrucnyPopis_1>Skříně na skladování chemikálií a hořlavin</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>42990000-2</HlavniSlovnikHp_2>
+      <CelkoveMnozstviNeboRozsah_3>10 kusů</CelkoveMnozstviNeboRozsah_3>
+      <OdhadovanaHodnotaBezDph_3>460 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>2</CastZakazkyC_0_0>
+      <Nazev_0_0>Vybavení operačních sálů I</Nazev_0_0>
+      <StrucnyPopis_1>Čelní hlavová lampa,Bipolární pinzeta,Břišní a hrudní rozvěrač,Chirurgické instrumentárium pro jaterní operace,Laparoskopické instrumentárium,Laparoskopická věž</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>33162000-3</HlavniSlovnikHp_2>
+      <OdhadovanaHodnotaBezDph_3>4 660 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>3</CastZakazkyC_0_0>
+      <Nazev_0_0>Vybavení operačních sálů II</Nazev_0_0>
+      <StrucnyPopis_1>Monitor vitálních funkcí,Ventilátor pro umělou plicní ventilaci</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>33162000-3</HlavniSlovnikHp_2>
+      <OdhadovanaHodnotaBezDph_3>3 440 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>4</CastZakazkyC_0_0>
+      <Nazev_0_0>Vybavení operačních sálů III</Nazev_0_0>
+      <StrucnyPopis_1>Operační stůl</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>33162000-3</HlavniSlovnikHp_2>
+      <HlavniSlovnikDp1_2>33160000-9</HlavniSlovnikDp1_2>
+      <CelkoveMnozstviNeboRozsah_3>3</CelkoveMnozstviNeboRozsah_3>
+      <OdhadovanaHodnotaBezDph_3>3 030 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>5</CastZakazkyC_0_0>
+      <Nazev_0_0>Vybavení operačních sálů IV</Nazev_0_0>
+      <StrucnyPopis_1>Systém stropních operačních lamp</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>33162000-3</HlavniSlovnikHp_2>
+      <CelkoveMnozstviNeboRozsah_3>3 ks</CelkoveMnozstviNeboRozsah_3>
+      <OdhadovanaHodnotaBezDph_3>3 030 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>6</CastZakazkyC_0_0>
+      <Nazev_0_0>Genetické analyzátory</Nazev_0_0>
+      <StrucnyPopis_1>Automatický genetický analyzátor/sekvenátor, Přístroj pro komparativní genomovou hybridizaci / analýzu exprese na čipu</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>38434000-6</HlavniSlovnikHp_2>
+      <OdhadovanaHodnotaBezDph_3>5 050 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>7</CastZakazkyC_0_0>
+      <Nazev_0_0>Proteomika I</Nazev_0_0>
+      <StrucnyPopis_1>Systém vysokoúčinné kapalinové chromatografie s nanoprůtokem, Sběrač mikrofrakcí, Hmotností spektrometr</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>33162000-3</HlavniSlovnikHp_2>
+      <OdhadovanaHodnotaBezDph_3>15 180 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>8</CastZakazkyC_0_0>
+      <Nazev_0_0>Proteomika II</Nazev_0_0>
+      <StrucnyPopis_1>Servis hmotnostního spektrometru</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>33162000-3</HlavniSlovnikHp_2>
+      <CelkoveMnozstviNeboRozsah_3>1 ks</CelkoveMnozstviNeboRozsah_3>
+      <OdhadovanaHodnotaBezDph_3>4 040 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>9</CastZakazkyC_0_0>
+      <Nazev_0_0>Cytometrie</Nazev_0_0>
+      <StrucnyPopis_1>Buněčný sorter</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>33162000-3</HlavniSlovnikHp_2>
+      <CelkoveMnozstviNeboRozsah_3>1 ks</CelkoveMnozstviNeboRozsah_3>
+      <OdhadovanaHodnotaBezDph_3>12 140 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>10</CastZakazkyC_0_0>
+      <Nazev_0_0>Fluorescenční mirkoskopie a časosběrné zobrazování</Nazev_0_0>
+      <StrucnyPopis_1>Zařízení pro multi-fluorescenční 3D časoběrné zobrazování</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>33162000-3</HlavniSlovnikHp_2>
+      <HlavniSlovnikDp1_2>38510000-3</HlavniSlovnikDp1_2>
+      <CelkoveMnozstviNeboRozsah_3>1 ks</CelkoveMnozstviNeboRozsah_3>
+      <OdhadovanaHodnotaBezDph_3>2 530 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>11</CastZakazkyC_0_0>
+      <Nazev_0_0>Biochemické analyzátory</Nazev_0_0>
+      <StrucnyPopis_1>Přístroj pro akutní měření srážlivosti krve, Biochemický analyzátor, BCM monitor, Koagulometr automatický, Analyzátor krevního obrazu č. diferenciálního rozpočtu leukosytů, spektrofluorometr s příslušenstvím, dilutor</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>38434000-6</HlavniSlovnikHp_2>
+      <OdhadovanaHodnotaBezDph_3>4 440 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>12</CastZakazkyC_0_0>
+      <Nazev_0_0>Zařízení biofyzikálních laboratoří</Nazev_0_0>
+      <StrucnyPopis_1>Pec vysokoteplotní, desintegrátor, ultrazvuková lázeň, bodotávek, oximetr</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>38434540-3</HlavniSlovnikHp_2>
+      <OdhadovanaHodnotaBezDph_3>710 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>13</CastZakazkyC_0_0>
+      <Nazev_0_0>Ultrazvuk</Nazev_0_0>
+      <StrucnyPopis_1>Ultrasonografický přístroj</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>38430000-8</HlavniSlovnikHp_2>
+      <CelkoveMnozstviNeboRozsah_3>1 ks</CelkoveMnozstviNeboRozsah_3>
+      <OdhadovanaHodnotaBezDph_3>2 530 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>14</CastZakazkyC_0_0>
+      <Nazev_0_0>Buněčná biologie</Nazev_0_0>
+      <StrucnyPopis_1>box hlubokomrazící, digestoř, laminární box, inkubátor s kontrolou, stolní homogenizátor, inkubátor skříňový, destičkový fotometr pro měření ELISA, automatická promývačka destiček pro měření ELISA, průtokový cytometr, bihazard box, analyzátor částic/buněk</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>38430000-8</HlavniSlovnikHp_2>
+      <HlavniSlovnikDp1_2>38434000-6</HlavniSlovnikDp1_2>
+      <OdhadovanaHodnotaBezDph_3>10 100 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>15</CastZakazkyC_0_0>
+      <Nazev_0_0>Molekulární biologie</Nazev_0_0>
+      <StrucnyPopis_1>komplexní vybavení pro PCR, Kinetický ELISA reader, lyofilizátor, celogenomový automatický genetický analyzátor/sekvenátor, automatická pipetovací stanice, real-time PCR cykler, horkovzdušný sterilizátor, autokláv, centrifugy stolní chlazené, laboratorní centrifugy a mikrocentrifugy, spektrofotometr, PCR cykler, dokumentační systém pro gely, sušička gelů</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>38434000-6</HlavniSlovnikHp_2>
+      <HlavniSlovnikDp1_2>38430000-8</HlavniSlovnikDp1_2>
+      <OdhadovanaHodnotaBezDph_3>11 120 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>16</CastZakazkyC_0_0>
+      <Nazev_0_0>Fyziologie zvířat</Nazev_0_0>
+      <StrucnyPopis_1>Zařízení na analýzu chuze s vnucenou rychlostí u lab. hlodavců, kryostat, neinvazivní měřič krevního tlaku, elktrokauter, homogenizátor ruční, laboratorní desinfekční myčka, myčka/dezinfektor boxů/klecí, box pro transport velkých zvířat, stimulátor/izolátor, experimentální pracoviště patch-clamp, zařízení pro nucenou pohybovou aktivitu laboratorních myší, operační stereomikroskop, stereotaktický přístroj s digitální navigací, injektor objemů, zdroj studeného světla se světlovodem, kamera k operačnímu mikroskopu + software, stolní ph-metr, analytické váhy, laboratorní váhy, zařízení pro přípravu ultračisté vody, fluorescenční mikroskop</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>38430000-8</HlavniSlovnikHp_2>
+      <HlavniSlovnikDp1_2>42990000-2</HlavniSlovnikDp1_2>
+      <HlavniSlovnikDp2_2>38510000-3</HlavniSlovnikDp2_2>
+      <HlavniSlovnikDp3_2>38434000-6</HlavniSlovnikDp3_2>
+      <HlavniSlovnikDp4_2>42990000-2</HlavniSlovnikDp4_2>
+      <OdhadovanaHodnotaBezDph_3>8 970 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>17</CastZakazkyC_0_0>
+      <Nazev_0_0>Měření tkáňové perfuze a metabolismu</Nazev_0_0>
+      <StrucnyPopis_1>Přístroj pro měření mikrovaskulární perfuze</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>38420000-5</HlavniSlovnikHp_2>
+      <CelkoveMnozstviNeboRozsah_3>1 ks</CelkoveMnozstviNeboRozsah_3>
+      <OdhadovanaHodnotaBezDph_3>310 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>18</CastZakazkyC_0_0>
+      <Nazev_0_0>Fluorospot</Nazev_0_0>
+      <StrucnyPopis_1>Čtecí systém fluorospot</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>38430000-8</HlavniSlovnikHp_2>
+      <CelkoveMnozstviNeboRozsah_3>1 ks</CelkoveMnozstviNeboRozsah_3>
+      <OdhadovanaHodnotaBezDph_3>1 450 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>19</CastZakazkyC_0_0>
+      <Nazev_0_0>Mitochondriální analýza</Nazev_0_0>
+      <StrucnyPopis_1>Multifunkční reader pro fluorescenční analýzu a příslušenství</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>38434000-6</HlavniSlovnikHp_2>
+      <CelkoveMnozstviNeboRozsah_3>1 ks</CelkoveMnozstviNeboRozsah_3>
+      <OdhadovanaHodnotaBezDph_3>1 220 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>20</CastZakazkyC_0_0>
+      <Nazev_0_0>Lednice a mrazáky</Nazev_0_0>
+      <StrucnyPopis_1>Lednice a mrazáky</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>42513000-5</HlavniSlovnikHp_2>
+      <OdhadovanaHodnotaBezDph_3>1 220 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>21</CastZakazkyC_0_0>
+      <Nazev_0_0>Laboratorní vybavení a příslušenství</Nazev_0_0>
+      <StrucnyPopis_1>Laboratorní vybavení a příslušenství</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>33162000-3</HlavniSlovnikHp_2>
+      <OdhadovanaHodnotaBezDph_3>4 200 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>22</CastZakazkyC_0_0>
+      <Nazev_0_0>Technické vybavení</Nazev_0_0>
+      <StrucnyPopis_1>Technické vybavení</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>42990000-2</HlavniSlovnikHp_2>
+      <OdhadovanaHodnotaBezDph_3>250 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>23</CastZakazkyC_0_0>
+      <Nazev_0_0>Zařízení pro medicinální plyny</Nazev_0_0>
+      <StrucnyPopis_1>Zařízení pro medicinální plyny</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>38420000-5</HlavniSlovnikHp_2>
+      <OdhadovanaHodnotaBezDph_3>430 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>24</CastZakazkyC_0_0>
+      <Nazev_0_0>Chirurgická komplexní věž</Nazev_0_0>
+      <StrucnyPopis_1>Komplexní věž</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>33160000-9</HlavniSlovnikHp_2>
+      <CelkoveMnozstviNeboRozsah_3>1 ks</CelkoveMnozstviNeboRozsah_3>
+      <OdhadovanaHodnotaBezDph_3>1 100 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>25</CastZakazkyC_0_0>
+      <Nazev_0_0>Měření tkáňové perfuze a metabolismu</Nazev_0_0>
+      <StrucnyPopis_1>Přístroj k měření průtoku krve v cévách vnitřních orgánů, Mikrodialýza pro monitorovací tkáňového metabolismu, intravitální videomirkoskop</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>33160000-9</HlavniSlovnikHp_2>
+      <HlavniSlovnikDp1_2>38510000-3</HlavniSlovnikDp1_2>
+      <HlavniSlovnikDp2_2>38420000-5</HlavniSlovnikDp2_2>
+      <HlavniSlovnikDp3_2>38430000-8</HlavniSlovnikDp3_2>
+      <OdhadovanaHodnotaBezDph_3>4 400 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>26</CastZakazkyC_0_0>
+      <Nazev_0_0>ELISA</Nazev_0_0>
+      <StrucnyPopis_1>Automat na metody ELISA</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>38434000-6</HlavniSlovnikHp_2>
+      <CelkoveMnozstviNeboRozsah_3>1 ks</CelkoveMnozstviNeboRozsah_3>
+      <OdhadovanaHodnotaBezDph_3>1 320 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+    <priloha_B>
+      <CastZakazkyC_0_0>27</CastZakazkyC_0_0>
+      <Nazev_0_0>Kryozařízení</Nazev_0_0>
+      <StrucnyPopis_1>Programovatelný zamražovač s mobilním zásobníkem kapalného dusíku, kryokontejner pro skladování vzorků v tekutém dusíku</StrucnyPopis_1>
+      <HlavniSlovnikHp_2>42513000-5</HlavniSlovnikHp_2>
+      <OdhadovanaHodnotaBezDph_3>1 220 000</OdhadovanaHodnotaBezDph_3>
+      <MenaOdhadovanaHodnota_3>CZK</MenaOdhadovanaHodnota_3>
+    </priloha_B>
+  </skup_priloha>
+</root>
