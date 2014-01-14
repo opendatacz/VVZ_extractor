@@ -9,27 +9,18 @@
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:pc="http://purl.org/procurement/public-contracts#"
-    xmlns:pccz="http://purl.org/procurement/public-contracts-czech#"
     xmlns:pcdt="http://purl.org/procurement/public-contracts-datatypes#"
     xmlns:dc="http://purl.org/dc/terms/"
     xmlns:adms="http://www.w3.org/ns/adms#"
-    xmlns:c4n="http://vocab.deri.ie/c4n#"
     xmlns:foaf="http://xmlns.com/foaf/0.1/"
-    xmlns:irw="http://www.ontologydesignpatterns.org/ont/web/irw.owl#"
-    xmlns:loted="http://loted.eu/ontology#"
-    xmlns:owl="http://www.w3.org/2002/07/owl#"
-    xmlns:payment="http://reference.data.gov.uk/def/payment#"
-    xmlns:qb="http://purl.org/linked-data/cube#"
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
     xmlns:s="http://schema.org/"
     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
-    xmlns:vann="http://purl.org/vocab/vann/"
     xmlns:activities="http://purl.org/procurement/public-contracts-activities#"
     xmlns:authkinds="http://purl.org/procurement/public-contracts-authority-kinds#"
     xmlns:kinds="http://purl.org/procurement/public-contracts-kinds#"
     xmlns:proctypes="http://purl.org/procurement/public-contracts-procedure-types#"
-    xmlns:criteria="http://purl.org/procurement/public-contracts-criteria#"
-    xmlns:pceu="http://purl.org/procurement/public-contracts-eu#">
+    xmlns:criteria="http://purl.org/procurement/public-contracts-criteria#">
 
 	<xsl:variable name="nm_lod" select="'http://linked.opendata.cz/resource/'"/>
 	<xsl:variable name="nm_vvz" select="concat($nm_lod, 'vestnikverejnychzakazek.cz/')"/>
@@ -311,26 +302,111 @@
 	            </xsl:if>
 	            
 	            <!-- TENDERS -->
-                <xsl:if test="count(skup_priloha/oddil_5) &gt; 1">
-                    <pc:numberOfTenders><xsl:value-of select="skup_priloha/oddil_5[1]/PocetNabidek_V_2" /></pc:numberOfTenders>
-                <pc:lot>
-                    <pc:Contract>
-                        <xsl:apply-templates select="skup_priloha/oddil_5" />
-                    </pc:Contract>
-                </pc:lot>
-                </xsl:if>
+	            <xsl:if test="count(skup_priloha/oddil_5) &gt; 1">
+	                <xsl:for-each select="skup_priloha/oddil_5">
+	                    <pc:lot>
+	                        <pc:Contract>
+	                            <xsl:if test="ZakazkaNazev_V">
+	                            <gr:legalName><xsl:value-of select="ZakazkaNazev_V" /></gr:legalName>
+                                </xsl:if>
+	                            <xsl:if test="Strucpopis_V_5">
+	                            <dc:description><xsl:value-of select="Strucpopis_V_5" /></dc:description>
+	                            </xsl:if>
+	                            <xsl:if test="PocetNabidek_V_2">
+	                            <pc:numberOfTenders rdf:datatype="xsd:integer"><xsl:value-of select="PocetNabidek_V_2" /></pc:numberOfTenders>
+	                            </xsl:if>
+	                            <xsl:call-template name="contractAward">
+	                                <xsl:with-param name="award" select="." />
+	                            </xsl:call-template>
+	                        </pc:Contract>
+	                    </pc:lot>
+	                </xsl:for-each>
+	            </xsl:if>
 	            <xsl:if test="count(skup_priloha/oddil_5) = 1">
-	                <xsl:apply-templates select="skup_priloha/oddil_5" />
-                </xsl:if>
-	            
+	                <xsl:call-template name="contractAward">
+	                    <xsl:with-param name="award" select="." />
+	                </xsl:call-template>
+	            </xsl:if>
 	            
 	        </pc:Contract>
-	        
 	        
 
 	    </rdf:RDF>
 	       
 	</xsl:template>
+    
+    <!-- TENDERS -->
+    <xsl:template name="contractAward">
+        <xsl:param name="award" />
+        
+        <xsl:if test="$award/Datum_V_1">
+            <pc:awardDate><xsl:value-of select="f:processDate($award/Datum_V_1)" /></pc:awardDate>
+        </xsl:if>
+        <pc:awardedTender>
+            <pc:Tender>
+                <pc:supplier>
+                    <gr:BusinessEntity>
+                        <xsl:if test="$award/NazevDodavatele_V_3">
+                        <gr:legalName><xsl:value-of select="$award/NazevDodavatele_V_3" /></gr:legalName>
+                        </xsl:if>
+                        <xsl:if test="$award/AdresaURL_V_3">
+                        <foaf:page><xsl:value-of select="$award/AdresaURL_V_3" /></foaf:page>
+                        </xsl:if>
+                        <s:contact>
+                            <s:ContactPoint>
+                                <xsl:if test="$award/NazevDodavatele_V_3">
+                                <s:name><xsl:value-of select="$award/NazevDodavatele_V_3" /></s:name>
+                                </xsl:if>
+                                <xsl:if test="$award/Email_V_3">
+                                <s:email><xsl:value-of select="$award/Email_V_3" /></s:email>
+                                </xsl:if>
+                                <xsl:if test="$award/Telefon_V_3">
+                                <s:telephone><xsl:value-of select="$award/Telefon_V_3" /></s:telephone>
+                                </xsl:if>
+                                <xsl:if test="$award/Fax_V_3">
+                                <s:faxNumber><xsl:value-of select="$award/Fax_V_3" /></s:faxNumber>
+                                </xsl:if>
+                            </s:ContactPoint>
+                        </s:contact>
+                        <s:address>
+                            <s:PostalAddress>
+                                <xsl:if test="$award/Adresa_V_3">
+                                <s:streetAddress><xsl:value-of select="$award/Adresa_V_3" /></s:streetAddress>
+                                </xsl:if>
+                                <xsl:if test="$award/Psc_V_3">
+                                <s:postalCode><xsl:value-of select="$award/Psc_V_3" /></s:postalCode>
+                                </xsl:if>
+                                <xsl:if test="$award/Obec_V_3">
+                                <s:addressLocality><xsl:value-of select="$award/Obec_V_3" /></s:addressLocality>
+                                </xsl:if>
+                                <xsl:if test="$award/Stat_V_3">
+                                <s:addressCountry><xsl:value-of select="$award/Stat_V_3" /></s:addressCountry>
+                                </xsl:if>
+                            </s:PostalAddress>
+                        </s:address>
+                    </gr:BusinessEntity>
+                </pc:supplier>
+                <xsl:if test="$award/Hodnota2_V_4">
+                    <pc:offeredPrice>
+                        <gr:UnitPriceSpecification>
+                            <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice($award/Hodnota2_V_4)" /></gr:hasCurrencyValue>
+                            <gr:hasCurrency><xsl:value-of select="$award/Mena2_V_4" /></gr:hasCurrency>
+                            <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean"><xsl:value-of select="$award/Dph2_V_4" /></gr:valueAddedTaxIncluded>
+                        </gr:UnitPriceSpecification>
+                    </pc:offeredPrice>
+                </xsl:if>
+                <xsl:if test="$award/Hodnota1_V_4">
+                <pc:estimatedPrice>
+                    <gr:UnitPriceSpecification>
+                        <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice($award/Hodnota1_V_4)" /></gr:hasCurrencyValue>
+                        <gr:hasCurrency><xsl:value-of select="$award/Mena1_V_4" /></gr:hasCurrency>
+                        <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean"><xsl:value-of select="$award/Dph1_V_4" /></gr:valueAddedTaxIncluded>
+                    </gr:UnitPriceSpecification>
+                </pc:estimatedPrice>
+                </xsl:if>
+            </pc:Tender>
+        </pc:awardedTender>
+    </xsl:template>
    
     <xsl:template match="KontaktniMista_I_1 | KRukam_I_1 | E_Mail_I_1 | Tel_I_1 | Fax_I_1">
        <xsl:param name="id_PCContactPoint" />
@@ -498,41 +574,7 @@
     
     <!-- doplnit kriteria 4-10 -->
     
-    <!-- TENDERS -->
-    <xsl:template match="oddil_5">
-        <pc:awardDate></pc:awardDate>
-        <pc:Tender rdf:about="">
-            <pc:supplier>
-                <gr:BusinessEntity rdf:about="">
-                    <gr:legalName><xsl:value-of select="NazevDodavatele_V_3" /></gr:legalName>
-                    <foaf:page><xsl:value-of select="AdresaURL_V_3" /></foaf:page>
-                    <s:contact>
-                        <s:ContactPoint rdf:about="">
-                            <s:name><xsl:value-of select="NazevDodavatele_V_3" /></s:name>
-                            <s:email><xsl:value-of select="Email_V_3" /></s:email>
-                            <s:telephone><xsl:value-of select="Telefon_V_3" /></s:telephone>
-                            <s:faxNumber><xsl:value-of select="Fax_V_3" /></s:faxNumber>
-                        </s:ContactPoint>
-                    </s:contact>
-                    <s:address>
-                        <s:PostalAddress rdf:about="">
-                            <s:streetAddress><xsl:value-of select="Adresa_V_3" /></s:streetAddress>
-                            <s:postalCode><xsl:value-of select="Psc_V_3" /></s:postalCode>
-                            <s:addressLocality><xsl:value-of select="Obec_V_3" /></s:addressLocality>
-                            <s:addressCountry><xsl:value-of select="Stat_V_3" /></s:addressCountry>
-                        </s:PostalAddress>
-                    </s:address>
-                </gr:BusinessEntity>
-            </pc:supplier>
-            <pc:offeredPrice>
-                <gr:UnitPriceSpecification rdf:about="">
-                    <gr:hasCurrencyValue><xsl:value-of select="Hodnota1_V_4" /></gr:hasCurrencyValue>
-                    <gr:hasCurrency><xsl:value-of select="Mena1_V_4" /></gr:hasCurrency>
-                    <gr:valueAddedTaxIncluded><xsl:value-of select="Dph1_V_4" /></gr:valueAddedTaxIncluded>
-                </gr:UnitPriceSpecification>
-            </pc:offeredPrice>
-        </pc:Tender>
-    </xsl:template>
+
     
     <!-- ADDITIONAL OBJECTS -->
     <xsl:template match="HlavniSlovnikDp1_II_1_6 | HlavniSlovnikDp2_II_1_6 | HlavniSlovnikDp3_II_1_6 | HlavniSlovnikDp4_II_1_6">
