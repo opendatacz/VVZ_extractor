@@ -183,6 +183,7 @@ public class PCReceiver extends Object {
 				SOAPBody responseBody = this.soapCall(soapMessage).getSOAPBody();
 				String doc = responseBody.getElementsByTagNameNS(this.URLisvzus,"FormDocument").item(0).getTextContent();
 
+				// todo handle BOM
 				doc = new String(DatatypeConverter.parseBase64Binary(doc),"UTF-8").substring(1);
 
 				DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();

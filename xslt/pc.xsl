@@ -5,7 +5,6 @@
     exclude-result-prefixes="f i"
     xpath-default-namespace="http://www.ness.cz/schemas/isvzus/v11.1"
     
-	xmlns:dcterms="http://purl.org/dc/terms/"
     xmlns:gr="http://purl.org/goodrelations/v1#"
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -13,7 +12,6 @@
     xmlns:pccz="http://purl.org/procurement/public-contracts-czech#"
     xmlns:pcdt="http://purl.org/procurement/public-contracts-datatypes#"
     xmlns:dc="http://purl.org/dc/terms/"
-    xmlns:br="http://purl.org/business-register#"
     xmlns:adms="http://www.w3.org/ns/adms#"
     xmlns:c4n="http://vocab.deri.ie/c4n#"
     xmlns:foaf="http://xmlns.com/foaf/0.1/"
@@ -55,32 +53,34 @@
 	    <xsl:variable name="VVZ_SubmitterIC" select="Ic_I_1" /> <!-- TODO osetrit jestli je IC zadano, kdyz ne, tak to bude null. CO s tim? -->
 	    <xsl:variable name="VVZ_FormURL" select="concat('http://www.vestnikverejnychzakazek.cz/cs/Form/Display/', $VVZ_FormId)" />
 	    
+	    <xsl:variable name="PC_URI" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber)" />
+	    
 	    <!-- IDENTIFIERS -->
 	    <xsl:variable name="id_contractNotice" select="concat($nm_vvz,'contract-notice/',$VVZ_FormNumber)" />
 	    <xsl:variable name="id_contractNoticeIdentifier" select="concat($nm_vvz,'contract-notice/',$VVZ_FormNumber,'/identifier/1')" />
-	    <xsl:variable name="id_publicContract" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber)" />
-	    <xsl:variable name="id_tendersOpening" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber,'/tenders-opening/1')" />
-	    <xsl:variable name="id_tenderPlace" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber,'/tender-place/1')" />
-	    <xsl:variable name="id_PCContactPoint" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber,'/contact-point/1')" />
+	    <xsl:variable name="id_publicContract" select="$PC_URI" />
+	    <xsl:variable name="id_tendersOpening" select="concat($PC_URI,'/tenders-opening/1')" />
+	    <xsl:variable name="id_tenderPlace" select="concat($PC_URI,'/tender-place/1')" />
+	    <xsl:variable name="id_PCContactPoint" select="concat($PC_URI,'/contact-point/1')" />
 	    <xsl:variable name="id_contractingAuthority" select="concat($nm_lod,'business-entity/CZ',$VVZ_SubmitterIC,'-',$VVZ_FormNumber)" />
-	    <xsl:variable name="id_pcPlace" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber,'/place/1')" />
-	    <xsl:variable name="id_estimatedPrice" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber,'/estimated-price/1')" />
-	    <xsl:variable name="id_awardCriteriaCombination" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber,'/combination-of-contract-award-criteria/')" />
-	    <xsl:variable name="nm_contractAwardCriterion" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber,'/contract-award-criterion/')" />
-	    <xsl:variable name="nm_publicContractCriteria" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber,'/public-contract-criteria/')" />
-	    
-	    <xsl:variable name="id_pcIdentifier1" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber,'/identifier/1')" />
-	    <xsl:variable name="id_pcIdentifier2" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber,'/identifier/2')" />
-	    <xsl:variable name="id_contractingAuthAddress" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber,'/postal-address/1')" />
-	    <xsl:variable name="id_documentsPrice" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber,'/documents-price/1')" />
+	    <xsl:variable name="id_pcPlace" select="concat($PC_URI,'/place/1')" />
+	    <xsl:variable name="id_estimatedPrice" select="concat($PC_URI,'/estimated-price/1')" />
+	    <xsl:variable name="id_awardCriteriaCombination" select="concat($PC_URI,'/combination-of-contract-award-criteria/')" />
+	    <xsl:variable name="nm_contractAwardCriterion" select="concat($PC_URI,'/contract-award-criterion/')" />
+	    <xsl:variable name="nm_publicContractCriteria" select="concat($PC_URI,'/public-contract-criteria/')" />
+	    <xsl:variable name="id_pcIdentifier1" select="concat($PC_URI,'/identifier/1')" />
+	    <xsl:variable name="id_pcIdentifier2" select="concat($PC_URI,'/identifier/2')" />
+	    <xsl:variable name="id_contractingAuthAddress" select="concat($PC_URI,'/postal-address/1')" />
+	    <xsl:variable name="id_documentsPrice" select="concat($PC_URI,'/documents-price/1')" />
+	    <xsl:variable name="id_agreedPrice" select="concat($PC_URI,'/agreed-price/1')" />
 	    
 	    <rdf:RDF>
 	        
 	        <pc:TendersOpening rdf:about="{$id_tendersOpening}">
 	            <xsl:if test="Datum_IV_3_8/text()">
-	            <dcterms:date rdf:datatype="xsd:dateTime">
+	            <dc:date rdf:datatype="xsd:dateTime">
 	                <xsl:value-of select="f:processDateTime(Datum_IV_3_8,Cas_IV_3_8)" />
-	            </dcterms:date>
+	            </dc:date>
 	            </xsl:if>
 	            <xsl:if test="Misto_IV_3_8/text()">
 	            <s:location>
@@ -127,33 +127,11 @@
 	                <xsl:value-of select="StrucnyPopisZakazky_II_1_5" />
 	            </dc:description>
 	            </xsl:if>
-	            <pc:contact>
-	                <s:contactPoint rdf:about="{$id_PCContactPoint}">
-	                    <xsl:if test="KontaktniMista_I_1/text()">
-	                    <s:description xml:lang="cs">
-	                        <xsl:value-of select="KontaktniMista_I_1" />
-	                    </s:description>
-	                    </xsl:if>
-	                    <xsl:if test="KRukam_I_1/text()">
-	                    <s:name xml:lang="cs">
-	                        <xsl:value-of select="KRukam_I_1" />
-	                    </s:name>
-	                    </xsl:if>
-	                    <xsl:if test="E_Mail_I_1/text()">
-	                    <s:email rdf:resource="{concat('mailto:',E_Mail_I_1)}" />
-	                    </xsl:if>
-	                    <xsl:if test="Tel_I_1/text()">
-	                    <s:telephone>
-	                        <xsl:value-of select="Tel_I_1" />
-	                    </s:telephone>
-	                    </xsl:if>
-	                    <xsl:if test="Fax_I_1/text()">
-	                    <s:faxNumber>
-	                        <xsl:value-of select="Fax_I_1" />
-	                    </s:faxNumber>
-	                    </xsl:if>
-	                </s:contactPoint>
-	            </pc:contact>
+	            
+	            <xsl:apply-templates select="PCContact">
+	                <xsl:with-param name="id_PCContactPoint" select="$id_PCContactPoint" />
+	            </xsl:apply-templates>
+	            
 	            <xsl:if test="DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2/text()">
 	            <pc:kind rdf:resource="{f:getKind(/node())}" />
 	            </xsl:if>
@@ -162,11 +140,6 @@
 	            </xsl:if>
 	            <pc:contractingAuthority>
 	                <gr:BusinessEntity rdf:about="{$id_contractingAuthority}">
-	                    <xsl:if test="UredniNazev_I_1/text()">
-	                    <dc:title xml:lang="cs">
-	                        <xsl:value-of select="UredniNazev_I_1" />
-	                    </dc:title>
-	                    </xsl:if>
 	                    <xsl:if test="UredniNazev_I_1/text()">
 	                    <gr:legalName xml:lang="cs">
 	                        <xsl:value-of select="UredniNazev_I_1" />
@@ -179,24 +152,26 @@
 	                    <pc:profile rdf:resource="{AdresaProfiluKupujiciho_I_1}" />
 	                    </xsl:if>
 	                    
-                        <xsl:choose>
-                            <xsl:when test="string-length(f:getAuthorityKind(Dvz_DruhVerejnehoZadavatele_I_2)) &gt; 0">
-                                <pc:authorityKind rdf:resource="{f:getAuthorityKind(Dvz_DruhVerejnehoZadavatele_I_2)}" />
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:if test="Dvz_Upresneni_I_2/text()">
-                                <pc:authorityKind>
-                                    <pc:authorityKind> <!-- TODO zde by mohl byt URI, ale jaky? -->
-                                        <skos:inScheme rdf:resource="authkinds:" />
-                                        <skos:topConceptOf rdf:resource="authkinds:"></skos:topConceptOf>
-                                        <skos:prefLabel xml:lang="cs">
-                                            <xsl:value-of select="Dvz_Upresneni_I_2" />
-                                        </skos:prefLabel>
+	                    <xsl:if test="Dvz_DruhVerejnehoZadavatele_I_2">
+                            <xsl:choose>
+                                <xsl:when test="string-length(f:getAuthorityKind(Dvz_DruhVerejnehoZadavatele_I_2)) &gt; 0">
+                                    <pc:authorityKind rdf:resource="{f:getAuthorityKind(Dvz_DruhVerejnehoZadavatele_I_2)}" />
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:if test="Dvz_Upresneni_I_2/text()">
+                                    <pc:authorityKind>
+                                        <pc:authorityKind> <!-- TODO zde by mohl byt URI, ale jaky? -->
+                                            <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-authority-kinds#" />
+                                            <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-authority-kinds#"></skos:topConceptOf>
+                                            <skos:prefLabel xml:lang="cs">
+                                                <xsl:value-of select="Dvz_Upresneni_I_2" />
+                                            </skos:prefLabel>
+                                        </pc:authorityKind>
                                     </pc:authorityKind>
-                                </pc:authorityKind>
-                                </xsl:if>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                                    </xsl:if>
+                                </xsl:otherwise>
+                            </xsl:choose>
+	                    </xsl:if>
 	                    	                    
 	                    <xsl:apply-templates select="Hpc_SluzbyProSirokouVerejnost_I_3 | Hpc_Obrana_I_3 | Hpc_VerejnyPoradekABezpecnost_I_3 | Hpc_ZivotniProstredi_I_3 | Hpc_HospodarskeAFinancniZalezitosti_I_3 | Hpc_Zdravotnictvi_I_3 | Hpc_BydleniAObcanskaVybavenost_I_3 | Hpc_SocialniSluzby_I_3 | Hpc_RekreaceKulturaANabozenstvi_I_3 | Hpc_Skolstvi_I_3" />
 	                    <xsl:apply-templates select="Hpc_Jiny_I_3" />
@@ -219,7 +194,10 @@
 	                    </s:address>
 	                </gr:BusinessEntity>
 	            </pc:contractingAuthority>
+	            
+	            <xsl:if test="HlavniSlovnikHp_II_1_6">
 	            <pc:mainObject rdf:resource="{concat($nm_cpv,f:stripDashes(HlavniSlovnikHp_II_1_6))}" />
+	            </xsl:if>
 	            
 	            <xsl:apply-templates select="HlavniSlovnikDp1_II_1_6 | HlavniSlovnikDp2_II_1_6 | HlavniSlovnikDp3_II_1_6 | HlavniSlovnikDp4_II_1_6" />
 	            
@@ -289,8 +267,8 @@
 	                    <xsl:if test="SpisoveCisloPrideleneVerejnymZadavatelem_IV_3_1/text()">
 	                    <skos:notation><xsl:value-of select="SpisoveCisloPrideleneVerejnymZadavatelem_IV_3_1" /></skos:notation>
 	                    </xsl:if>
-	                    <dcterms:creator><xsl:value-of select="$id_contractingAuthority" /></dcterms:creator>
-	                    <dc:type rdf:resource="{'pc:ContractIdentifierIssuedByContractingAuthority'}" />
+	                    <dc:creator><xsl:value-of select="$id_contractingAuthority" /></dc:creator>
+	                    <!--<dc:type rdf:resource="http://purl.org/procurement/public-contracts#ContractIdentifierIssuedByContractingAuthority" /> -->
 	                    <xsl:if test="UredniNazev_I_1/text()">
 	                    <adms:schemeAgency><xsl:value-of select="UredniNazev_I_1" /></adms:schemeAgency>
 	                    </xsl:if>
@@ -319,52 +297,113 @@
 	                </gr:UnitPriceSpecification>
 	            </pc:documentsPrice>
 	            </xsl:if>
+	            
+	            <xsl:if test="Hodnota_II_2_1">
+	            <pc:agreedPrice>
+	                <gr:UnitPriceSpecification rdf:about="{$id_agreedPrice}">
+	                    <gr:hasCurrencyValue><xsl:value-of select="f:processPrice(Hodnota_II_2_1)" /></gr:hasCurrencyValue>
+	                    <xsl:if test="Mena_II_2_1/text()">
+	                    <gr:hasCurrency><xsl:value-of select="Mena_II_2_1" /></gr:hasCurrency>
+	                    </xsl:if>
+	                    <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
+	                </gr:UnitPriceSpecification>
+	            </pc:agreedPrice>
+	            </xsl:if>
+	            
+	            <!-- TENDERS -->
+                <xsl:if test="count(skup_priloha/oddil_5) &gt; 1">
+                    <pc:numberOfTenders><xsl:value-of select="skup_priloha/oddil_5[1]/PocetNabidek_V_2" /></pc:numberOfTenders>
+                <pc:lot>
+                    <pc:Contract>
+                        <xsl:apply-templates select="skup_priloha/oddil_5" />
+                    </pc:Contract>
+                </pc:lot>
+                </xsl:if>
+	            <xsl:if test="count(skup_priloha/oddil_5) = 1">
+	                <xsl:apply-templates select="skup_priloha/oddil_5" />
+                </xsl:if>
+	            
+	            
 	        </pc:Contract>
+	        
+	        
 
 	    </rdf:RDF>
 	       
 	</xsl:template>
    
+    <xsl:template match="KontaktniMista_I_1 | KRukam_I_1 | E_Mail_I_1 | Tel_I_1 | Fax_I_1">
+       <xsl:param name="id_PCContactPoint" />
+       <pc:contact>
+           <s:ContactPoint rdf:about="{$id_PCContactPoint}">
+               <xsl:if test="KontaktniMista_I_1/text()">
+                   <s:description xml:lang="cs">
+                       <xsl:value-of select="KontaktniMista_I_1" />
+                   </s:description>
+               </xsl:if>
+               <xsl:if test="KRukam_I_1/text()">
+                   <s:name xml:lang="cs">
+                       <xsl:value-of select="KRukam_I_1" />
+                   </s:name>
+               </xsl:if>
+               <xsl:if test="E_Mail_I_1/text()">
+                   <s:email rdf:resource="{concat('mailto:',E_Mail_I_1)}" />
+               </xsl:if>
+               <xsl:if test="Tel_I_1/text()">
+                   <s:telephone>
+                       <xsl:value-of select="Tel_I_1" />
+                   </s:telephone>
+               </xsl:if>
+               <xsl:if test="Fax_I_1/text()">
+                   <s:faxNumber>
+                       <xsl:value-of select="Fax_I_1" />
+                   </s:faxNumber>
+               </xsl:if>
+           </s:ContactPoint>
+       </pc:contact>
+   </xsl:template>
+   
+   
    <!-- ACTIVITIES -->
    
     <xsl:template match="SluzbyProSirokouVerejnost_I_3">
-        <pc:activityKind rdf:resource="activities:GeneralServices" />
+        <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#GeneralServices" />
 	</xsl:template>
     
     <xsl:template match="Hpc_Obrana_I_3">
-        <pc:activityKind rdf:resource="activities:Defence" />
+        <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Defence" />
     </xsl:template>
     
     <xsl:template match="Hpc_VerejnyPoradekABezpecnost_I_3">
-        <pc:activityKind rdf:resource="activities:Safety" />
+        <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Safety" />
     </xsl:template>
     
     <xsl:template match="Hpc_ZivotniProstredi_I_3">
-        <pc:activityKind rdf:resource="activities:Environment" />
+        <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Environment" />
     </xsl:template>
     
     <xsl:template match="Hpc_HospodarskeAFinancniZalezitosti_I_3">
-        <pc:activityKind rdf:resource="activities:EconomicAffairs" />
+        <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#EconomicAffairs" />
     </xsl:template>
     
     <xsl:template match="Hpc_Zdravotnictvi_I_3">
-        <pc:activityKind rdf:resource="activities:Health" />
+        <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Health" />
     </xsl:template>
     
     <xsl:template match="Hpc_BydleniAObcanskaVybavenost_I_3">
-        <pc:activityKind rdf:resource="activities:Housing" />
+        <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Housing" />
     </xsl:template>
     
     <xsl:template match="Hpc_SocialniSluzby_I_3">
-        <pc:activityKind rdf:resource="activities:SocialProtection" />
+        <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#SocialProtection" />
     </xsl:template>
     
     <xsl:template match="Hpc_RekreaceKulturaANabozenstvi_I_3">
-        <pc:activityKind rdf:resource="activities:Cultural" />
+        <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Cultural" />
     </xsl:template>
     
     <xsl:template match="Hpc_Skolstvi_I_3">
-        <pc:activityKind rdf:resource="activities:Educational" />
+        <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Educational" />
     </xsl:template>
     
     <xsl:template match="Hpc_Jiny_I_3">
@@ -372,8 +411,8 @@
         <pc:activityKind>
             <pc:activityKind> <!-- TODO zde by mohl byt URI -->
                 <skos:prefLabel><xsl:value-of select="$root/Hpc_Upresneni_I_3" /></skos:prefLabel>
-                <skos:isScheme rdf:resource="activities:" />
-                <skos:topConceptOf rdf:resource="activities:" />
+                <skos:isScheme rdf:resource="http://purl.org/procurement/public-contracts-activities#" />
+                <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-activities#" />
             </pc:activityKind>
         </pc:activityKind>
         </xsl:if>
@@ -386,10 +425,10 @@
         <xsl:param name="nm_criteria" />
         <xsl:variable name="id">1</xsl:variable>
         
-        <xsl:if test="text() = true()">
+        <xsl:if test="text()">
         <pc:awardCriterion>
             <pc:CriterionWeighting rdf:about="{concat($nm_criterion,$id)}">
-                <pc:weightedCriterion rdf:resource="criteria:LowestPrice"></pc:weightedCriterion>
+                <pc:weightedCriterion rdf:resource="http://purl.org/procurement/public-contracts-criteria#LowestPrice"></pc:weightedCriterion>
                 <pc:criterionWeight rdf:datatype="pcdt:percentage">100</pc:criterionWeight>
             </pc:CriterionWeighting>
         </pc:awardCriterion>
@@ -409,8 +448,8 @@
                 <pc:weightedCriterion>
                     <skos:Concept rdf:about="{concat($nm_criteria,$id)}">
                         <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
-                        <skos:inScheme rdf:resource="criteria:" />
-                        <skos:topConceptOf rdf:resource="criteria:" />
+                        <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                        <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                     </skos:Concept>
                 </pc:weightedCriterion>                    
             </pc:AwardCriterion>
@@ -429,8 +468,8 @@
                 <pc:weightedCriterion>
                     <skos:Concept rdf:about="{concat($nm_criteria,$id)}">
                         <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
-                        <skos:inScheme rdf:resource="criteria:" />
-                        <skos:topConceptOf rdf:resource="criteria:" />
+                        <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                        <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                     </skos:Concept>
                 </pc:weightedCriterion>                    
             </pc:AwardCriterion>
@@ -449,8 +488,8 @@
                 <pc:weightedCriterion>
                     <skos:Concept rdf:about="{concat($nm_criteria,$id)}">
                         <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
-                        <skos:inScheme rdf:resource="criteria:" />
-                        <skos:topConceptOf rdf:resource="criteria:" />
+                        <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                        <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                     </skos:Concept>
                 </pc:weightedCriterion>                    
             </pc:AwardCriterion>
@@ -458,6 +497,42 @@
     </xsl:template>
     
     <!-- doplnit kriteria 4-10 -->
+    
+    <!-- TENDERS -->
+    <xsl:template match="oddil_5">
+        <pc:awardDate></pc:awardDate>
+        <pc:Tender rdf:about="">
+            <pc:supplier>
+                <gr:BusinessEntity rdf:about="">
+                    <gr:legalName><xsl:value-of select="NazevDodavatele_V_3" /></gr:legalName>
+                    <foaf:page><xsl:value-of select="AdresaURL_V_3" /></foaf:page>
+                    <s:contact>
+                        <s:ContactPoint rdf:about="">
+                            <s:name><xsl:value-of select="NazevDodavatele_V_3" /></s:name>
+                            <s:email><xsl:value-of select="Email_V_3" /></s:email>
+                            <s:telephone><xsl:value-of select="Telefon_V_3" /></s:telephone>
+                            <s:faxNumber><xsl:value-of select="Fax_V_3" /></s:faxNumber>
+                        </s:ContactPoint>
+                    </s:contact>
+                    <s:address>
+                        <s:PostalAddress rdf:about="">
+                            <s:streetAddress><xsl:value-of select="Adresa_V_3" /></s:streetAddress>
+                            <s:postalCode><xsl:value-of select="Psc_V_3" /></s:postalCode>
+                            <s:addressLocality><xsl:value-of select="Obec_V_3" /></s:addressLocality>
+                            <s:addressCountry><xsl:value-of select="Stat_V_3" /></s:addressCountry>
+                        </s:PostalAddress>
+                    </s:address>
+                </gr:BusinessEntity>
+            </pc:supplier>
+            <pc:offeredPrice>
+                <gr:UnitPriceSpecification rdf:about="">
+                    <gr:hasCurrencyValue><xsl:value-of select="Hodnota1_V_4" /></gr:hasCurrencyValue>
+                    <gr:hasCurrency><xsl:value-of select="Mena1_V_4" /></gr:hasCurrency>
+                    <gr:valueAddedTaxIncluded><xsl:value-of select="Dph1_V_4" /></gr:valueAddedTaxIncluded>
+                </gr:UnitPriceSpecification>
+            </pc:offeredPrice>
+        </pc:Tender>
+    </xsl:template>
     
     <!-- ADDITIONAL OBJECTS -->
     <xsl:template match="HlavniSlovnikDp1_II_1_6 | HlavniSlovnikDp2_II_1_6 | HlavniSlovnikDp3_II_1_6 | HlavniSlovnikDp4_II_1_6">
@@ -501,33 +576,33 @@
         <xsl:variable name="kindCat" select="$root/DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2/text()" />
         
         <xsl:variable name="serviceKinds" as="element()*">
-            <kind>kinds:MaintenanceAndRepairServices</kind>
-            <kind>kinds:LandTransportServices</kind>
-            <kind>kinds:AirTransportServices</kind>
-            <kind>kinds:TransportOfMailServices</kind>
-            <kind>kinds:TelecommunicationServices</kind>
-            <kind>kinds:FinancialServices</kind>
-            <kind>kinds:ComputerServices</kind>
-            <kind>kinds:ResearchAndDevelopmentServices</kind>
-            <kind>kinds:AccountingServices</kind>
-            <kind>kinds:MarketResearchServices</kind>
-            <kind>kinds:ConsultingServices</kind>
-            <kind>kinds:ArchitecturalServices</kind>
-            <kind>kinds:AdvertisingServices</kind>
-            <kind>kinds:BuildingCleaningServices</kind>
-            <kind>kinds:PublishingServices</kind>
-            <kind>kinds:SewageServices</kind>
-            <kind>kinds:HotelAndRestaurantServices</kind>
-            <kind>kinds:RailTransportServices</kind>
-            <kind>kinds:WaterTransportServices</kind>
-            <kind>kinds:SupportingTransportServices</kind>
-            <kind>kinds:LegalServices</kind>
-            <kind>kinds:PersonnelPlacementServices</kind>
-            <kind>kinds:InvestigationAndSecurityServices</kind>
-            <kind>kinds:EducationServices</kind>
-            <kind>kinds:HealthServices</kind>
-            <kind>kinds:CulturalServices</kind>
-            <kind>kinds:OtherServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#MaintenanceAndRepairServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#LandTransportServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#AirTransportServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#TransportOfMailServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#TelecommunicationServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#FinancialServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#ComputerServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#ResearchAndDevelopmentServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#AccountingServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#MarketResearchServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#ConsultingServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#ArchitecturalServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#AdvertisingServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#BuildingCleaningServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#PublishingServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#SewageServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#HotelAndRestaurantServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#RailTransportServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#WaterTransportServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#SupportingTransportServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#LegalServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#PersonnelPlacementServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#InvestigationAndSecurityServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#EducationServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#HealthServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#CulturalServices</kind>
+            <kind>http://purl.org/procurement/public-contracts-kinds#OtherServices</kind>
         </xsl:variable>
         
         <xsl:choose>
@@ -537,16 +612,16 @@
             <xsl:when test="matches($kindCat,'WORKS')">
                 <xsl:choose>
                     <xsl:when test="$root/StavebniPraceProvadeni_II_1_2">
-                        <xsl:value-of select="'kinds:WorksExecution'" />
+                        <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#WorksExecution'" />
                     </xsl:when>
                     <xsl:when test="$root/StavebniPraceProjektProvadeni_II_1_2">
-                        <xsl:value-of select="'kinds:WorksDesignExecution'" />
+                        <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#WorksDesignExecution'" />
                     </xsl:when>
                     <xsl:when test="$root/StavebniPraceProvadeniSouladPozadavky_II_1_2">
-                        <xsl:value-of select="'kinds:WorksRealisation'" />
+                        <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#WorksRealisation'" />
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="'kinds:WorksDesign'" />
+                        <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#WorksDesign'" />
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
@@ -556,24 +631,24 @@
                 
                 <xsl:choose>
                     <xsl:when test="matches($supplyKind,'PURCHASE')">
-                        <xsl:value-of select="'kinds:SuppliesPurchase'" />
+                        <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#SuppliesPurchase'" />
                     </xsl:when>
                     <xsl:when test="matches($supplyKind,'LEASE')">
-                        <xsl:value-of select="'kinds:SuppliesLease'" />
+                        <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#SuppliesLease'" />
                     </xsl:when>
                     <xsl:when test="matches($supplyKind,'RENTAL')">
-                        <xsl:value-of select="'kinds:SuppliesRental'" />
+                        <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#SuppliesRental'" />
                     </xsl:when>
                     <xsl:when test="matches($supplyKind,'HIRE_PURCHASE')">
-                        <xsl:value-of select="'kinds:SuppliesHire'" />
+                        <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#SuppliesHire'" />
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="'kinds:Supplies'" />
+                        <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#Supplies'" />
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="'kinds:Services'" />
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#Services'" />
             </xsl:otherwise>
         </xsl:choose>
         
@@ -585,22 +660,22 @@
         
         <xsl:choose>
             <xsl:when test="matches($type,'OPEN')">
-                <xsl:value-of select="'proctypes:Open'" />
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-procedure-types#Open'" />
             </xsl:when>
             <xsl:when test="matches($type,'RESTRICTED')">
-                <xsl:value-of select="'proctypes:Restricted'" />
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-procedure-types#Restricted'" />
             </xsl:when>
             <xsl:when test="matches($type,'ACCELERATED_RESTRICTED')">
-                <xsl:value-of select="'proctypes:AcceleratedRestricted'" />
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-procedure-types#AcceleratedRestricted'" />
             </xsl:when>
             <xsl:when test="matches($type,'NEGOTIATED')">
-                <xsl:value-of select="'proctypes:Negotiated'" />
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-procedure-types#Negotiated'" />
             </xsl:when>
             <xsl:when test="matches($type,'ACCELERATED_NEGOTIATED')">
-                <xsl:value-of select="'proctypes:AcceleratedNegotiated'" />
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-procedure-types#AcceleratedNegotiated'" />
             </xsl:when>
             <xsl:when test="matches($type,'COMPETITIVE_DIALOGUE')">
-                <xsl:value-of select="'proctypes:CompetitiveDialogue'" />
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-procedure-types#CompetitiveDialogue'" />
             </xsl:when>
         </xsl:choose>
     </xsl:function>
@@ -633,22 +708,22 @@
         
         <xsl:choose>
             <xsl:when test="matches($kind,'MINISTRY')">
-                <xsl:value-of select="'authkinds:NationalAuthority'" />
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-authority-kinds#NationalAuthority'" />
             </xsl:when>
             <xsl:when test="matches($kind,'NATIONAL_AGENCY')">
-                <xsl:value-of select="'authkinds:NationalAgency'" />
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-authority-kinds#NationalAgency'" />
             </xsl:when>
             <xsl:when test="matches($kind,'REGIONAL_AUTHORITY')">
-                <xsl:value-of select="'authkinds:LocalAuthority'" />
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-authority-kinds#LocalAuthority'" />
             </xsl:when>
             <xsl:when test="matches($kind,'REGIONAL_AGENCY')">
-                <xsl:value-of select="'authkinds:LocalAgency'" />
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-authority-kinds#LocalAgency'" />
             </xsl:when>
             <xsl:when test="matches($kind,'BODY_PUBLIC')">
-                <xsl:value-of select="'authkinds:PublicBody'" />
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-authority-kinds#PublicBody'" />
             </xsl:when>
             <xsl:when test="matches($kind,'EU_INSTITUTION')">
-                <xsl:value-of select="'authkinds:InternationalOrganization'" />
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-authority-kinds#InternationalOrganization'" />
             </xsl:when>
             <xsl:when test="matches($kind,'OTHER')">
                 
