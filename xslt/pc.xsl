@@ -61,212 +61,111 @@
     <xsl:variable name="id_documentsPrice" select="concat($PC_URI,'/documents-price/1')" />
     <xsl:variable name="id_agreedPrice" select="concat($PC_URI,'/agreed-price/1')" />
     
-    <!-- TODO musim osetrit aby se funkcim nepredavaly prazdne parametry -->
-
     <xsl:output encoding="UTF-8" indent="yes" method="xml" />
 
 	<xsl:template match="root">
 	    
 	    <rdf:RDF>
 	        
-	        <pc:TendersOpening rdf:about="{$id_tendersOpening}">
-	            <xsl:if test="Datum_IV_3_8/text()">
-	            <dc:date rdf:datatype="xsd:dateTime">
-	                <xsl:value-of select="f:processDateTime(Datum_IV_3_8,Cas_IV_3_8)" />
-	            </dc:date>
-	            </xsl:if>
-	            <xsl:if test="Misto_IV_3_8/text()">
-	            <s:location>
-	                <s:Place rdf:about="{$id_tenderPlace}">
-	                    <rdfs:label xml:lang="cs">
-	                        <xsl:value-of select="Misto_IV_3_8" />
-	                    </rdfs:label>
-	                </s:Place>
-	            </s:location>
-	            </xsl:if>
-	            <pc:publicNotice>
-	                <pc:ContractNotice rdf:about="{$id_contractNotice}">
-	                    <xsl:if test="skup_priloha/hlavicka/VvzPublished/text()">
-	                    <pc:publicationDate rdf:datatype="xsd:date">
-	                        <xsl:value-of select="f:processDate(skup_priloha/hlavicka/VvzPublished)"/>
-	                    </pc:publicationDate>
-	                    </xsl:if>
-	                    <rdfs:seeAlso>
-	                        <xsl:value-of select="$VVZ_FormURL" />
-	                    </rdfs:seeAlso>
-	                    <adms:identifier>
-	                        <adms:identifier rdf:about="{$id_contractNoticeIdentifier}">
-       	                        <skos:notation rdf:datatype="xsd:string">
-       	                            <xsl:value-of select="$VVZ_FormNumber" />
-       	                        </skos:notation>
-       	                        <adms:schemeAgency>
-       	                            <xsl:value-of select="$schemeAgency" />
-       	                        </adms:schemeAgency>
-       	                        <dc:creator rdf:resource="{$creator}" />
-	                        </adms:identifier>
-	                    </adms:identifier>
-	                </pc:ContractNotice>
-	            </pc:publicNotice>
-	        </pc:TendersOpening>
+	        <xsl:choose>
+	            <xsl:when test="verze_formulare='0200'"> <!-- ContractNotice -->
+	                <xsl:if test="Datum_IV_3_8 | Misto_IV_3_8">
+	                    <pc:TendersOpening rdf:about="{$id_tendersOpening}">
+	                        <xsl:apply-templates select="Datum_IV_3_8 | Misto_IV_3_8" />
+	                        <pc:publicNotice>
+	                            <pc:ContractNotice rdf:about="{$id_contractNotice}">
+	                                <xsl:apply-templates select="skup_priloha/hlavicka/VvzPublished" />
+	                            </pc:ContractNotice>
+	                        </pc:publicNotice>
+	                    </pc:TendersOpening>
+	                </xsl:if>
+	            </xsl:when>
+	            <xsl:when test="verze_formulare='0300'"> <!-- ContractAwardNotice -->
+	                <pc:ContractAwardNotice rdf:about="{$id_contractNotice}">
+	                    <xsl:apply-templates select="skup_priloha/hlavicka/VvzPublished" />
+	                </pc:ContractAwardNotice>
+	            </xsl:when>
+	        </xsl:choose>
+	        
 	        
 	        <pc:Contract rdf:about="{$id_publicContract}">
-	            <xsl:if test="NazevPridelenyZakazceVerejnymZadavatelem_II_1_1/text()">
-	            <dc:title xml:lang="cs">
-	                <xsl:value-of select="NazevPridelenyZakazceVerejnymZadavatelem_II_1_1" />
-	            </dc:title>
-	            </xsl:if>
-	            <xsl:if test="StrucnyPopisZakazky_II_1_5/text()">
-	            <dc:description xml:lang="cs">
-	                <xsl:value-of select="StrucnyPopisZakazky_II_1_5" />
-	            </dc:description>
+	            <xsl:apply-templates select="NazevPridelenyZakazce_II_1_1 | NazevPridelenyZakazceVerejnymZadavatelem_II_1_1" />
+
+	            <xsl:apply-templates select="StrucnyPopisZakazky_II_1_5 | StrucnyPopis_II1_4" />
+	            
+	            <xsl:if test="KontaktniMista_I_1 | KRukam_I_1 | E_Mail_I_1 | Tel_I_1 | Fax_I_1">
+	            <pc:contact>
+	                <s:ContactPoint rdf:about="{$id_PCContactPoint}">
+	                    <xsl:apply-templates select="KontaktniMista_I_1 | KRukam_I_1 | E_Mail_I_1 | Tel_I_1 | Fax_I_1" />
+	                </s:ContactPoint>
+	            </pc:contact>
 	            </xsl:if>
 	            
-	            <xsl:apply-templates select="PCContact">
-	                <xsl:with-param name="id_PCContactPoint" select="$id_PCContactPoint" />
-	            </xsl:apply-templates>
+	            <xsl:apply-templates select="DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2 | DruhZakazky_II_1_2" />
 	            
-	            <xsl:if test="DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2/text()">
-	            <pc:kind rdf:resource="{f:getKind(/node())}" />
-	            </xsl:if>
-	            <xsl:if test="DruhRizeni_IV_1_1/text()">
-	            <pc:procedureType rdf:resource="{f:getProcedureType(DruhRizeni_IV_1_1)}" />
-	            </xsl:if>
+	            <xsl:apply-templates select="DruhRizeni_IV_1_1" />
+
 	            <pc:contractingAuthority>
 	                <gr:BusinessEntity rdf:about="{$id_contractingAuthority}">
-	                    <xsl:if test="UredniNazev_I_1/text()">
-	                    <gr:legalName xml:lang="cs">
-	                        <xsl:value-of select="UredniNazev_I_1" />
-	                    </gr:legalName>
-	                    </xsl:if>
-	                    <xsl:if test="ObecnaAdresaVerejnehoZadavatele_I_1/text()">
-	                    <foaf:page rdf:resource="{ObecnaAdresaVerejnehoZadavatele_I_1}" />
-	                    </xsl:if>
-	                    <xsl:if test="AdresaProfiluKupujiciho_I_1/text()">
-	                    <pc:profile rdf:resource="{AdresaProfiluKupujiciho_I_1}" />
-	                    </xsl:if>
-	                    
-	                    <xsl:if test="Dvz_DruhVerejnehoZadavatele_I_2">
-                            <xsl:choose>
-                                <xsl:when test="string-length(f:getAuthorityKind(Dvz_DruhVerejnehoZadavatele_I_2)) &gt; 0">
-                                    <pc:authorityKind rdf:resource="{f:getAuthorityKind(Dvz_DruhVerejnehoZadavatele_I_2)}" />
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:if test="Dvz_Upresneni_I_2/text()">
-                                    <pc:authorityKind>
-                                        <pc:authorityKind> <!-- TODO zde by mohl byt URI, ale jaky? -->
-                                            <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-authority-kinds#" />
-                                            <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-authority-kinds#"></skos:topConceptOf>
-                                            <skos:prefLabel xml:lang="cs">
-                                                <xsl:value-of select="Dvz_Upresneni_I_2" />
-                                            </skos:prefLabel>
-                                        </pc:authorityKind>
-                                    </pc:authorityKind>
-                                    </xsl:if>
-                                </xsl:otherwise>
-                            </xsl:choose>
-	                    </xsl:if>
-	                    	                    
+	                    <xsl:apply-templates select="UredniNazev_I_1" mode="legalName" />
+	                    <xsl:apply-templates select="ObecnaAdresaVerejnehoZadavatele_I_1 | AdresaProfiluKupujiciho_I_1 | AdresaProfiluZadavatele_I_1 | Dvz_DruhVerejnehoZadavatele_I_2 | DruhVerejnehoZadavatele_I_2" />
+	 	                    	
+	                    <!-- form type 2 -->
 	                    <xsl:apply-templates select="Hpc_SluzbyProSirokouVerejnost_I_3 | Hpc_Obrana_I_3 | Hpc_VerejnyPoradekABezpecnost_I_3 | Hpc_ZivotniProstredi_I_3 | Hpc_HospodarskeAFinancniZalezitosti_I_3 | Hpc_Zdravotnictvi_I_3 | Hpc_BydleniAObcanskaVybavenost_I_3 | Hpc_SocialniSluzby_I_3 | Hpc_RekreaceKulturaANabozenstvi_I_3 | Hpc_Skolstvi_I_3" />
 	                    <xsl:apply-templates select="Hpc_Jiny_I_3" />
+	                    <!-- form type 3 -->
+	                    <xsl:apply-templates select="SluzbyProSirokouVerejnost_I_3 | Obrana_I_3 | VerejnyPoradekABezpecnost_I_3 | ZivotniProstredi_I_3 | HospodarskeAFinancniZalezitosti_I_3 | Zdravotnictvi_I_3 | BydleniAObcanskaVybavenost_I_3 | SocialniSluzby_I_3 | RekreaceKulturaANabozenstvi_I_3 | Skolstvi_I_3" />
+	                    <xsl:apply-templates select="JinyProsimSpecifikujte_I_3" />
 	                    
+	                    <xsl:if test="PostovniAdresa_I_1 | Psc_I_1 | Obec_I_1 | Stat_I_1">
 	                    <s:address>
 	                        <s:PostalAddress rdf:about="{$id_contractingAuthAddress}">
-	                            <xsl:if test="PostovniAdresa_I_1/text()">
-	                            <s:streetAddress><xsl:value-of select="PostovniAdresa_I_1" /></s:streetAddress>
-	                            </xsl:if>
-	                            <xsl:if test="Psc_I_1/text()">
-	                            <s:postalCode><xsl:value-of select="Psc_I_1" /></s:postalCode>
-	                            </xsl:if>
-	                            <xsl:if test="Obec_I_1/text()">
-	                            <s:addressLocality><xsl:value-of select="Obec_I_1" /></s:addressLocality>
-	                            </xsl:if>
-	                            <xsl:if test="Stat_I_1/text()">
-	                            <s:addressCountry><xsl:value-of select="Stat_I_1" /></s:addressCountry>
-	                            </xsl:if>
+	                            <xsl:apply-templates select="PostovniAdresa_I_1 | Adresa_I_1" />
+	                            <xsl:apply-templates select="Psc_I_1" />
+	                            <xsl:apply-templates select="Obec_I_1" />
+	                            <xsl:apply-templates select="Stat_I_1" />
 	                        </s:PostalAddress>
 	                    </s:address>
+	                    </xsl:if>
 	                </gr:BusinessEntity>
 	            </pc:contractingAuthority>
 	            
-	            <xsl:if test="HlavniSlovnikHp_II_1_6">
-	            <pc:mainObject rdf:resource="{concat($nm_cpv,f:stripDashes(HlavniSlovnikHp_II_1_6))}" />
-	            </xsl:if>
+	            <xsl:apply-templates select="HlavniSlovnikHp_II_1_6 | HlavniSlovnikHp_II_1_5" />
 	            
+	            <!-- form type 2 -->
 	            <xsl:apply-templates select="HlavniSlovnikDp1_II_1_6 | HlavniSlovnikDp2_II_1_6 | HlavniSlovnikDp3_II_1_6 | HlavniSlovnikDp4_II_1_6" />
+	            <!-- form type 3 -->
+	            <xsl:apply-templates select="HlavniSlovnikDp1_II_1_5 | HlavniSlovnikDp2_II_1_5 | HlavniSlovnikDp3_II_1_5 | HlavniSlovnikDp4_II_1_5" />
 	            
-	            <xsl:if test="HlavniMistoProvadeniStavebnichPraci_II_1_2/text()">
-	            <pc:location>
-	                <s:Place rdf:about="{$id_pcPlace}">
-	                    <rdfs:label xml:lang="cs"><xsl:value-of select="HlavniMistoProvadeniStavebnichPraci_II_1_2" /></rdfs:label>
-	                    <xsl:if test="KodNuts1_II_1_2/text()">
-	                    <pceu:hasParentRegion rdf:resource="{concat('http://ec.europa.eu/eurostat/ramon/rdfdata/nuts2008/',KodNuts1_II_1_2)}" />
-	                    </xsl:if>
-	                </s:Place>
-	            </pc:location>
-	            </xsl:if>
+	            <xsl:apply-templates select="HlavniMistoProvadeniStavebnichPraci_II_1_2 | HlavniMisto_II_1_2" />
+
 	            <pc:notice rdf:resource="{$id_contractNotice}" />
+	            
+	            <xsl:if test="UvedtePredpokladanouHodnotuBezDph_II_2_1 | RozsahOd_II_2_1 | RozsahDo_II_2_1">
 	            <pc:estimatedPrice>
                     <gr:UnitPriceSpecification rdf:about="{$id_estimatedPrice}">
-                        <xsl:if test="UvedtePredpokladanouHodnotuBezDph_II_2_1/text()">
-	                    <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(UvedtePredpokladanouHodnotuBezDph_II_2_1)" /></gr:hasCurrencyValue>
-                        </xsl:if>
-                        <xsl:if test="RozsahOd_II_2_1/text()">
-                       <gr:hasMinCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(RozsahOd_II_2_1)" /></gr:hasMinCurrencyValue>
-	                    </xsl:if>
-                        <xsl:if test="RozsahDo_II_2_1/text()">
-                       <gr:hasMaxCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(RozsahDo_II_2_1)" /></gr:hasMaxCurrencyValue>
-	                    </xsl:if>
-                        <xsl:if test="MenaHodnota_II_2_1/text()">
-	                    <gr:hasCurrency><xsl:value-of select="MenaHodnota_II_2_1" /></gr:hasCurrency>
-                        </xsl:if>
-	                    <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
+                        <xsl:apply-templates select="UvedtePredpokladanouHodnotuBezDph_II_2_1 | RozsahOd_II_2_1 | RozsahDo_II_2_1 | MenaHodnota_II_2_1" />
+                        <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
 	                </gr:UnitPriceSpecification>
 	            </pc:estimatedPrice>
+	            </xsl:if>
 	            <pc:awardCriteriaCombination>
                     <pc:awardCriteriaCombination rdf:about="{$id_awardCriteriaCombination}">
-                        <xsl:apply-templates select="NejnizsiNabidkovaCena_IV_2_1 | Kriteria1_IV_2_1 | Kriteria2_IV_2_1 | Kriteria3_IV_2_1 | Kriteria4_IV_2_1 | Kriteria5_IV_2_1 | Kriteria6_IV_2_1 | Kriteria7_IV_2_1 | Kriteria8_IV_2_1 | Kriteria9_IV_2_1 | Kriteria10_IV_2_1">
-                            <xsl:with-param name="nm_criterion"><xsl:value-of select="$nm_contractAwardCriterion" /></xsl:with-param>
-                            <xsl:with-param name="nm_criteria"><xsl:value-of select="$nm_publicContractCriteria" /></xsl:with-param>
-                        </xsl:apply-templates>
+                        <!-- nejnizsi cenova nabidka - NejnizsiNabidkovaCena_IV_2_1 form type 2 | KriteriaTyp_IV_2_1 form type 3 -->
+                        <xsl:apply-templates select="NejnizsiNabidkovaCena_IV_2_1 | KriteriaTyp_IV_2_1 | Kriteria1_IV_2_1 | Kriteria2_IV_2_1 | Kriteria3_IV_2_1 | Kriteria4_IV_2_1 | Kriteria5_IV_2_1 | Kriteria6_IV_2_1 | Kriteria7_IV_2_1 | Kriteria8_IV_2_1 | Kriteria9_IV_2_1 | Kriteria10_IV_2_1" />
                     </pc:awardCriteriaCombination>
 	            </pc:awardCriteriaCombination>
-	            <xsl:if test="NeboZahajeni_II_3/text()">
-     	            <pc:startDate rdf:datatype="xsd:date">
-     	                <xsl:value-of select="f:processDate(NeboZahajeni_II_3)" />
-     	            </pc:startDate>
-	            </xsl:if>
-	            <xsl:if test="Dokonceni_II_3/text()">
-    	            <pc:estimatedEndDate rdf:datatype="xsd:date">
-    	                <xsl:value-of select="f:processDate(Dokonceni_II_3)" />
-    	            </pc:estimatedEndDate>
-	            </xsl:if>
-	            <xsl:if test="Datum_IV_3_4/text()">
-	            <pc:tenderDeadline rdf:datatype="xsd:dateTime">
-	                <xsl:value-of select="f:processDateTime(Datum_IV_3_4,Cas_IV_3_4)" />
-	            </pc:tenderDeadline>
-	            </xsl:if>
-	            <xsl:if test="Datum_IV_3_3/text()">
-	            <pc:documentationRequestDeadline rdf:datatype="xsd:dateTime">
-	                <xsl:value-of select="f:processDateTime(Datum_IV_3_3,Cas_IV_3_3)" />
-	            </pc:documentationRequestDeadline>
-	            </xsl:if>
+	            
+	            <xsl:apply-templates select="NeboZahajeni_II_3 | Dokonceni_II_3 | Datum_IV_3_4 | Datum_IV_3_3" />
+	            
 	            <xsl:if test="VMesicich_II_3/text() or NeboDnech_II_3/text()">
 	            <pc:duration rdf:datatype="xsd:duration">
 	                <xsl:value-of select="f:getDuration(VMesicich_II_3,NeboDnech_II_3)" />
 	            </pc:duration>
 	            </xsl:if>
-	            <adms:identifier>
-	                <adms:Identifier rdf:about="{$id_pcIdentifier1}">
-	                    <xsl:if test="SpisoveCisloPrideleneVerejnymZadavatelem_IV_3_1/text()">
-	                    <skos:notation><xsl:value-of select="SpisoveCisloPrideleneVerejnymZadavatelem_IV_3_1" /></skos:notation>
-	                    </xsl:if>
-	                    <dc:creator><xsl:value-of select="$id_contractingAuthority" /></dc:creator>
-	                    <!--<dc:type rdf:resource="http://purl.org/procurement/public-contracts#ContractIdentifierIssuedByContractingAuthority" /> -->
-	                    <xsl:if test="UredniNazev_I_1/text()">
-	                    <adms:schemeAgency><xsl:value-of select="UredniNazev_I_1" /></adms:schemeAgency>
-	                    </xsl:if>
-	                </adms:Identifier>
-	            </adms:identifier>
+	            
+	            <xsl:apply-templates select="SpisoveCisloPrideleneVerejnymZadavatelem_IV_3_1 | SpisCislo_IV_3_1" />
+	            
 	            <adms:identifier>
 	                <adms:Identifier rdf:about="{$id_pcIdentifier2}">
 	                    <skos:notation rdf:datatype="xsd:string">
@@ -279,44 +178,16 @@
 	                </adms:Identifier>
 	            </adms:identifier>
 	            
-	            <xsl:if test="UvedteCenu_IV_3_3">
-	            <pc:documentsPrice>
-	                <gr:UnitPriceSpecification rdf:about="{$id_documentsPrice}">
-	                    <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(UvedteCenu_IV_3_3)" /></gr:hasCurrencyValue>
-	                    <xsl:if test="Mena_IV_3_3/text()">
-	                    <gr:hasCurrency><xsl:value-of select="Mena_IV_3_3" /></gr:hasCurrency>
-	                    </xsl:if>
-	                    <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
-	                </gr:UnitPriceSpecification>
-	            </pc:documentsPrice>
-	            </xsl:if>
-	            
-	            <xsl:if test="Hodnota_II_2_1">
-	            <pc:agreedPrice>
-	                <gr:UnitPriceSpecification rdf:about="{$id_agreedPrice}">
-	                    <gr:hasCurrencyValue><xsl:value-of select="f:processPrice(Hodnota_II_2_1)" /></gr:hasCurrencyValue>
-	                    <xsl:if test="Mena_II_2_1/text()">
-	                    <gr:hasCurrency><xsl:value-of select="Mena_II_2_1" /></gr:hasCurrency>
-	                    </xsl:if>
-	                    <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
-	                </gr:UnitPriceSpecification>
-	            </pc:agreedPrice>
-	            </xsl:if>
+	            <xsl:apply-templates select="UvedteCenu_IV_3_3" />
+	            <xsl:apply-templates select="Hodnota_II_2_1" />
 	            
 	            <!-- TENDERS -->
 	            <xsl:if test="count(skup_priloha/oddil_5) &gt; 1">
 	                <xsl:for-each select="skup_priloha/oddil_5">
 	                    <pc:lot>
 	                        <pc:Contract>
-	                            <xsl:if test="ZakazkaNazev_V">
-	                            <gr:legalName><xsl:value-of select="ZakazkaNazev_V" /></gr:legalName>
-                                </xsl:if>
-	                            <xsl:if test="Strucpopis_V_5">
-	                            <dc:description><xsl:value-of select="Strucpopis_V_5" /></dc:description>
-	                            </xsl:if>
-	                            <xsl:if test="PocetNabidek_V_2">
-	                            <pc:numberOfTenders rdf:datatype="xsd:integer"><xsl:value-of select="PocetNabidek_V_2" /></pc:numberOfTenders>
-	                            </xsl:if>
+	                            <xsl:apply-templates select="ZakazkaNazev_V | Strucpopis_V_5 | PocetNabidek_V_2" />
+	                            
 	                            <xsl:call-template name="contractAward">
 	                                <xsl:with-param name="award" select="." />
 	                            </xsl:call-template>
@@ -331,69 +202,86 @@
 	            </xsl:if>
 	            
 	        </pc:Contract>
-	        
 
 	    </rdf:RDF>
 	       
 	</xsl:template>
     
+    <!-- TENDERS OPENING -->
+    
+    <xsl:template match="Datum_IV_3_8">
+        <dc:date rdf:datatype="xsd:dateTime">
+            <xsl:value-of select="f:processDateTime(text(),$root/Cas_IV_3_8)" />
+        </dc:date>
+    </xsl:template>
+    
+    <xsl:template match="Misto_IV_3_8">
+        <s:location>
+            <s:Place rdf:about="{$id_tenderPlace}">
+                <rdfs:label xml:lang="cs">
+                    <xsl:value-of select="text()" />
+                </rdfs:label>
+            </s:Place>
+        </s:location>
+    </xsl:template>
+    
+    <xsl:template match="VvzPublished">
+        <pc:publicationDate rdf:datatype="xsd:date">
+            <xsl:value-of select="f:processDate(text())"/>
+        </pc:publicationDate>
+        <rdfs:seeAlso>
+            <xsl:value-of select="$VVZ_FormURL" />
+        </rdfs:seeAlso>
+        <adms:identifier>
+            <adms:identifier rdf:about="{$id_contractNoticeIdentifier}">
+                <skos:notation rdf:datatype="xsd:string">
+                    <xsl:value-of select="$VVZ_FormNumber" />
+                </skos:notation>
+                <adms:schemeAgency>
+                    <xsl:value-of select="$schemeAgency" />
+                </adms:schemeAgency>
+                <dc:creator rdf:resource="{$creator}" />
+            </adms:identifier>
+        </adms:identifier>
+    </xsl:template>
+    
     <!-- TENDERS -->
     <xsl:template name="contractAward">
         <xsl:param name="award" />
         
-        <xsl:if test="$award/Datum_V_1">
-            <pc:awardDate><xsl:value-of select="f:processDate($award/Datum_V_1)" /></pc:awardDate>
-        </xsl:if>
+        <xsl:apply-templates select="$award/Datum_V_1" />
+        
         <pc:awardedTender>
             <pc:Tender>
                 <pc:supplier>
                     <gr:BusinessEntity>
-                        <xsl:if test="$award/NazevDodavatele_V_3">
-                        <gr:legalName><xsl:value-of select="$award/NazevDodavatele_V_3" /></gr:legalName>
-                        </xsl:if>
-                        <xsl:if test="$award/AdresaURL_V_3">
-                        <foaf:page><xsl:value-of select="$award/AdresaURL_V_3" /></foaf:page>
-                        </xsl:if>
+                        <xsl:apply-templates select="$award/NazevDodavatele_V_3" mode="businessEntity" />
+                        <xsl:apply-templates select="$award/AdresaURL_V_3" />
+                        
                         <s:contact>
                             <s:ContactPoint>
-                                <xsl:if test="$award/NazevDodavatele_V_3">
-                                <s:name><xsl:value-of select="$award/NazevDodavatele_V_3" /></s:name>
-                                </xsl:if>
-                                <xsl:if test="$award/Email_V_3">
-                                <s:email><xsl:value-of select="$award/Email_V_3" /></s:email>
-                                </xsl:if>
-                                <xsl:if test="$award/Telefon_V_3">
-                                <s:telephone><xsl:value-of select="$award/Telefon_V_3" /></s:telephone>
-                                </xsl:if>
-                                <xsl:if test="$award/Fax_V_3">
-                                <s:faxNumber><xsl:value-of select="$award/Fax_V_3" /></s:faxNumber>
-                                </xsl:if>
+                                <xsl:apply-templates select="$award/NazevDodavatele_V_3" mode="contactPoint" />
+                                <xsl:apply-templates select="$award/Email_V_3 | $award/Telefon_V_3 | $award/Fax_V_3" />
                             </s:ContactPoint>
                         </s:contact>
                         <s:address>
                             <s:PostalAddress>
-                                <xsl:if test="$award/Adresa_V_3">
-                                <s:streetAddress><xsl:value-of select="$award/Adresa_V_3" /></s:streetAddress>
-                                </xsl:if>
-                                <xsl:if test="$award/Psc_V_3">
-                                <s:postalCode><xsl:value-of select="$award/Psc_V_3" /></s:postalCode>
-                                </xsl:if>
-                                <xsl:if test="$award/Obec_V_3">
-                                <s:addressLocality><xsl:value-of select="$award/Obec_V_3" /></s:addressLocality>
-                                </xsl:if>
-                                <xsl:if test="$award/Stat_V_3">
-                                <s:addressCountry><xsl:value-of select="$award/Stat_V_3" /></s:addressCountry>
-                                </xsl:if>
+                                <xsl:apply-templates select="$award/Adresa_V_3 | $award/Psc_V_3 | $award/Obec_V_3 | $award/Stat_V_3" />
                             </s:PostalAddress>
                         </s:address>
                     </gr:BusinessEntity>
                 </pc:supplier>
+
                 <xsl:if test="$award/Hodnota2_V_4">
                     <pc:offeredPrice>
                         <gr:UnitPriceSpecification>
                             <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice($award/Hodnota2_V_4)" /></gr:hasCurrencyValue>
+                            <xsl:if test="$award/Mena2_V_4">
                             <gr:hasCurrency><xsl:value-of select="$award/Mena2_V_4" /></gr:hasCurrency>
+                            </xsl:if>
+                            <xsl:if test="$award/Dph2_V_4">
                             <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean"><xsl:value-of select="$award/Dph2_V_4" /></gr:valueAddedTaxIncluded>
+                            </xsl:if>
                         </gr:UnitPriceSpecification>
                     </pc:offeredPrice>
                 </xsl:if>
@@ -401,111 +289,157 @@
                 <pc:estimatedPrice>
                     <gr:UnitPriceSpecification>
                         <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice($award/Hodnota1_V_4)" /></gr:hasCurrencyValue>
+                        <xsl:if test="$award/Mena1_V_4">
                         <gr:hasCurrency><xsl:value-of select="$award/Mena1_V_4" /></gr:hasCurrency>
+                        </xsl:if>
+                        <xsl:if test="$award/Dph1_V_4">
                         <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean"><xsl:value-of select="$award/Dph1_V_4" /></gr:valueAddedTaxIncluded>
+                        </xsl:if>
                     </gr:UnitPriceSpecification>
                 </pc:estimatedPrice>
                 </xsl:if>
             </pc:Tender>
         </pc:awardedTender>
     </xsl:template>
-   
-    <xsl:template match="KontaktniMista_I_1 | KRukam_I_1 | E_Mail_I_1 | Tel_I_1 | Fax_I_1">
-       <xsl:param name="id_PCContactPoint" />
-       <pc:contact>
-           <s:ContactPoint rdf:about="{$id_PCContactPoint}">
-               <xsl:if test="KontaktniMista_I_1/text()">
-                   <s:description xml:lang="cs">
-                       <xsl:value-of select="KontaktniMista_I_1" />
-                   </s:description>
-               </xsl:if>
-               <xsl:if test="KRukam_I_1/text()">
-                   <s:name xml:lang="cs">
-                       <xsl:value-of select="KRukam_I_1" />
-                   </s:name>
-               </xsl:if>
-               <xsl:if test="E_Mail_I_1/text()">
-                   <s:email rdf:resource="{concat('mailto:',E_Mail_I_1)}" />
-               </xsl:if>
-               <xsl:if test="Tel_I_1/text()">
-                   <s:telephone>
-                       <xsl:value-of select="Tel_I_1" />
-                   </s:telephone>
-               </xsl:if>
-               <xsl:if test="Fax_I_1/text()">
-                   <s:faxNumber>
-                       <xsl:value-of select="Fax_I_1" />
-                   </s:faxNumber>
-               </xsl:if>
-           </s:ContactPoint>
-       </pc:contact>
-   </xsl:template>
+    
+    <xsl:template match="NazevDodavatele_V_3" mode="businessEntity">
+        <gr:legalName><xsl:value-of select="text()" /></gr:legalName>
+    </xsl:template>
+    
+    <xsl:template match="AdresaURL_V_3">
+        <foaf:page><xsl:value-of select="text()" /></foaf:page>
+    </xsl:template>
+    
+    <xsl:template match="NazevDodavatele_V_3" mode="contactPoint">
+        <s:name><xsl:value-of select="text()" /></s:name>
+    </xsl:template>
+    
+    <xsl:template match="Email_V_3">
+        <s:email rdf:resource="{text()}" />
+    </xsl:template>
+    
+    <xsl:template match="Telefon_V_3">
+        <s:telephone><xsl:value-of select="text()" /></s:telephone>
+    </xsl:template>
+    
+    <xsl:template match="Fax_V_3">
+        <s:faxNumber><xsl:value-of select="text()" /></s:faxNumber>
+    </xsl:template>
+    
+    <xsl:template match="Adresa_V_3">
+        <s:streetAddress><xsl:value-of select="text()" /></s:streetAddress>
+    </xsl:template>
+    
+    <xsl:template match="Psc_V_3">
+        <s:postalCode><xsl:value-of select="text()" /></s:postalCode>
+    </xsl:template>
+    
+    <xsl:template match="Obec_V_3">
+        <s:addressLocality><xsl:value-of select="text()" /></s:addressLocality>
+    </xsl:template>
+    
+    <xsl:template match="Stat_V_3">
+        <s:addressCountry><xsl:value-of select="text()" /></s:addressCountry>
+    </xsl:template>
+    
+    <xsl:template match="KontaktniMista_I_1">
+        <s:description xml:lang="cs">
+            <xsl:value-of select="text()" />
+        </s:description>
+    </xsl:template>
+    
+    <xsl:template match="KRukam_I_1">
+        <s:name xml:lang="cs">
+            <xsl:value-of select="text()" />
+        </s:name>
+    </xsl:template>
+    
+    <xsl:template match="E_Mail_I_1">
+        <s:email rdf:resource="{concat('mailto:',text())}" />
+    </xsl:template>
+    
+    <xsl:template match="Tel_I_1">
+        <s:telephone>
+            <xsl:value-of select="text()" />
+        </s:telephone>
+    </xsl:template>
+    
+    <xsl:template match="Fax_I_1">
+        <s:faxNumber>
+            <xsl:value-of select="text()" />
+        </s:faxNumber>
+    </xsl:template>
    
    
    <!-- ACTIVITIES -->
    
-    <xsl:template match="SluzbyProSirokouVerejnost_I_3">
+    <xsl:template match="Hpc_SluzbyProSirokouVerejnost_I_3 | SluzbyProSirokouVerejnost_I_3">
         <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#GeneralServices" />
 	</xsl:template>
     
-    <xsl:template match="Hpc_Obrana_I_3">
+    <xsl:template match="Hpc_Obrana_I_3 | Obrana_I_3">
         <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Defence" />
     </xsl:template>
     
-    <xsl:template match="Hpc_VerejnyPoradekABezpecnost_I_3">
+    <xsl:template match="Hpc_VerejnyPoradekABezpecnost_I_3 | VerejnyPoradekABezpecnost_I_3">
         <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Safety" />
     </xsl:template>
     
-    <xsl:template match="Hpc_ZivotniProstredi_I_3">
+    <xsl:template match="Hpc_ZivotniProstredi_I_3 | ZivotniProstredi_I_3">
         <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Environment" />
     </xsl:template>
     
-    <xsl:template match="Hpc_HospodarskeAFinancniZalezitosti_I_3">
+    <xsl:template match="Hpc_HospodarskeAFinancniZalezitosti_I_3 | HospodarskeAFinancniZalezitosti_I_3">
         <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#EconomicAffairs" />
     </xsl:template>
     
-    <xsl:template match="Hpc_Zdravotnictvi_I_3">
+    <xsl:template match="Hpc_Zdravotnictvi_I_3 | Zdravotnictvi_I_3">
         <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Health" />
     </xsl:template>
     
-    <xsl:template match="Hpc_BydleniAObcanskaVybavenost_I_3">
+    <xsl:template match="Hpc_BydleniAObcanskaVybavenost_I_3 | BydleniAObcanskaVybavenost_I_3">
         <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Housing" />
     </xsl:template>
     
-    <xsl:template match="Hpc_SocialniSluzby_I_3">
+    <xsl:template match="Hpc_SocialniSluzby_I_3 | SocialniSluzby_I_3">
         <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#SocialProtection" />
     </xsl:template>
     
-    <xsl:template match="Hpc_RekreaceKulturaANabozenstvi_I_3">
+    <xsl:template match="Hpc_RekreaceKulturaANabozenstvi_I_3 | RekreaceKulturaANabozenstvi_I_3">
         <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Cultural" />
     </xsl:template>
     
-    <xsl:template match="Hpc_Skolstvi_I_3">
+    <xsl:template match="Hpc_Skolstvi_I_3 | Skolstvi_I_3">
         <pc:activityKind rdf:resource="http://purl.org/procurement/public-contracts-activities#Educational" />
     </xsl:template>
     
     <xsl:template match="Hpc_Jiny_I_3">
-        <xsl:if test="$root/Hpc_Upresneni_I_3/text()">
+        <xsl:apply-templates select="$root/Hpc_Upresneni_I_3" />
+    </xsl:template>
+    
+    <xsl:template match="JinyProsimSpecifikujte_I_3">
+        <xsl:apply-templates select="$root/JinyProsimSpecifikujteB_I_3" />
+    </xsl:template>
+    
+    <xsl:template match="Hpc_Upresneni_I_3 | JinyProsimSpecifikujte_I_3">
         <pc:activityKind>
             <pc:activityKind> <!-- TODO zde by mohl byt URI -->
-                <skos:prefLabel><xsl:value-of select="$root/Hpc_Upresneni_I_3" /></skos:prefLabel>
+                <skos:prefLabel><xsl:value-of select="text()" /></skos:prefLabel>
                 <skos:isScheme rdf:resource="http://purl.org/procurement/public-contracts-activities#" />
                 <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-activities#" />
             </pc:activityKind>
         </pc:activityKind>
-        </xsl:if>
     </xsl:template>
 
     <!-- CRITERIA -->
 
-    <xsl:template match="NejnizsiNabidkovaCena_IV_2_1">
-        <xsl:param name="nm_criterion" />
-        <xsl:param name="nm_criteria" />
+    <xsl:template match="NejnizsiNabidkovaCena_IV_2_1 | KriteriaTyp_IV_2_1">
+
         <xsl:variable name="id">1</xsl:variable>
         
         <xsl:if test="text()">
         <pc:awardCriterion>
-            <pc:CriterionWeighting rdf:about="{concat($nm_criterion,$id)}">
+            <pc:CriterionWeighting rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <pc:weightedCriterion rdf:resource="http://purl.org/procurement/public-contracts-criteria#LowestPrice"></pc:weightedCriterion>
                 <pc:criterionWeight rdf:datatype="pcdt:percentage">100</pc:criterionWeight>
             </pc:CriterionWeighting>
@@ -515,16 +449,14 @@
     </xsl:template>
     
     <xsl:template match="Kriteria1_IV_2_1">
-        <xsl:param name="nm_criterion" />
-        <xsl:param name="nm_criteria" />
         <xsl:variable name="id">2</xsl:variable>
         <pc:awardCriterion>
-            <pc:AwardCriterion rdf:about="{concat($nm_criterion,$id)}">
+            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha1_IV_2_1/text()">
                 <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha1_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
                 <pc:weightedCriterion>
-                    <skos:Concept rdf:about="{concat($nm_criteria,$id)}">
+                    <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
                         <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
                         <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                         <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
@@ -535,16 +467,14 @@
     </xsl:template>
     
     <xsl:template match="Kriteria2_IV_2_1">
-        <xsl:param name="nm_criterion" />
-        <xsl:param name="nm_criteria" />
         <xsl:variable name="id">3</xsl:variable>
         <pc:awardCriterion>
-            <pc:AwardCriterion rdf:about="{concat($nm_criterion,$id)}">
+            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha2_IV_2_1/text()">
                 <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha2_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
                 <pc:weightedCriterion>
-                    <skos:Concept rdf:about="{concat($nm_criteria,$id)}">
+                    <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
                         <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
                         <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                         <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
@@ -555,16 +485,14 @@
     </xsl:template>
     
     <xsl:template match="Kriteria3_IV_2_1">
-        <xsl:param name="nm_criterion" />
-        <xsl:param name="nm_criteria" />
         <xsl:variable name="id">4</xsl:variable>
         <pc:awardCriterion>
-            <pc:AwardCriterion rdf:about="{concat($nm_criterion,$id)}">
+            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha3_IV_2_1">
                 <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha3_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
                 <pc:weightedCriterion>
-                    <skos:Concept rdf:about="{concat($nm_criteria,$id)}">
+                    <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
                         <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
                         <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                         <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
@@ -574,16 +502,330 @@
         </pc:awardCriterion>
     </xsl:template>
     
-    <!-- doplnit kriteria 4-10 -->
-    
-
-    
-    <!-- ADDITIONAL OBJECTS -->
-    <xsl:template match="HlavniSlovnikDp1_II_1_6 | HlavniSlovnikDp2_II_1_6 | HlavniSlovnikDp3_II_1_6 | HlavniSlovnikDp4_II_1_6">
-        <pc:additionalObject rdf:resource="{concat($nm_cpv,f:stripDashes(text()))}" />
+    <xsl:template match="Kriteria4_IV_2_1">
+        <xsl:variable name="id">5</xsl:variable>
+        <pc:awardCriterion>
+            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+                <xsl:if test="$root/Vaha4_IV_2_1">
+                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha4_IV_2_1" /></pc:criterionWeight>
+                </xsl:if>
+                <pc:weightedCriterion>
+                    <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
+                        <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
+                        <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                        <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                    </skos:Concept>
+                </pc:weightedCriterion>                    
+            </pc:AwardCriterion>
+        </pc:awardCriterion>
     </xsl:template>
     
-	
+    <xsl:template match="Kriteria5_IV_2_1">
+        <xsl:variable name="id">6</xsl:variable>
+        <pc:awardCriterion>
+            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+                <xsl:if test="$root/Vaha5_IV_2_1">
+                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha5_IV_2_1" /></pc:criterionWeight>
+                </xsl:if>
+                <pc:weightedCriterion>
+                    <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
+                        <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
+                        <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                        <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                    </skos:Concept>
+                </pc:weightedCriterion>                    
+            </pc:AwardCriterion>
+        </pc:awardCriterion>
+    </xsl:template>
+    
+    <xsl:template match="Kriteria6_IV_2_1">
+        <xsl:variable name="id">7</xsl:variable>
+        <pc:awardCriterion>
+            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+                <xsl:if test="$root/Vaha6_IV_2_1">
+                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha6_IV_2_1" /></pc:criterionWeight>
+                </xsl:if>
+                <pc:weightedCriterion>
+                    <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
+                        <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
+                        <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                        <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                    </skos:Concept>
+                </pc:weightedCriterion>                    
+            </pc:AwardCriterion>
+        </pc:awardCriterion>
+    </xsl:template>
+    
+    <xsl:template match="Kriteria7_IV_2_1">
+        <xsl:variable name="id">8</xsl:variable>
+        <pc:awardCriterion>
+            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+                <xsl:if test="$root/Vaha7_IV_2_1">
+                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha7_IV_2_1" /></pc:criterionWeight>
+                </xsl:if>
+                <pc:weightedCriterion>
+                    <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
+                        <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
+                        <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                        <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                    </skos:Concept>
+                </pc:weightedCriterion>                    
+            </pc:AwardCriterion>
+        </pc:awardCriterion>
+    </xsl:template>
+    
+    <xsl:template match="Kriteria8_IV_2_1">
+        <xsl:variable name="id">9</xsl:variable>
+        <pc:awardCriterion>
+            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+                <xsl:if test="$root/Vaha8_IV_2_1">
+                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha8_IV_2_1" /></pc:criterionWeight>
+                </xsl:if>
+                <pc:weightedCriterion>
+                    <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
+                        <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
+                        <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                        <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                    </skos:Concept>
+                </pc:weightedCriterion>                    
+            </pc:AwardCriterion>
+        </pc:awardCriterion>
+    </xsl:template>
+    
+    <xsl:template match="Kriteria9_IV_2_1">
+        <xsl:variable name="id">10</xsl:variable>
+        <pc:awardCriterion>
+            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+                <xsl:if test="$root/Vaha9_IV_2_1">
+                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha9_IV_2_1" /></pc:criterionWeight>
+                </xsl:if>
+                <pc:weightedCriterion>
+                    <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
+                        <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
+                        <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                        <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                    </skos:Concept>
+                </pc:weightedCriterion>                    
+            </pc:AwardCriterion>
+        </pc:awardCriterion>
+    </xsl:template>
+    
+    <xsl:template match="Kriteria10_IV_2_1">
+        <xsl:variable name="id">11</xsl:variable>
+        <pc:awardCriterion>
+            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+                <xsl:if test="$root/Vaha10_IV_2_1">
+                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha10_IV_2_1" /></pc:criterionWeight>
+                </xsl:if>
+                <pc:weightedCriterion>
+                    <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
+                        <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
+                        <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                        <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                    </skos:Concept>
+                </pc:weightedCriterion>                    
+            </pc:AwardCriterion>
+        </pc:awardCriterion>
+    </xsl:template>
+    
+    <!-- ADDITIONAL OBJECTS -->
+    <xsl:template match="HlavniSlovnikDp1_II_1_6 | HlavniSlovnikDp2_II_1_6 | HlavniSlovnikDp3_II_1_6 | HlavniSlovnikDp4_II_1_6 | HlavniSlovnikDp1_II_1_5 | HlavniSlovnikDp2_II_1_5 | HlavniSlovnikDp3_II_1_5 | HlavniSlovnikDp4_II_1_5">
+        <pc:additionalObject rdf:resource="{concat($nm_cpv,f:stripDashes(text()))}" />
+    </xsl:template>
+
+    <xsl:template match="NazevPridelenyZakazce_II_1_1 | NazevPridelenyZakazceVerejnymZadavatelem_II_1_1">
+        <dc:title xml:lang="cs">
+            <xsl:value-of select="text()" />
+        </dc:title> 
+    </xsl:template>
+    
+    <xsl:template match="StrucnyPopisZakazky_II_1_5 | StrucnyPopis_II1_4">
+        <dc:description xml:lang="cs">
+            <xsl:value-of select="text()" />
+        </dc:description>
+    </xsl:template>
+    
+    <xsl:template match="DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2 | DruhZakazky_II_1_2">
+        <pc:kind rdf:resource="{f:getKind(/node(),text())}" />
+    </xsl:template>
+    
+    <xsl:template match="UredniNazev_I_1" mode="legalName">
+        <gr:legalName xml:lang="cs">
+            <xsl:value-of select="text()" />
+        </gr:legalName>
+    </xsl:template>
+    
+    <xsl:template match="ObecnaAdresaVerejnehoZadavatele_I_1">
+        <foaf:page rdf:resource="{text()}" />
+    </xsl:template>
+    
+    <xsl:template match="AdresaProfiluKupujiciho_I_1">
+        <pc:profile rdf:resource="{text()}" />
+    </xsl:template>
+    
+    <xsl:template match="AdresaProfiluZadavatele_I_1">
+        <pc:buyerProfile rdf:resource="{text()}" />
+    </xsl:template>
+    
+    <xsl:template match="Dvz_DruhVerejnehoZadavatele_I_2 | DruhVerejnehoZadavatele_I_2">
+        <xsl:choose>
+            <xsl:when test="string-length(f:getAuthorityKind(text())) &gt; 0">
+                <pc:authorityKind rdf:resource="{f:getAuthorityKind(text())}" />
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:apply-templates select="$root/Dvz_Upresneni_I_2 | $root/ProsimUpresnete_I_2" />
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="Dvz_Upresneni_I_2 | ProsimUpresnete_I_2">
+        <pc:authorityKind>
+            <pc:authorityKind> <!-- TODO zde by mohl byt URI, ale jaky? -->
+                <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-authority-kinds#" />
+                <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-authority-kinds#"></skos:topConceptOf>
+                <skos:prefLabel xml:lang="cs">
+                    <xsl:value-of select="text()" />
+                </skos:prefLabel>
+            </pc:authorityKind>
+        </pc:authorityKind>
+    </xsl:template>
+
+    <xsl:template match="DruhRizeni_IV_1_1">
+        <pc:procedureType rdf:resource="{f:getProcedureType(text())}" />
+    </xsl:template>
+    
+    <xsl:template match="PostovniAdresa_I_1 | Adresa_I_1">
+        <s:streetAddress><xsl:value-of select="text()" /></s:streetAddress>
+    </xsl:template>
+    
+    <xsl:template match="Psc_I_1">
+        <s:postalCode><xsl:value-of select="text()" /></s:postalCode>
+    </xsl:template>
+    
+    <xsl:template match="Obec_I_1">
+        <s:addressLocality><xsl:value-of select="text()" /></s:addressLocality>
+    </xsl:template>
+    
+    <xsl:template match="Stat_I_1">
+        <s:addressCountry><xsl:value-of select="text()" /></s:addressCountry>
+    </xsl:template>
+
+    <xsl:template match="HlavniSlovnikHp_II_1_6 | HlavniSlovnikHp_II_1_5">
+        <pc:mainObject rdf:resource="{concat($nm_cpv,f:stripDashes(text()))}" />
+    </xsl:template>
+    
+    <xsl:template match="HlavniMistoProvadeniStavebnichPraci_II_1_2 | HlavniMisto_II_1_2">
+        <pc:location>
+            <s:Place rdf:about="{$id_pcPlace}">
+                <rdfs:label xml:lang="cs"><xsl:value-of select="text()" /></rdfs:label>
+                <xsl:apply-templates select="$root/KodNuts1_II_1_2 | $root/NUTS1_II_1_2" />
+            </s:Place>
+        </pc:location>
+    </xsl:template>
+    
+    <xsl:template match="KodNuts1_II_1_2 | NUTS1_II_1_2">
+        <pceu:hasParentRegion rdf:resource="{concat('http://ec.europa.eu/eurostat/ramon/rdfdata/nuts2008/',text())}" />
+    </xsl:template>
+    
+    <xsl:template match="UvedtePredpokladanouHodnotuBezDph_II_2_1">
+        <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasCurrencyValue>
+    </xsl:template>
+    
+    <xsl:template match="RozsahOd_II_2_1">
+        <gr:hasMinCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasMinCurrencyValue>
+    </xsl:template>
+    
+    <xsl:template match="RozsahDo_II_2_1">
+        <gr:hasMaxCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasMaxCurrencyValue>
+    </xsl:template>
+    
+    <xsl:template match="MenaHodnota_II_2_1">
+        <gr:hasCurrency><xsl:value-of select="text()" /></gr:hasCurrency>
+    </xsl:template>
+    
+    <xsl:template match="NeboZahajeni_II_3">
+        <pc:startDate rdf:datatype="xsd:date">
+            <xsl:value-of select="f:processDate(text())" />
+        </pc:startDate>
+    </xsl:template>
+    
+    <xsl:template match="Dokonceni_II_3">
+        <pc:estimatedEndDate rdf:datatype="xsd:date">
+            <xsl:value-of select="f:processDate(text())" />
+        </pc:estimatedEndDate>
+    </xsl:template>
+    
+    <xsl:template match="Datum_IV_3_4">
+        <pc:tenderDeadline rdf:datatype="xsd:dateTime">
+            <xsl:value-of select="f:processDateTime(text(),$root/Cas_IV_3_4)" />
+        </pc:tenderDeadline>
+    </xsl:template>
+    
+    <xsl:template match="Datum_IV_3_3">
+        <pc:documentationRequestDeadline rdf:datatype="xsd:dateTime">
+            <xsl:value-of select="f:processDateTime(text(),$root/Cas_IV_3_3)" />
+        </pc:documentationRequestDeadline>
+    </xsl:template>
+    
+    <xsl:template match="SpisoveCisloPrideleneVerejnymZadavatelem_IV_3_1 | SpisCislo_IV_3_1">
+        <adms:identifier>
+            <adms:Identifier rdf:about="{$id_pcIdentifier1}">
+                <skos:notation><xsl:value-of select="text()" /></skos:notation>
+                <dc:creator><xsl:value-of select="$id_contractingAuthority" /></dc:creator>
+                <!--<dc:type rdf:resource="http://purl.org/procurement/public-contracts#ContractIdentifierIssuedByContractingAuthority" /> -->
+                <xsl:apply-templates select="$root/UredniNazev_I_1 | $root/Nazev_I_1" mode="schemeAgency" />
+            </adms:Identifier>
+        </adms:identifier>
+    </xsl:template>
+    
+    <xsl:template match="UredniNazev_I_1 | Nazev_I_1" mode="schemeAgency">
+        <adms:schemeAgency><xsl:value-of select="text()" /></adms:schemeAgency>
+    </xsl:template>
+    
+    <xsl:template match="UvedteCenu_IV_3_3">
+        <pc:documentsPrice>
+            <gr:UnitPriceSpecification rdf:about="{$id_documentsPrice}">
+                <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasCurrencyValue>
+                <xsl:apply-templates select="$root/Mena_IV_3_3" />
+                <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
+            </gr:UnitPriceSpecification>
+        </pc:documentsPrice>
+    </xsl:template>
+    
+    <xsl:template match="Mena_IV_3_3">
+        <gr:hasCurrency><xsl:value-of select="text()" /></gr:hasCurrency>
+    </xsl:template>
+    
+    <xsl:template match="Hodnota_II_2_1">
+        <pc:agreedPrice>
+            <gr:UnitPriceSpecification rdf:about="{$id_agreedPrice}">
+                <gr:hasCurrencyValue><xsl:value-of select="f:processPrice(text())" /></gr:hasCurrencyValue>
+                <xsl:apply-templates select="$root/Mena_II_2_1" />
+                <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
+            </gr:UnitPriceSpecification>
+        </pc:agreedPrice>
+    </xsl:template>
+    
+    <xsl:template match="Mena_II_2_1">
+        <gr:hasCurrency><xsl:value-of select="text()" /></gr:hasCurrency>
+    </xsl:template>
+
+    <xsl:template match="ZakazkaNazev_V">
+        <gr:legalName><xsl:value-of select="text()" /></gr:legalName>
+    </xsl:template>
+    
+    <xsl:template match="Strucpopis_V_5">
+        <dc:description><xsl:value-of select="text()" /></dc:description>
+    </xsl:template>
+    
+    <xsl:template match="PocetNabidek_V_2">
+        <pc:numberOfTenders rdf:datatype="xsd:integer"><xsl:value-of select="text()" /></pc:numberOfTenders>
+    </xsl:template>
+
+    <xsl:template match="Datum_V_1">
+        <pc:awardDate rdf:datatype="xsd:date"><xsl:value-of select="f:processDate(text())" /></pc:awardDate>
+    </xsl:template>
+
     <!-- @param date dd/mm/yyyy -->
     <xsl:function name="f:processDate">
         <xsl:param name="date"/>
@@ -617,7 +859,7 @@
     <xsl:function name="f:getKind">
         
         <xsl:param name="root" />
-        <xsl:variable name="kindCat" select="$root/DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2/text()" />
+        <xsl:param name="kindCat" />
         
         <xsl:variable name="serviceKinds" as="element()*">
             <kind>http://purl.org/procurement/public-contracts-kinds#MaintenanceAndRepairServices</kind>
@@ -651,7 +893,12 @@
         
         <xsl:choose>
             <xsl:when test="matches($kindCat,'SERVICES')">
-                <xsl:value-of select="$serviceKinds[xsd:integer($root/KategorieSluzeb_II_1_2)]" />
+                <xsl:if test="$root/Sluzby_II_1_2"> <!-- form type 3 -->
+                    <xsl:value-of select="$serviceKinds[xsd:integer($root/Sluzby_II_1_2)]" />
+                </xsl:if>
+                <xsl:if test="$root/KategorieSluzeb_II_1_2"> <!-- form type 2 -->
+                    <xsl:value-of select="$serviceKinds[xsd:integer($root/KategorieSluzeb_II_1_2)]" />
+                </xsl:if>
             </xsl:when>
             <xsl:when test="matches($kindCat,'WORKS')">
                 <xsl:choose>
