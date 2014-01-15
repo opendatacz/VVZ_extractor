@@ -9,6 +9,7 @@
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:pc="http://purl.org/procurement/public-contracts#"
+    xmlns:pceu="http://purl.org/procurement/public-contracts-eu#"
     xmlns:pcdt="http://purl.org/procurement/public-contracts-datatypes#"
     xmlns:dc="http://purl.org/dc/terms/"
     xmlns:adms="http://www.w3.org/ns/adms#"
@@ -32,38 +33,39 @@
     
     <xsl:variable name="root" select="root" />
     
+    <xsl:variable name="VVZ_FormId" select="$root/skup_priloha/hlavicka/VvzFormId" />
+    <xsl:variable name="VVZ_FormNumber" select="$root/skup_priloha/hlavicka/VvzNumber" />
+    <xsl:variable name="VVZ_PCNumber" select="$root/skup_priloha/hlavicka/CocoCode" />
+    <xsl:variable name="VVZ_SubmitterIC" select="$root/Ic_I_1" /> <!-- TODO osetrit jestli je IC zadano, kdyz ne, tak to bude null. CO s tim? -->
+    
+    <xsl:variable name="VVZ_FormURL" select="concat('http://www.vestnikverejnychzakazek.cz/cs/Form/Display/', $VVZ_FormId)" />
+
+    <xsl:variable name="PC_URI" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber)" />
+    
+    <!-- IDENTIFIERS -->
+    <xsl:variable name="id_contractNotice" select="concat($nm_vvz,'contract-notice/',$VVZ_FormNumber)" />
+    <xsl:variable name="id_contractNoticeIdentifier" select="concat($nm_vvz,'contract-notice/',$VVZ_FormNumber,'/identifier/1')" />
+    <xsl:variable name="id_publicContract" select="$PC_URI" />
+    <xsl:variable name="id_tendersOpening" select="concat($PC_URI,'/tenders-opening/1')" />
+    <xsl:variable name="id_tenderPlace" select="concat($PC_URI,'/tender-place/1')" />
+    <xsl:variable name="id_PCContactPoint" select="concat($PC_URI,'/contact-point/1')" />
+    <xsl:variable name="id_contractingAuthority" select="concat($nm_lod,'business-entity/CZ',$VVZ_SubmitterIC,'-',$VVZ_FormNumber)" />
+    <xsl:variable name="id_pcPlace" select="concat($PC_URI,'/place/1')" />
+    <xsl:variable name="id_estimatedPrice" select="concat($PC_URI,'/estimated-price/1')" />
+    <xsl:variable name="id_awardCriteriaCombination" select="concat($PC_URI,'/combination-of-contract-award-criteria/')" />
+    <xsl:variable name="nm_contractAwardCriterion" select="concat($PC_URI,'/contract-award-criterion/')" />
+    <xsl:variable name="nm_publicContractCriteria" select="concat($PC_URI,'/public-contract-criteria/')" />
+    <xsl:variable name="id_pcIdentifier1" select="concat($PC_URI,'/identifier/1')" />
+    <xsl:variable name="id_pcIdentifier2" select="concat($PC_URI,'/identifier/2')" />
+    <xsl:variable name="id_contractingAuthAddress" select="concat($PC_URI,'/postal-address/1')" />
+    <xsl:variable name="id_documentsPrice" select="concat($PC_URI,'/documents-price/1')" />
+    <xsl:variable name="id_agreedPrice" select="concat($PC_URI,'/agreed-price/1')" />
+    
     <!-- TODO musim osetrit aby se funkcim nepredavaly prazdne parametry -->
 
     <xsl:output encoding="UTF-8" indent="yes" method="xml" />
 
 	<xsl:template match="root">
-	    
-	    <xsl:variable name="VVZ_FormId" select="skup_priloha/hlavicka/VvzFormId" />
-	    <xsl:variable name="VVZ_FormNumber" select="skup_priloha/hlavicka/VvzNumber" />
-	    <xsl:variable name="VVZ_PCNumber" select="skup_priloha/hlavicka/CocoCode" />
-	    <xsl:variable name="VVZ_SubmitterIC" select="Ic_I_1" /> <!-- TODO osetrit jestli je IC zadano, kdyz ne, tak to bude null. CO s tim? -->
-	    <xsl:variable name="VVZ_FormURL" select="concat('http://www.vestnikverejnychzakazek.cz/cs/Form/Display/', $VVZ_FormId)" />
-	    
-	    <xsl:variable name="PC_URI" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber)" />
-	    
-	    <!-- IDENTIFIERS -->
-	    <xsl:variable name="id_contractNotice" select="concat($nm_vvz,'contract-notice/',$VVZ_FormNumber)" />
-	    <xsl:variable name="id_contractNoticeIdentifier" select="concat($nm_vvz,'contract-notice/',$VVZ_FormNumber,'/identifier/1')" />
-	    <xsl:variable name="id_publicContract" select="$PC_URI" />
-	    <xsl:variable name="id_tendersOpening" select="concat($PC_URI,'/tenders-opening/1')" />
-	    <xsl:variable name="id_tenderPlace" select="concat($PC_URI,'/tender-place/1')" />
-	    <xsl:variable name="id_PCContactPoint" select="concat($PC_URI,'/contact-point/1')" />
-	    <xsl:variable name="id_contractingAuthority" select="concat($nm_lod,'business-entity/CZ',$VVZ_SubmitterIC,'-',$VVZ_FormNumber)" />
-	    <xsl:variable name="id_pcPlace" select="concat($PC_URI,'/place/1')" />
-	    <xsl:variable name="id_estimatedPrice" select="concat($PC_URI,'/estimated-price/1')" />
-	    <xsl:variable name="id_awardCriteriaCombination" select="concat($PC_URI,'/combination-of-contract-award-criteria/')" />
-	    <xsl:variable name="nm_contractAwardCriterion" select="concat($PC_URI,'/contract-award-criterion/')" />
-	    <xsl:variable name="nm_publicContractCriteria" select="concat($PC_URI,'/public-contract-criteria/')" />
-	    <xsl:variable name="id_pcIdentifier1" select="concat($PC_URI,'/identifier/1')" />
-	    <xsl:variable name="id_pcIdentifier2" select="concat($PC_URI,'/identifier/2')" />
-	    <xsl:variable name="id_contractingAuthAddress" select="concat($PC_URI,'/postal-address/1')" />
-	    <xsl:variable name="id_documentsPrice" select="concat($PC_URI,'/documents-price/1')" />
-	    <xsl:variable name="id_agreedPrice" select="concat($PC_URI,'/agreed-price/1')" />
 	    
 	    <rdf:RDF>
 	        
