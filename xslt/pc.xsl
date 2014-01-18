@@ -2,6 +2,7 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:i="http://www.ness.cz/schemas/isvzus/v11.1"
     xmlns:f="http://opendata.cz/xslt/functions#"
+    xmlns:uuid="http://www.uuid.org"
     exclude-result-prefixes="f i"
     xpath-default-namespace="http://www.ness.cz/schemas/isvzus/v11.1"
     
@@ -36,7 +37,22 @@
     <xsl:variable name="VVZ_FormId" select="$root/skup_priloha/hlavicka/VvzFormId" />
     <xsl:variable name="VVZ_FormNumber" select="$root/skup_priloha/hlavicka/VvzNumber" />
     <xsl:variable name="VVZ_PCNumber" select="$root/skup_priloha/hlavicka/CocoCode" />
-    <xsl:variable name="VVZ_SubmitterIC" select="$root/Ic_I_1" /> <!-- TODO osetrit jestli je IC zadano, kdyz ne, tak to bude null. CO s tim? -->
+    <xsl:variable name="VVZ_SubmitterIC">
+        <xsl:choose>
+            <xsl:when test="$root/Ic_I_1/text()">
+                <xsl:value-of select="concat('CZ',$root/Ic_I_1)" />
+            </xsl:when>
+            <xsl:when test="$root/Nazev_I_1/text()">
+                <xsl:value-of select="f:slugify($root/Nazev_I_1)" />
+            </xsl:when>
+            <xsl:when test="$root/UredniNazev_I_1/text()">
+                <xsl:value-of select="f:slugify($root/UredniNazev_I_1)" />
+            </xsl:when>
+            <xsl:otherwise>
+                <!-- make UUID -->
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
     
     <xsl:variable name="VVZ_FormURL" select="concat('http://www.vestnikverejnychzakazek.cz/cs/Form/Display/', $VVZ_FormId)" />
 
@@ -47,9 +63,17 @@
     <xsl:variable name="id_contractNoticeIdentifier" select="concat($nm_vvz,'contract-notice/',$VVZ_FormNumber,'/identifier/1')" />
     <xsl:variable name="id_publicContract" select="$PC_URI" />
     <xsl:variable name="id_tendersOpening" select="concat($PC_URI,'/tenders-opening/1')" />
-    <xsl:variable name="id_tenderPlace" select="concat($PC_URI,'/tender-place/1')" />
-    <xsl:variable name="id_PCContactPoint" select="concat($PC_URI,'/contact-point/1')" />
-    <xsl:variable name="id_contractingAuthority" select="concat($nm_lod,'business-entity/CZ',$VVZ_SubmitterIC,'-',$VVZ_FormNumber)" />
+    <xsl:variable name="id_tendersOpeningPlace" select="concat($PC_URI,'/tenders-opening-place/1')" />
+    <xsl:variable name="id_PCContactPoint" select="concat($PC_URI,'/pc-contact-point/1')" />
+    <xsl:variable name="nm_tendersContactPoint" select="concat($PC_URI,'/tenders-contact-point/')" />
+    <xsl:variable name="nm_tender" select="concat($PC_URI,'/tender/')" />
+    <xsl:variable name="nm_tendersContract" select="concat($PC_URI,'/tenders-contract/')" />
+    <xsl:variable name="nm_tendersOfferedPrice" select="concat($PC_URI,'/tenders-offered-price/')" />
+    <xsl:variable name="nm_tendersEstimatedPrice" select="concat($PC_URI,'/tenders-estimated-price/')" />
+    <xsl:variable name="nm_supplier" select="concat($PC_URI,'/supplier/')" />
+    <xsl:variable name="nm_tendersPlace" select="concat($PC_URI,'/tenders-place/')" />
+    <xsl:variable name="nm_businessEntity" select="concat($nm_lod,'business-entity/')" />
+    <xsl:variable name="id_contractingAuthority" select="concat($nm_businessEntity,$VVZ_SubmitterIC,'-',$VVZ_FormNumber)" />
     <xsl:variable name="id_pcPlace" select="concat($PC_URI,'/place/1')" />
     <xsl:variable name="id_estimatedPrice" select="concat($PC_URI,'/estimated-price/1')" />
     <xsl:variable name="id_awardCriteriaCombination" select="concat($PC_URI,'/combination-of-contract-award-criteria/')" />
@@ -66,7 +90,6 @@
 	<xsl:template match="root">
 	    
 	    <rdf:RDF>
-	        
 	        <xsl:choose>
 	            <xsl:when test="verze_formulare='0200'"> <!-- ContractNotice -->
 	                <xsl:if test="Datum_IV_3_8 | Misto_IV_3_8">
@@ -107,7 +130,7 @@
 
 	            <pc:contractingAuthority>
 	                <gr:BusinessEntity rdf:about="{$id_contractingAuthority}">
-	                    <xsl:apply-templates select="UredniNazev_I_1" mode="legalName" />
+	                    <xsl:apply-templates select="UredniNazev_I_1 | Nazev_I_1" mode="legalName" />
 	                    <xsl:apply-templates select="ObecnaAdresaVerejnehoZadavatele_I_1 | AdresaProfiluKupujiciho_I_1 | AdresaProfiluZadavatele_I_1 | Dvz_DruhVerejnehoZadavatele_I_2 | DruhVerejnehoZadavatele_I_2" />
 	 	                    	
 	                    <!-- form type 2 -->
@@ -143,10 +166,10 @@
 	            
 	            <xsl:if test="UvedtePredpokladanouHodnotuBezDph_II_2_1 | RozsahOd_II_2_1 | RozsahDo_II_2_1">
 	            <pc:estimatedPrice>
-                    <gr:UnitPriceSpecification rdf:about="{$id_estimatedPrice}">
+                    <gr:PriceSpecification rdf:about="{$id_estimatedPrice}">
                         <xsl:apply-templates select="UvedtePredpokladanouHodnotuBezDph_II_2_1 | RozsahOd_II_2_1 | RozsahDo_II_2_1 | MenaHodnota_II_2_1" />
                         <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
-	                </gr:UnitPriceSpecification>
+	                </gr:PriceSpecification>
 	            </pc:estimatedPrice>
 	            </xsl:if>
 	            <pc:awardCriteriaCombination>
@@ -178,18 +201,27 @@
 	                </adms:Identifier>
 	            </adms:identifier>
 	            
-	            <xsl:apply-templates select="UvedteCenu_IV_3_3" />
-	            <xsl:apply-templates select="Hodnota_II_2_1" />
+	            <xsl:apply-templates select="UvedteCenu_IV_3_3 | Hodnota_II_2_1" />
 	            
 	            <!-- TENDERS -->
 	            <xsl:if test="count(skup_priloha/oddil_5) &gt; 1">
 	                <xsl:for-each select="skup_priloha/oddil_5">
 	                    <pc:lot>
-	                        <pc:Contract>
+	                        <pc:Contract rdf:about="{concat($nm_tendersContract,position())}">
 	                            <xsl:apply-templates select="ZakazkaNazev_V | Strucpopis_V_5 | PocetNabidek_V_2" />
 	                            
 	                            <xsl:call-template name="contractAward">
 	                                <xsl:with-param name="award" select="." />
+	                                <xsl:with-param name="bussinesEntityURI">
+	                                    <xsl:choose>
+	                                        <xsl:when test="NazevDodavatele_V_3">
+	                                            <xsl:value-of select="concat($nm_businessEntity, f:slugify(NazevDodavatele_V_3), '-', $VVZ_FormNumber)" />
+	                                        </xsl:when>
+	                                        <xsl:otherwise>
+	                                            <!-- make UUID -->
+	                                        </xsl:otherwise>
+	                                    </xsl:choose>
+	                                </xsl:with-param>
 	                            </xsl:call-template>
 	                        </pc:Contract>
 	                    </pc:lot>
@@ -198,6 +230,19 @@
 	            <xsl:if test="count(skup_priloha/oddil_5) = 1">
 	                <xsl:call-template name="contractAward">
 	                    <xsl:with-param name="award" select="." />
+	                    <xsl:with-param name="bussinesEntityURI">
+	                        <xsl:choose>
+	                            <xsl:when test="$root/skup_priloha/IcoDodavatel">
+	                                <xsl:value-of select="concat($nm_businessEntity, $root/skup_priloha/IcoDodavatel, '-', $VVZ_FormNumber)" />
+	                            </xsl:when>
+	                            <xsl:when test="NazevDodavatele_V_3">
+	                                <xsl:value-of select="concat($nm_businessEntity, f:slugify(NazevDodavatele_V_3), '-', $VVZ_FormNumber)" />
+	                            </xsl:when>
+	                            <xsl:otherwise>
+	                                <!-- make UUID -->
+	                            </xsl:otherwise>
+	                        </xsl:choose>
+	                    </xsl:with-param>
 	                </xsl:call-template>
 	            </xsl:if>
 	            
@@ -217,7 +262,7 @@
     
     <xsl:template match="Misto_IV_3_8">
         <s:location>
-            <s:Place rdf:about="{$id_tenderPlace}">
+            <s:Place rdf:about="{$id_tendersOpeningPlace}">
                 <rdfs:label xml:lang="cs">
                     <xsl:value-of select="text()" />
                 </rdfs:label>
@@ -248,33 +293,42 @@
     <!-- TENDERS -->
     <xsl:template name="contractAward">
         <xsl:param name="award" />
+        <xsl:param name="bussinesEntityURI" />
+        
+        <xsl:variable name="count">
+            <xsl:number/>
+        </xsl:variable>
         
         <xsl:apply-templates select="$award/Datum_V_1" />
         
         <pc:awardedTender>
-            <pc:Tender>
+            <pc:Tender rdf:about="{concat($nm_tender,$count)}">
                 <pc:supplier>
-                    <gr:BusinessEntity>
+                    <gr:BusinessEntity rdf:about="{$bussinesEntityURI}">
                         <xsl:apply-templates select="$award/NazevDodavatele_V_3" mode="businessEntity" />
                         <xsl:apply-templates select="$award/AdresaURL_V_3" />
                         
+                        <xsl:if test="$award/NazevDodavatele_V_3 | $award/Email_V_3 | $award/Telefon_V_3 | $award/Fax_V_3">
                         <s:contact>
-                            <s:ContactPoint>
+                            <s:ContactPoint rdf:about="{concat($nm_tendersContactPoint,$count)}">
                                 <xsl:apply-templates select="$award/NazevDodavatele_V_3" mode="contactPoint" />
                                 <xsl:apply-templates select="$award/Email_V_3 | $award/Telefon_V_3 | $award/Fax_V_3" />
                             </s:ContactPoint>
                         </s:contact>
+                        </xsl:if>
+                        <xsl:if test="$award/Adresa_V_3 | $award/Psc_V_3 | $award/Obec_V_3 | $award/Stat_V_3">
                         <s:address>
-                            <s:PostalAddress>
+                            <s:PostalAddress rdf:about="{concat($nm_tendersPlace,$count)}">
                                 <xsl:apply-templates select="$award/Adresa_V_3 | $award/Psc_V_3 | $award/Obec_V_3 | $award/Stat_V_3" />
                             </s:PostalAddress>
                         </s:address>
+                        </xsl:if>
                     </gr:BusinessEntity>
                 </pc:supplier>
 
                 <xsl:if test="$award/Hodnota2_V_4">
                     <pc:offeredPrice>
-                        <gr:UnitPriceSpecification>
+                        <gr:PriceSpecification rdf:about="{concat($nm_tendersOfferedPrice,$count)}">
                             <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice($award/Hodnota2_V_4)" /></gr:hasCurrencyValue>
                             <xsl:if test="$award/Mena2_V_4">
                             <gr:hasCurrency><xsl:value-of select="$award/Mena2_V_4" /></gr:hasCurrency>
@@ -282,12 +336,12 @@
                             <xsl:if test="$award/Dph2_V_4">
                             <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean"><xsl:value-of select="$award/Dph2_V_4" /></gr:valueAddedTaxIncluded>
                             </xsl:if>
-                        </gr:UnitPriceSpecification>
+                        </gr:PriceSpecification>
                     </pc:offeredPrice>
                 </xsl:if>
                 <xsl:if test="$award/Hodnota1_V_4">
                 <pc:estimatedPrice>
-                    <gr:UnitPriceSpecification>
+                    <gr:PriceSpecification rdf:about="{concat($nm_tendersEstimatedPrice,$count)}">
                         <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice($award/Hodnota1_V_4)" /></gr:hasCurrencyValue>
                         <xsl:if test="$award/Mena1_V_4">
                         <gr:hasCurrency><xsl:value-of select="$award/Mena1_V_4" /></gr:hasCurrency>
@@ -295,7 +349,7 @@
                         <xsl:if test="$award/Dph1_V_4">
                         <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean"><xsl:value-of select="$award/Dph1_V_4" /></gr:valueAddedTaxIncluded>
                         </xsl:if>
-                    </gr:UnitPriceSpecification>
+                    </gr:PriceSpecification>
                 </pc:estimatedPrice>
                 </xsl:if>
             </pc:Tender>
@@ -649,7 +703,7 @@
         <pc:kind rdf:resource="{f:getKind(/node(),text())}" />
     </xsl:template>
     
-    <xsl:template match="UredniNazev_I_1" mode="legalName">
+    <xsl:template match="UredniNazev_I_1 | Nazev_I_1" mode="legalName">
         <gr:legalName xml:lang="cs">
             <xsl:value-of select="text()" />
         </gr:legalName>
@@ -784,11 +838,11 @@
     
     <xsl:template match="UvedteCenu_IV_3_3">
         <pc:documentsPrice>
-            <gr:UnitPriceSpecification rdf:about="{$id_documentsPrice}">
+            <gr:PriceSpecification rdf:about="{$id_documentsPrice}">
                 <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasCurrencyValue>
                 <xsl:apply-templates select="$root/Mena_IV_3_3" />
                 <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
-            </gr:UnitPriceSpecification>
+            </gr:PriceSpecification>
         </pc:documentsPrice>
     </xsl:template>
     
@@ -798,11 +852,11 @@
     
     <xsl:template match="Hodnota_II_2_1">
         <pc:agreedPrice>
-            <gr:UnitPriceSpecification rdf:about="{$id_agreedPrice}">
+            <gr:PriceSpecification rdf:about="{$id_agreedPrice}">
                 <gr:hasCurrencyValue><xsl:value-of select="f:processPrice(text())" /></gr:hasCurrencyValue>
                 <xsl:apply-templates select="$root/Mena_II_2_1" />
                 <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
-            </gr:UnitPriceSpecification>
+            </gr:PriceSpecification>
         </pc:agreedPrice>
     </xsl:template>
     
@@ -1038,6 +1092,11 @@
             </xsl:when>
         </xsl:choose>
         
+    </xsl:function>
+    
+    <xsl:function name="f:slugify" as="xsd:anyURI">
+        <xsl:param name="classLabel" as="xsd:string"/>
+        <xsl:value-of select="encode-for-uri(translate(replace(lower-case(normalize-space($classLabel)), '\s', '-'),'áàâäéèêëěíìîïóòôöúùûüůýžščřďňť','aaaaeeeeeiiiioooouuuuuyzscrdnt'))"/>
     </xsl:function>
     
 </xsl:stylesheet>
