@@ -119,13 +119,7 @@
 
 	            <xsl:apply-templates select="StrucnyPopisZakazky_II_1_5 | StrucnyPopis_II1_4" />
 	            
-	            <xsl:if test="KontaktniMista_I_1 | KRukam_I_1 | E_Mail_I_1 | Tel_I_1 | Fax_I_1">
-	            <pc:contact>
-	                <s:ContactPoint rdf:about="{$id_PCContactPoint}">
-	                    <xsl:apply-templates select="KontaktniMista_I_1 | KRukam_I_1 | E_Mail_I_1 | Tel_I_1 | Fax_I_1" />
-	                </s:ContactPoint>
-	            </pc:contact>
-	            </xsl:if>
+	            <xsl:apply-templates select=".[KontaktniMista_I_1 | KRukam_I_1 | E_Mail_I_1 | Tel_I_1 | Fax_I_1]" mode="pcContactPoint" />
 	            
 	            <xsl:apply-templates select="DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2 | DruhZakazky_II_1_2" />
 	            
@@ -143,16 +137,8 @@
 	                    <xsl:apply-templates select="SluzbyProSirokouVerejnost_I_3 | Obrana_I_3 | VerejnyPoradekABezpecnost_I_3 | ZivotniProstredi_I_3 | HospodarskeAFinancniZalezitosti_I_3 | Zdravotnictvi_I_3 | BydleniAObcanskaVybavenost_I_3 | SocialniSluzby_I_3 | RekreaceKulturaANabozenstvi_I_3 | Skolstvi_I_3" />
 	                    <xsl:apply-templates select="JinyProsimSpecifikujte_I_3" />
 	                    
-	                    <xsl:if test="PostovniAdresa_I_1 | Psc_I_1 | Obec_I_1 | Stat_I_1">
-	                    <s:address>
-	                        <s:PostalAddress rdf:about="{$id_contractingAuthAddress}">
-	                            <xsl:apply-templates select="PostovniAdresa_I_1 | Adresa_I_1" />
-	                            <xsl:apply-templates select="Psc_I_1" />
-	                            <xsl:apply-templates select="Obec_I_1" />
-	                            <xsl:apply-templates select="Stat_I_1" />
-	                        </s:PostalAddress>
-	                    </s:address>
-	                    </xsl:if>
+	                    <xsl:apply-templates select=".[PostovniAdresa_I_1 | Psc_I_1 | Obec_I_1 | Stat_I_1]" mode="contractingAuthorityAddress" />
+	                    
 	                </gr:BusinessEntity>
 	            </pc:contractingAuthority>
 	            
@@ -167,14 +153,8 @@
 
 	            <pc:notice rdf:resource="{$id_contractNotice}" />
 	            
-	            <xsl:if test="UvedtePredpokladanouHodnotuBezDph_II_2_1 | RozsahOd_II_2_1 | RozsahDo_II_2_1">
-	            <pc:estimatedPrice>
-                    <gr:PriceSpecification rdf:about="{$id_estimatedPrice}">
-                        <xsl:apply-templates select="UvedtePredpokladanouHodnotuBezDph_II_2_1 | RozsahOd_II_2_1 | RozsahDo_II_2_1 | MenaHodnota_II_2_1" />
-                        <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
-	                </gr:PriceSpecification>
-	            </pc:estimatedPrice>
-	            </xsl:if>
+	            <xsl:apply-templates select=".[UvedtePredpokladanouHodnotuBezDph_II_2_1 | RozsahOd_II_2_1 | RozsahDo_II_2_1]" mode="pcEstimatedPrice" />
+	            
 	            <pc:awardCriteriaCombination>
                     <pc:awardCriteriaCombination rdf:about="{$id_awardCriteriaCombination}">
                         <!-- nejnizsi cenova nabidka - NejnizsiNabidkovaCena_IV_2_1 form type 2 | KriteriaTyp_IV_2_1 form type 3 -->
@@ -256,6 +236,31 @@
 	    </rdf:RDF>
 	       
 	</xsl:template>
+    
+    <xsl:template match="root" mode="pcContactPoint">
+        <pc:contact>
+            <s:ContactPoint rdf:about="{$id_PCContactPoint}">
+                <xsl:apply-templates select="KontaktniMista_I_1 | KRukam_I_1 | E_Mail_I_1 | Tel_I_1 | Fax_I_1" />
+            </s:ContactPoint>
+        </pc:contact>
+    </xsl:template>
+    
+    <xsl:template match="root" mode="contractingAuthorityAddress">
+        <s:address>
+            <s:PostalAddress rdf:about="{$id_contractingAuthAddress}">
+                <xsl:apply-templates select="PostovniAdresa_I_1 | Adresa_I_1 | Psc_I_1 | Obec_I_1 | Stat_I_1" />
+            </s:PostalAddress>
+        </s:address>
+    </xsl:template>
+    
+    <xsl:template match="root" mode="pcEstimatedPrice">
+        <pc:estimatedPrice>
+            <gr:PriceSpecification rdf:about="{$id_estimatedPrice}">
+                <xsl:apply-templates select="UvedtePredpokladanouHodnotuBezDph_II_2_1 | RozsahOd_II_2_1 | RozsahDo_II_2_1 | MenaHodnota_II_2_1" />
+                <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
+            </gr:PriceSpecification>
+        </pc:estimatedPrice>
+    </xsl:template>
     
     <!-- TENDERS OPENING -->
     
