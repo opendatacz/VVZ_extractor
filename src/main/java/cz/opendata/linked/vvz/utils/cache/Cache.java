@@ -33,16 +33,31 @@ public class Cache extends cz.opendata.linked.vvz.utils.Object {
 		return instance;
 	}
 
-	private String cacheDir =  "./";
-	private String basePath = "cache";
+	/**
+	 * Dir where downloaded documents is stored
+	 */
+	private String cacheDir =  "cache";
+
+	/**
+	 * Path where cache dir is located
+	 */
+	private String basePath = "./";
 
 
 	/**
-	 * Dir location where documents will be cached
+	 * Dir location where downloaded documents will be cached
 	 * @param cacheDir
 	 */
 	public void setCacheDir(String cacheDir) {
 		this.cacheDir = cacheDir;
+	}
+
+	/**
+	 * Path where cache dir is located
+	 * @param basePath
+	 */
+	public void setBasePath(String basePath) {
+		this.basePath = basePath;
 	}
 
 	/**

@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -24,12 +26,13 @@ public class Main {
 
 		Cache cache = Cache.getInstance();
 		cache.setLogger(logger);
+		cache.setBasePath("/home/cammeron/Java-Workspace/VVZ_extractor");
 
 		QueryParameters params = new QueryParameters();
 
 		try {
 			params.setDateFrom(new SimpleDateFormat("dd.MM.yyyy").parse("10.01.2014"));
-			params.setDateTo(new SimpleDateFormat("dd.MM.yyyy").parse("10.01.2013"));
+			params.setDateTo(new SimpleDateFormat("dd.MM.yyyy").parse("10.01.2014"));
 			params.setSelectedFormType(2);
 			params.setContext("first");
 		} catch(Exception e) {
@@ -52,29 +55,35 @@ public class Main {
 
 		try {
 
-			Integer i = 0;
-			Integer failures=0;
+			Integer parsed = 0, alreadyParsed = 0, cached = 0, alreadyCached = 0, failures=0;
 
-			for(String id : pcr.loadPublicContractsList(params)) {
+			List<String> PCIds = pcr.loadPublicContractsList(params);
+			logger.info(PCIds.size() + " public contracts is going to be downloaded and parsed");
+
+			for(String id : PCIds) {
 
 				try {
 					if(cache.isCached(id)) {
-						logger.info(id + " file is cached");
+						logger.info(id + " file is already cached");
 						cache.getDocument(id);
+						alreadyCached++;
 					} else {
 						logger.info(id + " file is going to be downloaded");
 						cache.storeDocument(pcr.loadPublicContractForm(id),id);
+						cached++;
 					}
 
 					if(journal.getDocument(Integer.parseInt(id)) == null) {
 						journal.insertDocument(Integer.parseInt(id));
 
 						logger.info(id + " document is going to be parsed");
+						parsed++;
 					} else {
-						logger.info(id + " document is parsed");
+						logger.info(id + " document has been already parsed");
+						alreadyParsed++;
 					}
 
-					i++;
+
 					// todo mohlo by to taky checknout verzi formulare
 
 				} catch(CacheException | JournalException | PCReceiveException e) {
@@ -85,8 +94,12 @@ public class Main {
 
 			}
 
-			logger.info("tries: " + i);
-			logger.info("failures: " + failures);
+			logger.info("Downloading & parsing finished. \n" +
+					"Failures: " + failures + "\n" +
+					"Downloaded: " + cached + "\n" +
+					"Already cached: " + alreadyCached + "\n" +
+					"Parsed: " + parsed + "\n" +
+					"Already parsed: " + alreadyParsed + "");
 
 			journal.close();
 

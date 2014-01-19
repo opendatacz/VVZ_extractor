@@ -3,7 +3,7 @@
     xmlns:i="http://www.ness.cz/schemas/isvzus/v11.1"
     xmlns:f="http://opendata.cz/xslt/functions#"
     xmlns:uuid="http://www.uuid.org"
-    exclude-result-prefixes="f i"
+    exclude-result-prefixes="f i uuid"
     xpath-default-namespace="http://www.ness.cz/schemas/isvzus/v11.1"
     
     xmlns:gr="http://purl.org/goodrelations/v1#"
@@ -23,6 +23,10 @@
     xmlns:kinds="http://purl.org/procurement/public-contracts-kinds#"
     xmlns:proctypes="http://purl.org/procurement/public-contracts-procedure-types#"
     xmlns:criteria="http://purl.org/procurement/public-contracts-criteria#">
+    
+    <xsl:import href="uuid.xslt" />
+    
+    <xsl:output encoding="UTF-8" indent="yes" method="xml" />
 
 	<xsl:variable name="nm_lod" select="'http://linked.opendata.cz/resource/'"/>
 	<xsl:variable name="nm_vvz" select="concat($nm_lod, 'vestnikverejnychzakazek.cz/')"/>
@@ -50,6 +54,7 @@
             </xsl:when>
             <xsl:otherwise>
                 <!-- make UUID -->
+                <xsl:value-of select="uuid:get-uuid()" />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -85,8 +90,6 @@
     <xsl:variable name="id_documentsPrice" select="concat($PC_URI,'/documents-price/1')" />
     <xsl:variable name="id_agreedPrice" select="concat($PC_URI,'/agreed-price/1')" />
     
-    <xsl:output encoding="UTF-8" indent="yes" method="xml" />
-
 	<xsl:template match="root">
 	    
 	    <rdf:RDF>
@@ -214,11 +217,12 @@
 	                                <xsl:with-param name="award" select="." />
 	                                <xsl:with-param name="bussinesEntityURI">
 	                                    <xsl:choose>
-	                                        <xsl:when test="NazevDodavatele_V_3">
+	                                        <xsl:when test="NazevDodavatele_V_3/text()">
 	                                            <xsl:value-of select="concat($nm_businessEntity, f:slugify(NazevDodavatele_V_3), '-', $VVZ_FormNumber)" />
 	                                        </xsl:when>
 	                                        <xsl:otherwise>
 	                                            <!-- make UUID -->
+	                                            <xsl:value-of select="uuid:get-uuid()" />
 	                                        </xsl:otherwise>
 	                                    </xsl:choose>
 	                                </xsl:with-param>
@@ -232,14 +236,15 @@
 	                    <xsl:with-param name="award" select="." />
 	                    <xsl:with-param name="bussinesEntityURI">
 	                        <xsl:choose>
-	                            <xsl:when test="$root/skup_priloha/IcoDodavatel">
+	                            <xsl:when test="$root/skup_priloha/IcoDodavatel/text()">
 	                                <xsl:value-of select="concat($nm_businessEntity, $root/skup_priloha/IcoDodavatel, '-', $VVZ_FormNumber)" />
 	                            </xsl:when>
-	                            <xsl:when test="NazevDodavatele_V_3">
+	                            <xsl:when test="NazevDodavatele_V_3/text()">
 	                                <xsl:value-of select="concat($nm_businessEntity, f:slugify(NazevDodavatele_V_3), '-', $VVZ_FormNumber)" />
 	                            </xsl:when>
 	                            <xsl:otherwise>
 	                                <!-- make UUID -->
+	                                <xsl:value-of select="uuid:get-uuid()" />
 	                            </xsl:otherwise>
 	                        </xsl:choose>
 	                    </xsl:with-param>
