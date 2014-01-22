@@ -19,7 +19,6 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
 
     private TextField input_dateFrom;
     private TextField input_dateTo;
-    private TextField input_workingDir;
     private TextField input_context;
 
     private boolean formValid = false;
@@ -35,28 +34,20 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
 	public void setConfiguration(VVZ_extractorConfig conf) throws ConfigException {
 		input_dateFrom.setValue(conf.dateFrom);
         input_dateTo.setValue(conf.dateTo);
-        input_workingDir.setValue(conf.workingDir);
         input_context.setValue(conf.context);
 	}
 
 	@Override
 	public VVZ_extractorConfig getConfiguration() throws ConfigException {
 
-        if (!input_workingDir.isValid()) {
-            InvalidValueException ex = new EmptyValueException("Working dir path must be filled!");
-            throw new ConfigException(ex.getMessage(), ex);
-        } else if (!formValid) {
-            throw new InvalidValueException("Working dir path must be filled!");
-        } else {
 
-            VVZ_extractorConfig conf = new VVZ_extractorConfig();
-            conf.dateFrom = input_dateFrom.getValue().trim();
-            conf.dateTo = input_dateTo.getValue().trim();
-            conf.context = input_context.getValue().trim();
-            conf.workingDir = input_workingDir.getValue().trim();
+        VVZ_extractorConfig conf = new VVZ_extractorConfig();
+        conf.dateFrom = input_dateFrom.getValue().trim();
+        conf.dateTo = input_dateTo.getValue().trim();
+        conf.context = input_context.getValue().trim();
 
-            return conf;
-        }
+        return conf;
+
 
 	}
 
@@ -87,7 +78,7 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
         input_dateFrom.setImmediate(true);
         input_dateFrom.setWidth("100%");
         input_dateFrom.setHeight("-1px");
-
+	    input_dateFrom.setDescription("Date to");
 
         mainLayout.addComponent(input_dateFrom);
 
@@ -98,6 +89,7 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
         input_dateTo.setImmediate(true);
         input_dateTo.setWidth("100%");
         input_dateTo.setHeight("-1px");
+	    input_dateTo.setDescription("");
 
         mainLayout.addComponent(input_dateTo);
 
@@ -108,44 +100,10 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
         input_context.setImmediate(true);
         input_context.setWidth("100%");
         input_context.setHeight("-1px");
+	    input_context.setDescription("");
 
         mainLayout.addComponent(input_context);
 
-        // text field for date to
-        input_workingDir = new TextField();
-        input_workingDir.setNullRepresentation("");
-        input_workingDir.setCaption("Working dir path:");
-        input_workingDir.setImmediate(true);
-        input_workingDir.setWidth("100%");
-        input_workingDir.setHeight("-1px");
-
-        mainLayout.addComponent(input_workingDir);
-
-        input_workingDir.addValueChangeListener(new Property.ValueChangeListener() {
-            @Override
-            public void valueChange(Property.ValueChangeEvent event) {
-                final String workingDir = input_workingDir.getValue().trim();
-
-                if (workingDir.isEmpty()) {
-
-                    formValid = false;
-
-                } else {
-                    formValid = true;
-                }
-            }
-        });
-
-        input_workingDir.addValidator(new Validator() {
-            @Override
-            public void validate(Object value) throws Validator.InvalidValueException {
-                if (value.getClass() == String.class && !((String) value).isEmpty()) {
-                    return;
-                }
-                throw new Validator.InvalidValueException("Working dir path must be filled!");
-            }
-
-        });
 
         return mainLayout;
     }

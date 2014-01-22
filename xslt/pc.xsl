@@ -42,9 +42,13 @@
     <xsl:variable name="VVZ_FormNumber" select="$root/skup_priloha/hlavicka/VvzNumber" />
     <xsl:variable name="VVZ_PCNumber" select="$root/skup_priloha/hlavicka/CocoCode" />
     <xsl:variable name="VVZ_SubmitterIC">
+        <!-- ICO can be found in two places -->
         <xsl:choose>
             <xsl:when test="$root/Ic_I_1/text()">
                 <xsl:value-of select="concat('CZ',$root/Ic_I_1)" />
+            </xsl:when>
+            <xsl:when test="$root/skup_priloha/hlavicka/IcoZadavatel/text()">
+                <xsl:value-of select="concat('CZ',$root/skup_priloha/hlavicka/IcoZadavatel)" />
             </xsl:when>
             <xsl:when test="$root/Nazev_I_1/text()">
                 <xsl:value-of select="f:slugify($root/Nazev_I_1)" />
@@ -89,9 +93,12 @@
     <xsl:variable name="id_contractingAuthAddress" select="concat($PC_URI,'/postal-address/1')" />
     <xsl:variable name="id_documentsPrice" select="concat($PC_URI,'/documents-price/1')" />
     <xsl:variable name="id_agreedPrice" select="concat($PC_URI,'/agreed-price/1')" />
+    <xsl:variable name="id_activityKind" select="concat($PC_URI,'/activity-kind/1')" />
+    <xsl:variable name="id_authorityKind" select="concat($PC_URI,'/authority-kind/1')" />
     
 	<xsl:template match="root">
 	    
+	    <xsl:if test="verze_formulare='0200' or verze_formulare='0300'">
 	    <rdf:RDF>
 	        <xsl:choose>
 	            <xsl:when test="verze_formulare='0200'"> <!-- ContractNotice -->
@@ -164,17 +171,13 @@
 	            
 	            <xsl:apply-templates select="NeboZahajeni_II_3 | Dokonceni_II_3 | Datum_IV_3_4 | Datum_IV_3_3" />
 	            
-	            <xsl:if test="VMesicich_II_3/text() or NeboDnech_II_3/text()">
-	            <pc:duration rdf:datatype="xsd:duration">
-	                <xsl:value-of select="f:getDuration(VMesicich_II_3,NeboDnech_II_3)" />
-	            </pc:duration>
-	            </xsl:if>
+	            <xsl:apply-templates select="VMesicich_II_3 | NeboDnech_II_3" />
 	            
 	            <xsl:apply-templates select="SpisoveCisloPrideleneVerejnymZadavatelem_IV_3_1 | SpisCislo_IV_3_1" />
 	            
 	            <adms:identifier>
 	                <adms:Identifier rdf:about="{$id_pcIdentifier2}">
-	                    <skos:notation rdf:datatype="xsd:string">
+	                    <skos:notation>
 	                        <xsl:value-of select="$VVZ_PCNumber" />
 	                    </skos:notation>
 	                    <adms:schemeAgency>
@@ -202,7 +205,7 @@
 	                                        </xsl:when>
 	                                        <xsl:otherwise>
 	                                            <!-- make UUID -->
-	                                            <xsl:value-of select="uuid:get-uuid()" />
+	                                            <xsl:value-of select="concat($nm_businessEntity, uuid:get-uuid(), '-', $VVZ_FormNumber)" />
 	                                        </xsl:otherwise>
 	                                    </xsl:choose>
 	                                </xsl:with-param>
@@ -213,7 +216,7 @@
 	            </xsl:if>
 	            <xsl:if test="count(skup_priloha/oddil_5) = 1">
 	                <xsl:call-template name="contractAward">
-	                    <xsl:with-param name="award" select="." />
+	                    <xsl:with-param name="award" select="skup_priloha/oddil_5" />
 	                    <xsl:with-param name="bussinesEntityURI">
 	                        <xsl:choose>
 	                            <xsl:when test="$root/skup_priloha/IcoDodavatel/text()">
@@ -224,7 +227,7 @@
 	                            </xsl:when>
 	                            <xsl:otherwise>
 	                                <!-- make UUID -->
-	                                <xsl:value-of select="uuid:get-uuid()" />
+	                                <xsl:value-of select="concat($nm_businessEntity, uuid:get-uuid(), '-', $VVZ_FormNumber)" />
 	                            </xsl:otherwise>
 	                        </xsl:choose>
 	                    </xsl:with-param>
@@ -234,6 +237,7 @@
 	        </pc:Contract>
 
 	    </rdf:RDF>
+	    </xsl:if>
 	       
 	</xsl:template>
     
@@ -273,9 +277,9 @@
     <xsl:template match="Misto_IV_3_8">
         <s:location>
             <s:Place rdf:about="{$id_tendersOpeningPlace}">
-                <rdfs:label xml:lang="cs">
+                <s:name xml:lang="cs">
                     <xsl:value-of select="text()" />
-                </rdfs:label>
+                </s:name>
             </s:Place>
         </s:location>
     </xsl:template>
@@ -289,7 +293,7 @@
         </rdfs:seeAlso>
         <adms:identifier>
             <adms:identifier rdf:about="{$id_contractNoticeIdentifier}">
-                <skos:notation rdf:datatype="xsd:string">
+                <skos:notation>
                     <xsl:value-of select="$VVZ_FormNumber" />
                 </skos:notation>
                 <adms:schemeAgency>
@@ -302,13 +306,13 @@
     
     <!-- TENDERS -->
     <xsl:template name="contractAward">
-        <xsl:param name="award" />
-        <xsl:param name="bussinesEntityURI" />
+        <xsl:param name="award" as="node()" />
+        <xsl:param name="bussinesEntityURI" as="xsd:string" />
         
-        <xsl:variable name="count">
+        <xsl:variable name="count" as="xsd:integer">
             <xsl:number/>
         </xsl:variable>
-        
+
         <xsl:apply-templates select="$award/Datum_V_1" />
         
         <pc:awardedTender>
@@ -364,6 +368,18 @@
                 </xsl:if>
             </pc:Tender>
         </pc:awardedTender>
+    </xsl:template>
+    
+    <xsl:template match="VMesicich_II_3">
+        <pc:duration rdf:datatype="xsd:duration">
+            <xsl:value-of select="f:getDuration(text(),'M')" />
+        </pc:duration>
+    </xsl:template>
+    
+    <xsl:template match="NeboDnech_II_3">
+        <pc:duration rdf:datatype="xsd:duration">
+            <xsl:value-of select="f:getDuration(text(),'D')" />
+        </pc:duration>
     </xsl:template>
     
     <xsl:template match="NazevDodavatele_V_3" mode="businessEntity">
@@ -485,9 +501,9 @@
         <xsl:apply-templates select="$root/JinyProsimSpecifikujteB_I_3" />
     </xsl:template>
     
-    <xsl:template match="Hpc_Upresneni_I_3 | JinyProsimSpecifikujte_I_3">
+    <xsl:template match="Hpc_Upresneni_I_3 | JinyProsimSpecifikujteB_I_3">
         <pc:activityKind>
-            <pc:activityKind> <!-- TODO zde by mohl byt URI -->
+            <pc:activityKind rdf:about="{$id_activityKind}">
                 <skos:prefLabel><xsl:value-of select="text()" /></skos:prefLabel>
                 <skos:isScheme rdf:resource="http://purl.org/procurement/public-contracts-activities#" />
                 <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-activities#" />
@@ -499,9 +515,9 @@
 
     <xsl:template match="NejnizsiNabidkovaCena_IV_2_1 | KriteriaTyp_IV_2_1">
 
-        <xsl:variable name="id">1</xsl:variable>
+        <xsl:variable name="id" as="xsd:integer">1</xsl:variable>
         
-        <xsl:if test="text()">
+        <xsl:if test="text() = true()">
         <pc:awardCriterion>
             <pc:CriterionWeighting rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <pc:weightedCriterion rdf:resource="http://purl.org/procurement/public-contracts-criteria#LowestPrice"></pc:weightedCriterion>
@@ -513,7 +529,7 @@
     </xsl:template>
     
     <xsl:template match="Kriteria1_IV_2_1">
-        <xsl:variable name="id">2</xsl:variable>
+        <xsl:variable name="id" as="xsd:integer">2</xsl:variable>
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha1_IV_2_1/text()">
@@ -531,7 +547,7 @@
     </xsl:template>
     
     <xsl:template match="Kriteria2_IV_2_1">
-        <xsl:variable name="id">3</xsl:variable>
+        <xsl:variable name="id" as="xsd:integer">3</xsl:variable>
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha2_IV_2_1/text()">
@@ -549,7 +565,7 @@
     </xsl:template>
     
     <xsl:template match="Kriteria3_IV_2_1">
-        <xsl:variable name="id">4</xsl:variable>
+        <xsl:variable name="id" as="xsd:integer">4</xsl:variable>
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha3_IV_2_1">
@@ -567,7 +583,7 @@
     </xsl:template>
     
     <xsl:template match="Kriteria4_IV_2_1">
-        <xsl:variable name="id">5</xsl:variable>
+        <xsl:variable name="id" as="xsd:integer">5</xsl:variable>
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha4_IV_2_1">
@@ -585,7 +601,7 @@
     </xsl:template>
     
     <xsl:template match="Kriteria5_IV_2_1">
-        <xsl:variable name="id">6</xsl:variable>
+        <xsl:variable name="id" as="xsd:integer">6</xsl:variable>
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha5_IV_2_1">
@@ -603,7 +619,7 @@
     </xsl:template>
     
     <xsl:template match="Kriteria6_IV_2_1">
-        <xsl:variable name="id">7</xsl:variable>
+        <xsl:variable name="id" as="xsd:integer">7</xsl:variable>
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha6_IV_2_1">
@@ -621,7 +637,7 @@
     </xsl:template>
     
     <xsl:template match="Kriteria7_IV_2_1">
-        <xsl:variable name="id">8</xsl:variable>
+        <xsl:variable name="id" as="xsd:integer">8</xsl:variable>
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha7_IV_2_1">
@@ -639,7 +655,7 @@
     </xsl:template>
     
     <xsl:template match="Kriteria8_IV_2_1">
-        <xsl:variable name="id">9</xsl:variable>
+        <xsl:variable name="id" as="xsd:integer">9</xsl:variable>
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha8_IV_2_1">
@@ -657,7 +673,7 @@
     </xsl:template>
     
     <xsl:template match="Kriteria9_IV_2_1">
-        <xsl:variable name="id">10</xsl:variable>
+        <xsl:variable name="id" as="xsd:integer">10</xsl:variable>
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha9_IV_2_1">
@@ -675,7 +691,7 @@
     </xsl:template>
     
     <xsl:template match="Kriteria10_IV_2_1">
-        <xsl:variable name="id">11</xsl:variable>
+        <xsl:variable name="id" as="xsd:integer">11</xsl:variable>
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha10_IV_2_1">
@@ -710,7 +726,10 @@
     </xsl:template>
     
     <xsl:template match="DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2 | DruhZakazky_II_1_2">
-        <pc:kind rdf:resource="{f:getKind(/node(),text())}" />
+        <xsl:variable name="kind" select="f:getKind(text())" />
+        <xsl:if test="$kind!=''">
+        <pc:kind rdf:resource="{$kind}" />
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="UredniNazev_I_1 | Nazev_I_1" mode="legalName">
@@ -744,7 +763,7 @@
     
     <xsl:template match="Dvz_Upresneni_I_2 | ProsimUpresnete_I_2">
         <pc:authorityKind>
-            <pc:authorityKind> <!-- TODO zde by mohl byt URI, ale jaky? -->
+            <pc:authorityKind rdf:about="{$id_authorityKind}">
                 <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-authority-kinds#" />
                 <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-authority-kinds#"></skos:topConceptOf>
                 <skos:prefLabel xml:lang="cs">
@@ -755,7 +774,9 @@
     </xsl:template>
 
     <xsl:template match="DruhRizeni_IV_1_1">
-        <pc:procedureType rdf:resource="{f:getProcedureType(text())}" />
+        <xsl:if test="DruhRizeni_IV_1_1/text()">
+            <pc:procedureType rdf:resource="{f:getProcedureType(text())}" />
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="PostovniAdresa_I_1 | Adresa_I_1">
@@ -781,7 +802,7 @@
     <xsl:template match="HlavniMistoProvadeniStavebnichPraci_II_1_2 | HlavniMisto_II_1_2">
         <pc:location>
             <s:Place rdf:about="{$id_pcPlace}">
-                <rdfs:label xml:lang="cs"><xsl:value-of select="text()" /></rdfs:label>
+                <s:name xml:lang="cs"><xsl:value-of select="text()" /></s:name>
                 <xsl:apply-templates select="$root/KodNuts1_II_1_2 | $root/NUTS1_II_1_2" />
             </s:Place>
         </pc:location>
@@ -892,7 +913,7 @@
 
     <!-- @param date dd/mm/yyyy -->
     <xsl:function name="f:processDate">
-        <xsl:param name="date"/>
+        <xsl:param name="date" as="xsd:string" />
         <xsl:analyze-string select="$date" regex="(\d{{2}})/(\d{{2}})/(\d{{4}})">
             <xsl:matching-substring>
                 <xsl:value-of select="xsd:date(concat(regex-group(3), '-', regex-group(2), '-', regex-group(1)))"/>
@@ -905,15 +926,15 @@
     
     <!-- @param date dd/mm/yyyy -->
     <!-- @param time hh:mm -->
-    <xsl:function name="f:processDateTime">
-        <xsl:param name="date" />
-        <xsl:param name="time" />
+    <xsl:function name="f:processDateTime" as="xsd:dateTime">
+        <xsl:param name="date" as="xsd:string" />
+        <xsl:param name="time" as="xsd:string" />
         <xsl:choose>
             <xsl:when test="$time">
-                <xsl:value-of select="concat(f:processDate($date),'T',$time)" />
+                <xsl:value-of select="concat(f:processDate($date),'T',$time,':00')" />
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="concat(f:processDate($date),'T00:00')" />
+                <xsl:value-of select="concat(f:processDate($date),'T00:00:00')" />
             </xsl:otherwise>
         </xsl:choose>
         
@@ -921,9 +942,8 @@
     
     <!-- @param root node -->
     <xsl:function name="f:getKind">
-        
-        <xsl:param name="root" />
-        <xsl:param name="kindCat" />
+
+        <xsl:param name="kindCat" as="xsd:string" />
         
         <xsl:variable name="serviceKinds" as="element()*">
             <kind>http://purl.org/procurement/public-contracts-kinds#MaintenanceAndRepairServices</kind>
@@ -958,10 +978,14 @@
         <xsl:choose>
             <xsl:when test="matches($kindCat,'SERVICES')">
                 <xsl:if test="$root/Sluzby_II_1_2"> <!-- form type 3 -->
+                    <xsl:if test="string(number($root/Sluzby_II_1_2)) != 'NaN'">
                     <xsl:value-of select="$serviceKinds[xsd:integer($root/Sluzby_II_1_2)]" />
+                    </xsl:if>
                 </xsl:if>
                 <xsl:if test="$root/KategorieSluzeb_II_1_2"> <!-- form type 2 -->
+                    <xsl:if test="string(number($root/KategorieSluzeb_II_1_2)) != 'NaN'">
                     <xsl:value-of select="$serviceKinds[xsd:integer($root/KategorieSluzeb_II_1_2)]" />
+                    </xsl:if>
                 </xsl:if>
             </xsl:when>
             <xsl:when test="matches($kindCat,'WORKS')">
@@ -1036,7 +1060,7 @@
     </xsl:function>
     
     <!-- @param text string -->
-    <xsl:function name="f:stripDashes">
+    <xsl:function name="f:stripDashes" as="xsd:string">
         <xsl:param name="text" as="xsd:string" />
         
         <xsl:analyze-string select="$text" regex="(\d*)-(\d*)">
@@ -1051,7 +1075,7 @@
     </xsl:function>
     
     <!-- @param price string -->
-    <xsl:function name="f:processPrice">
+    <xsl:function name="f:processPrice" as="xsd:decimal">
         <xsl:param name="price" as="xsd:string" />
         <xsl:value-of select="translate(translate($price,' ',''),',','.')" />
     </xsl:function>
@@ -1080,33 +1104,21 @@
             <xsl:when test="matches($kind,'EU_INSTITUTION')">
                 <xsl:value-of select="'http://purl.org/procurement/public-contracts-authority-kinds#InternationalOrganization'" />
             </xsl:when>
-            <xsl:when test="matches($kind,'OTHER')">
-                
-            </xsl:when>
         </xsl:choose>
     </xsl:function>
     
-    <!-- @param months -->
-    <!-- @param years -->
-    <!-- @param days -->
     <xsl:function name="f:getDuration">
-        <xsl:param name="months" />
-        <xsl:param name="days" />
+        <xsl:param name="value" as="xsd:integer" />
+        <xsl:param name="unit" as="xsd:string" />
         
-        <xsl:choose>
-            <xsl:when test="$months">
-                <xsl:value-of select="concat('P',$months,'M')" />
-            </xsl:when>
-            <xsl:when test="$days">
-                <xsl:value-of select="concat('P',$months,'D')" />
-            </xsl:when>
-        </xsl:choose>
+        <xsl:value-of select="concat('P',$value,$unit)" />
         
     </xsl:function>
     
     <xsl:function name="f:slugify" as="xsd:anyURI">
-        <xsl:param name="classLabel" as="xsd:string"/>
-        <xsl:value-of select="encode-for-uri(translate(replace(lower-case(normalize-space($classLabel)), '\s', '-'),'áàâäéèêëěíìîïóòôöúùûüůýžščřďňť','aaaaeeeeeiiiioooouuuuuyzscrdnt'))"/>
+        <xsl:param name="text" as="xsd:string"/>
+        <xsl:value-of select="encode-for-uri(translate(replace(lower-case(normalize-unicode($text, 'NFKD')), '\P{IsBasicLatin}', ''), ' ', '-'))" />
+        <!--  <xsl:value-of select="encode-for-uri(translate(replace(lower-case(normalize-space($text)), '\s', '-'),'áàâäéèêëěíìîïóòôöúùûüůýžščřďňť','aaaaeeeeeiiiioooouuuuuyzscrdnt'))"/>-->
     </xsl:function>
     
 </xsl:stylesheet>

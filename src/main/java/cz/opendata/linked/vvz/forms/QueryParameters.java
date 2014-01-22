@@ -6,22 +6,29 @@ import java.util.Date;
 
 public class QueryParameters {
 
-	private String selectedFormType = "";
+	private String[] selectedFormTypes;
 	private String dateFrom = "";
 	private String dateTo = "";
 	private String context = "";
 
-	public void setSelectedFormType(Integer formType) throws Exception{
-		// 1-19 a 50-55
-		if(formType < 1 || (formType > 19 && formType < 50) || formType > 55) {
-			throw new Exception("formType number must be in range 1-19 a 50-55");
-		} else {
-			this.selectedFormType = formType.toString();
+	public void setSelectedFormTypes(Integer[] formTypes) throws Exception{
+
+		String[] finalFormTypes = new String[formTypes.length];
+
+		for(int i=0; i<formTypes.length; i++) {
+			// 1-19 a 50-55
+			if(formTypes[i] < 1 || (formTypes[i] > 19 && formTypes[i] < 50) || formTypes[i] > 55) {
+				throw new Exception("Form type numbers must be in range 1-19 a 50-55");
+			} else {
+				finalFormTypes[i] = formTypes[i].toString();
+			}
 		}
+		this.selectedFormTypes = finalFormTypes;
+
 	}
 
-	public String getSelectedFormType() {
-		return this.selectedFormType.toString();
+	public String[] getSelectedFormTypes() {
+		return this.selectedFormTypes;
 	}
 
 	public void setDateFrom(Date dateFrom) {

@@ -2,6 +2,7 @@ package cz.opendata.linked.vvz.utils.journal;
 
 import java.sql.*;
 import java.util.Calendar;
+import org.apache.derby.jdbc.EmbeddedDriver;
 
 /**
  * Registers used documents
@@ -34,10 +35,12 @@ public class Journal extends cz.opendata.linked.vvz.utils.Object {
 	 * @throws JournalException
 	 */
     public Connection getConnection(String DBlocation) throws JournalException {
+
         if (this.connection == null) {
             try{
                 // Load the EmbeddedDriver class
-                Class.forName(this.driver).newInstance();
+	            new EmbeddedDriver();
+                //Class.forName(this.driver).newInstance();
                 this.log("Derby driver loaded.");
             } catch(Exception e) {
                 throw new JournalException("Could not load derby driver.", e);
@@ -161,11 +164,13 @@ public class Journal extends cz.opendata.linked.vvz.utils.Object {
 	 */
 	public void close() throws JournalException {
 
-		try {
-			this.connection.close();
-			this.connection = null;
-		} catch(SQLException e) {
-			throw new JournalException("Could not close connection. " + e.getMessage(), e);
+		if(this.hasConnection()) {
+			try {
+				this.connection.close();
+				this.connection = null;
+			} catch(SQLException e) {
+				throw new JournalException("Could not close connection. " + e.getMessage(), e);
+			}
 		}
 	}
     

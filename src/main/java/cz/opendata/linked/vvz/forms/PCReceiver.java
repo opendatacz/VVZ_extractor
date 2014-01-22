@@ -76,26 +76,26 @@ public class PCReceiver extends Object {
 			userIdEl.addTextNode(this.userId);
 
 			SOAPElement queryParamsEl = requestEl.addChildElement("QueryParameters","isv");
+			SOAPElement formTypeEl;
 
-
-			if(params.getSelectedFormType().isEmpty()) {
-				throw new PCReceiveException("selectedFormType parameter must be filled.");
+			if(params.getSelectedFormTypes().length < 1) {
+				throw new PCReceiveException("No required form types in query parameters.");
 			} else {
 
 				SOAPElement queryParamEl = queryParamsEl.addChildElement("QueryParameter", "isv");
-				queryParamEl.addChildElement("Name","isv").addTextNode("SelectedFormType");
-				queryParamEl.addChildElement("Value","isv").addTextNode(params.getSelectedFormType());
+				queryParamEl.addChildElement("Name", "isv").addTextNode("SelectedFormType");
+				formTypeEl = queryParamEl.addChildElement("Value","isv").addTextNode("");
 
 				if(!params.getDateFrom().isEmpty()) {
 					queryParamEl = queryParamsEl.addChildElement("QueryParameter","isv");
 					queryParamEl.addChildElement("Name","isv").addTextNode("DateTimePublicationFrom");
-					queryParamEl.addChildElement("Value","isv").addTextNode(params.getDateFrom());
+					queryParamEl.addChildElement("Value", "isv").addTextNode(params.getDateFrom());
 				}
 
 				if(!params.getDateTo().isEmpty()) {
 					queryParamEl = queryParamsEl.addChildElement("QueryParameter","isv");
 					queryParamEl.addChildElement("Name","isv").addTextNode("DateTimePublicationTo");
-					queryParamEl.addChildElement("Value","isv").addTextNode(params.getDateTo());
+					queryParamEl.addChildElement("Value", "isv").addTextNode(params.getDateTo());
 				}
 
 			}
@@ -103,30 +103,39 @@ public class PCReceiver extends Object {
 			MimeHeaders headers = soapMessage.getMimeHeaders();
 			headers.addHeader("SOAPAction", "http://www.ness.cz/schemas/isvzus/ExportForms/IExportForms/ListForms");
 
-			soapMessage.saveChanges();
+			for(int i=0;i<params.getSelectedFormTypes().length;i++) {
 
-			try {
-				SOAPBody responseBody = this.soapCall(soapMessage).getSOAPBody();
+				String formType = params.getSelectedFormTypes()[i];
 
-				String code = responseBody.getElementsByTagNameNS(this.URLisvzus,"Code").item(0).getTextContent();
-				if(code.equals("0")) {
-					log("Public contracts list received.");
-				} else if(code.equals("1")) {
-					throw new PCReceiveException("Loading public contracts list failed. Code " + code + " - Bad query parameters.");
-				} else if(code.equals("3")) {
-					throw new PCReceiveException("Loading public contracts list failed. Code " + code + " - Identification failed. Wrong GUID.");
-				} else if(code.equals("99")) {
-					throw new PCReceiveException("Loading public contracts list failed. Code " + code + " - Unknown reason.");
+				formTypeEl.setTextContent(formType);
+
+				soapMessage.saveChanges();
+
+				try {
+					SOAPBody responseBody = this.soapCall(soapMessage).getSOAPBody();
+
+					String code = responseBody.getElementsByTagNameNS(this.URLisvzus,"Code").item(0).getTextContent();
+					if(code.equals("0")) {
+						log("Form type " + formType + " public contracts list received.");
+					} else if(code.equals("1")) {
+						throw new PCReceiveException("Loading public contracts  " + formType + "  list failed. Code " + code + " - Bad query parameters.");
+					} else if(code.equals("3")) {
+						throw new PCReceiveException("Loading public contracts  " + formType + "  list failed. Code " + code + " - Identification failed. Wrong GUID.");
+					} else if(code.equals("99")) {
+						throw new PCReceiveException("Loading public contracts  " + formType + "  list failed. Code " + code + " - Unknown reason.");
+					}
+
+					NodeList formsList = responseBody.getElementsByTagNameNS(this.URLisvzus,"FormInfo");
+
+					for(int j=0; j<formsList.getLength();j++) {
+
+						PCIds.add(formsList.item(j).getTextContent());
+					}
+				} catch(SOAPException e) {
+					throw new PCReceiveException("Error while loading public contracts list.", e);
+
 				}
 
-				NodeList formsList = responseBody.getElementsByTagNameNS(this.URLisvzus,"FormInfo");
-
-				for(int i=0; i<formsList.getLength();i++) {
-
-					PCIds.add(formsList.item(i).getTextContent());
-				}
-			} catch(SOAPException e) {
-				throw new PCReceiveException("Error while loading public contracts list.", e);
 			}
 
 		} catch(SOAPException e) {
