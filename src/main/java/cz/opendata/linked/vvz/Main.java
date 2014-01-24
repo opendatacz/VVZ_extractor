@@ -13,9 +13,7 @@ import cz.opendata.linked.vvz.utils.xslt.XML2RDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.File;
+import java.io.*;
 import java.text.SimpleDateFormat;
 
 import java.util.List;
@@ -76,6 +74,16 @@ public class Main {
 		}
 
 		try {
+			File stylesheet = new File("/home/cammeron/Java-Workspace/VVZ_extractor/xslt","pc.xsl");
+			XML2RDF xsl = new XML2RDF(stylesheet);
+			xsl.setLogger(logger);
+			//unpackXSLT();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		/*
+		try {
 
 			Integer parsed = 0, alreadyParsed = 0, cached = 0, alreadyCached = 0, failures=0;
 
@@ -83,8 +91,11 @@ public class Main {
 			logger.info(PCIds.size() + " public contracts is going to be downloaded and parsed");
 
 			Document inputFile;
+
 			File stylesheet = new File("/home/cammeron/Java-Workspace/VVZ_extractor/xslt","pc.xsl");
 			XML2RDF xsl = new XML2RDF(stylesheet);
+
+
 			xsl.setLogger(logger);
 
 			for(String id : PCIds) {
@@ -156,8 +167,36 @@ public class Main {
 			logger.info(e.getMessage());
 			System.exit(-1);
 		}
+		*/
 
 	}
 
+	/*
+	public static void unpackXSLT() {
+
+		new File("temp","xslt").mkdirs();
+		File xsltFile = new File("temp/xslt/", "pc.xsl");
+
+		try {
+			xsltFile.createNewFile();
+
+			InputStream input = getClass().getResourceAsStream("/xslt/pc.xsl");
+			FileOutputStream out = new FileOutputStream(xsltFile);
+
+			byte[] buffer = new byte[1024];
+			int len;
+			while ((len = input.read(buffer)) != -1) {
+				out.write(buffer, 0, len);
+			}
+
+			//out.write(IOUtils.readFully(input, -1, false));
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		this.logger.info("input stream loading");
+
+	}
+	*/
 
 }

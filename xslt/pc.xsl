@@ -51,14 +51,14 @@
                 <xsl:value-of select="concat('CZ',$root/skup_priloha/hlavicka/IcoZadavatel)" />
             </xsl:when>
             <xsl:when test="$root/Nazev_I_1/text()">
-                <xsl:value-of select="f:slugify($root/Nazev_I_1)" />
+                <xsl:value-of select="concat(f:slugify($root/Nazev_I_1),'-',$VVZ_FormNumber)" />
             </xsl:when>
             <xsl:when test="$root/UredniNazev_I_1/text()">
-                <xsl:value-of select="f:slugify($root/UredniNazev_I_1)" />
+                <xsl:value-of select="concat(f:slugify($root/UredniNazev_I_1),'-',$VVZ_FormNumber)" />
             </xsl:when>
             <xsl:otherwise>
                 <!-- make UUID -->
-                <xsl:value-of select="uuid:get-uuid()" />
+                <xsl:value-of select="concat(uuid:get-uuid(),'-',$VVZ_FormNumber)" />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -82,7 +82,7 @@
     <xsl:variable name="nm_supplier" select="concat($PC_URI,'/supplier/')" />
     <xsl:variable name="nm_tendersPlace" select="concat($PC_URI,'/tenders-place/')" />
     <xsl:variable name="nm_businessEntity" select="concat($nm_lod,'business-entity/')" />
-    <xsl:variable name="id_contractingAuthority" select="concat($nm_businessEntity,$VVZ_SubmitterIC,'-',$VVZ_FormNumber)" />
+    <xsl:variable name="id_contractingAuthority" select="concat($nm_businessEntity,$VVZ_SubmitterIC)" />
     <xsl:variable name="id_pcPlace" select="concat($PC_URI,'/place/1')" />
     <xsl:variable name="id_estimatedPrice" select="concat($PC_URI,'/estimated-price/1')" />
     <xsl:variable name="id_awardCriteriaCombination" select="concat($PC_URI,'/combination-of-contract-award-criteria/')" />
@@ -180,7 +180,7 @@
 	                    <skos:notation>
 	                        <xsl:value-of select="$VVZ_PCNumber" />
 	                    </skos:notation>
-	                    <adms:schemeAgency>
+	                    <adms:schemeAgency xml:lang="cs">
 	                        <xsl:value-of select="$schemeAgency" />
 	                    </adms:schemeAgency>
 	                    <dc:creator rdf:resource="{$creator}" />
@@ -220,7 +220,7 @@
 	                    <xsl:with-param name="bussinesEntityURI">
 	                        <xsl:choose>
 	                            <xsl:when test="$root/skup_priloha/IcoDodavatel/text()">
-	                                <xsl:value-of select="concat($nm_businessEntity, $root/skup_priloha/IcoDodavatel, '-', $VVZ_FormNumber)" />
+	                                <xsl:value-of select="concat($nm_businessEntity, $root/skup_priloha/IcoDodavatel)" />
 	                            </xsl:when>
 	                            <xsl:when test="NazevDodavatele_V_3/text()">
 	                                <xsl:value-of select="concat($nm_businessEntity, f:slugify(NazevDodavatele_V_3), '-', $VVZ_FormNumber)" />
@@ -277,7 +277,7 @@
     <xsl:template match="Misto_IV_3_8">
         <s:location>
             <s:Place rdf:about="{$id_tendersOpeningPlace}">
-                <s:name xml:lang="cs">
+                <s:name>
                     <xsl:value-of select="text()" />
                 </s:name>
             </s:Place>
@@ -288,9 +288,7 @@
         <pc:publicationDate rdf:datatype="xsd:date">
             <xsl:value-of select="f:processDate(text())"/>
         </pc:publicationDate>
-        <rdfs:seeAlso>
-            <xsl:value-of select="$VVZ_FormURL" />
-        </rdfs:seeAlso>
+        <rdfs:seeAlso rdf:resource="{$VVZ_FormURL}" />
         <adms:identifier>
             <adms:identifier rdf:about="{$id_contractNoticeIdentifier}">
                 <skos:notation>
@@ -387,7 +385,7 @@
     </xsl:template>
     
     <xsl:template match="AdresaURL_V_3">
-        <foaf:page><xsl:value-of select="text()" /></foaf:page>
+        <foaf:page rdf:resource="{text()}" />
     </xsl:template>
     
     <xsl:template match="NazevDodavatele_V_3" mode="contactPoint">
@@ -395,7 +393,7 @@
     </xsl:template>
     
     <xsl:template match="Email_V_3">
-        <s:email rdf:resource="{text()}" />
+        <s:email rdf:resource="{concat('mailto:',text())}" />
     </xsl:template>
     
     <xsl:template match="Telefon_V_3">
@@ -429,7 +427,7 @@
     </xsl:template>
     
     <xsl:template match="KRukam_I_1">
-        <s:name xml:lang="cs">
+        <s:name>
             <xsl:value-of select="text()" />
         </s:name>
     </xsl:template>
@@ -747,7 +745,7 @@
     </xsl:template>
     
     <xsl:template match="AdresaProfiluZadavatele_I_1">
-        <pc:buyerProfile rdf:resource="{text()}" />
+        <pc:profile rdf:resource="{text()}" />
     </xsl:template>
     
     <xsl:template match="Dvz_DruhVerejnehoZadavatele_I_2 | DruhVerejnehoZadavatele_I_2">
@@ -802,7 +800,7 @@
     <xsl:template match="HlavniMistoProvadeniStavebnichPraci_II_1_2 | HlavniMisto_II_1_2">
         <pc:location>
             <s:Place rdf:about="{$id_pcPlace}">
-                <s:name xml:lang="cs"><xsl:value-of select="text()" /></s:name>
+                <s:name><xsl:value-of select="text()" /></s:name>
                 <xsl:apply-templates select="$root/KodNuts1_II_1_2 | $root/NUTS1_II_1_2" />
             </s:Place>
         </pc:location>
@@ -856,7 +854,7 @@
         <adms:identifier>
             <adms:Identifier rdf:about="{$id_pcIdentifier1}">
                 <skos:notation><xsl:value-of select="text()" /></skos:notation>
-                <dc:creator><xsl:value-of select="$id_contractingAuthority" /></dc:creator>
+                <dc:creator rdf:resource="{$id_contractingAuthority}" />
                 <!--<dc:type rdf:resource="http://purl.org/procurement/public-contracts#ContractIdentifierIssuedByContractingAuthority" /> -->
                 <xsl:apply-templates select="$root/UredniNazev_I_1 | $root/Nazev_I_1" mode="schemeAgency" />
             </adms:Identifier>

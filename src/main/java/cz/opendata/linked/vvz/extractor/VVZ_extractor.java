@@ -23,8 +23,10 @@ import cz.opendata.linked.vvz.utils.xslt.XML2RDF;
 import org.w3c.dom.Document;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -37,6 +39,8 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
         implements DPU, ConfigDialogProvider<VVZ_extractorConfig> {
 
 	private final Logger logger = LoggerFactory.getLogger(VVZ_extractor.class);
+
+	private DPUContext context;
 
     @OutputDataUnit
     public RDFDataUnit rdfOutput;
@@ -52,6 +56,8 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 
     @Override
     public void execute(DPUContext context) throws DPUException, DataUnitException {
+
+	    this.context = context;
 
 	    //get working dir
 	    File workingDir = context.getWorkingDir();
@@ -115,13 +121,16 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 		    this.logger.info(PCIds.size() + " public contracts is going to be downloaded and parsed");
 
 		    Document inputFile;
+		    Boolean parse = false;
 
 		    XML2RDF xsl;
 
 		    try {
-			    File stylesheet = new File("/home/cammeron/Java-Workspace/VVZ_extractor/xslt","pc.xsl");
-			    //File stylesheet = new File(new java.io.File(".").getCanonicalPath() + File.separator + "xslt","pc.xsl");
-			    this.logger.info("cesta ke xslt: " + new java.io.File(".").getCanonicalPath() + File.separator + "xslt");
+			    this.unpackXSLT("pc.xsl");
+			    this.unpackXSLT("uuid.xslt");
+
+			    File stylesheet = new File(context.getGlobalDirectory() + File.separator + "xslt","pc.xsl");
+
 			    xsl = new XML2RDF(stylesheet);
 			    xsl.setLogger(this.logger);
 		    } catch(IOException e) {
@@ -147,24 +156,28 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 						    journal.insertDocument(Integer.parseInt(id));
 
 						    this.logger.info(id + " document is going to be parsed");
-						    parsed++;
+						    parse = true;
 					    } else {
 						    this.logger.info(id + " document has been already parsed");
 						    alreadyParsed++;
+						    parse = false;
 					    }
 				    } else {
 					    this.logger.info(id + " document is going to be parsed");
-					    parsed++;
+					    parse = true;
 				    }
 
 				    try {
-				        String output = xsl.executeXSLT(inputFile);
+					    if(parse) {
+					        String output = xsl.executeXSLT(inputFile);
 
-					    String outputPath = pathToWorkingDir + File.separator + "out"  + File.separator + String.valueOf(id) + ".rdf";
-					    DataUnitUtils.checkExistanceOfDir(pathToWorkingDir + File.separator + "out" + File.separator);
-					    DataUnitUtils.storeStringToTempFile(output, outputPath);
+						    String outputPath = pathToWorkingDir + File.separator + "out"  + File.separator + String.valueOf(id) + ".rdf";
+						    DataUnitUtils.checkExistanceOfDir(pathToWorkingDir + File.separator + "out" + File.separator);
+						    DataUnitUtils.storeStringToTempFile(output, outputPath);
 
-					    rdfOutput.addFromRDFXMLFile(new File(outputPath));
+						    rdfOutput.addFromRDFXMLFile(new File(outputPath));
+						    parsed++;
+					    }
 
 				    } catch(Exception e) {
 					    this.logger.error(e.getMessage());
@@ -176,7 +189,9 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 				    break;
 			    }
 
-			    break;
+			    if(parsed==5) {
+				    break;
+			    }
 
 		    }
 
@@ -201,6 +216,41 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 
     }
 
+	public void unpackXSLT(String stylesheet) {
+
+		File xsltDir = new File(this.context.getGlobalDirectory(),"xslt");
+		File xsltFile = new File(xsltDir, stylesheet);
+
+		if(!xsltFile.exists()) {
+
+			this.logger.debug("Unpacking XSLT " + stylesheet + " to global directory");
+
+			try {
+
+				xsltDir.mkdirs();
+
+				xsltFile.createNewFile();
+
+				InputStream input = getClass().getResourceAsStream("/xslt/" + stylesheet);
+				FileOutputStream out = new FileOutputStream(xsltFile);
+
+				byte[] buffer = new byte[1024];
+				int len;
+				while ((len = input.read(buffer)) != -1) {
+					out.write(buffer, 0, len);
+				}
+
+				this.logger.debug("XSLT " + stylesheet + " has been stored in global working dir successfully.");
+
+			} catch(IOException e) {
+
+			}
+
+		} else {
+			this.logger.debug("XSLT " + stylesheet + " is already stored in global working dir.");
+		}
+
+	}
 
     @Override
     public void cleanUp() {	}
