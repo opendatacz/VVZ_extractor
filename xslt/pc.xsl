@@ -717,16 +717,18 @@
         </dc:title> 
     </xsl:template>
     
-    <xsl:template match="StrucnyPopisZakazky_II_1_5 | StrucnyPopis_II1_4">
+    <xsl:template match="StrucnyPopisZakazky_II_1_5 | StrucnyPopis_II1_4s">
         <dc:description xml:lang="cs">
             <xsl:value-of select="text()" />
         </dc:description>
     </xsl:template>
     
     <xsl:template match="DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2 | DruhZakazky_II_1_2">
-        <xsl:variable name="kind" select="f:getKind(text())" />
-        <xsl:if test="$kind!=''">
-        <pc:kind rdf:resource="{$kind}" />
+        <xsl:if test="text()">
+            <xsl:variable name="kind" select="f:getKind(text())" />
+            <xsl:if test="$kind!=''">
+                <pc:kind rdf:resource="{$kind}" />
+            </xsl:if>
         </xsl:if>
     </xsl:template>
     
@@ -794,7 +796,9 @@
     </xsl:template>
 
     <xsl:template match="HlavniSlovnikHp_II_1_6 | HlavniSlovnikHp_II_1_5">
-        <pc:mainObject rdf:resource="{concat($nm_cpv,f:stripDashes(text()))}" />
+        <xsl:if test="text()">
+            <pc:mainObject rdf:resource="{concat($nm_cpv,f:stripDashes(text()))}" />
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="HlavniMistoProvadeniStavebnichPraci_II_1_2 | HlavniMisto_II_1_2">
@@ -1004,25 +1008,32 @@
             </xsl:when>
             <xsl:when test="matches($kindCat,'SUPPLIES')">
                 
-                <xsl:variable name="supplyKind" select="$root/Dodavky_II_1_2" as="xsd:string" />
-                
                 <xsl:choose>
-                    <xsl:when test="matches($supplyKind,'PURCHASE')">
-                        <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#SuppliesPurchase'" />
-                    </xsl:when>
-                    <xsl:when test="matches($supplyKind,'LEASE')">
-                        <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#SuppliesLease'" />
-                    </xsl:when>
-                    <xsl:when test="matches($supplyKind,'RENTAL')">
-                        <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#SuppliesRental'" />
-                    </xsl:when>
-                    <xsl:when test="matches($supplyKind,'HIRE_PURCHASE')">
-                        <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#SuppliesHire'" />
+                    <xsl:when test="$root/Dodavky_II_1_2">
+                        <xsl:variable name="supplyKind" select="$root/Dodavky_II_1_2" as="xsd:string" />
+                        <xsl:choose>
+                            <xsl:when test="matches($supplyKind,'PURCHASE')">
+                                <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#SuppliesPurchase'" />
+                            </xsl:when>
+                            <xsl:when test="matches($supplyKind,'LEASE')">
+                                <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#SuppliesLease'" />
+                            </xsl:when>
+                            <xsl:when test="matches($supplyKind,'RENTAL')">
+                                <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#SuppliesRental'" />
+                            </xsl:when>
+                            <xsl:when test="matches($supplyKind,'HIRE_PURCHASE')">
+                                <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#SuppliesHire'" />
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#Supplies'" />
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#Supplies'" />
                     </xsl:otherwise>
                 </xsl:choose>
+                
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="'http://purl.org/procurement/public-contracts-kinds#Services'" />
@@ -1061,7 +1072,7 @@
     <xsl:function name="f:stripDashes" as="xsd:string">
         <xsl:param name="text" as="xsd:string" />
         
-        <xsl:analyze-string select="$text" regex="(\d*)-(\d*)">
+        <xsl:analyze-string select="$text" regex="(\d*)-.*">
             <xsl:matching-substring>
                 <xsl:value-of select="regex-group(1)"/>
             </xsl:matching-substring>
@@ -1075,7 +1086,18 @@
     <!-- @param price string -->
     <xsl:function name="f:processPrice" as="xsd:decimal">
         <xsl:param name="price" as="xsd:string" />
-        <xsl:value-of select="translate(translate($price,' ',''),',','.')" />
+
+        <xsl:variable name="tidyPrice" select="translate($price,' -','')" />
+        
+        <xsl:choose>
+            <xsl:when test="contains($tidyPrice, ',')">
+                <xsl:value-of select="(translate(substring-before($tidyPrice,','),',',''),substring-after($tidyPrice,','))" separator="." />
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$tidyPrice" />
+            </xsl:otherwise>
+        </xsl:choose>
+
     </xsl:function>
 
     
