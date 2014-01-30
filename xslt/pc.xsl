@@ -158,15 +158,15 @@
 	            
 	            <xsl:apply-templates select="HlavniMistoProvadeniStavebnichPraci_II_1_2 | HlavniMisto_II_1_2" />
 
-	            <pc:notice rdf:resource="{$id_contractNotice}" />
+	            <pc:publicNotice rdf:resource="{$id_contractNotice}" />
 	            
 	            <xsl:apply-templates select=".[UvedtePredpokladanouHodnotuBezDph_II_2_1 | RozsahOd_II_2_1 | RozsahDo_II_2_1]" mode="pcEstimatedPrice" />
 	            
 	            <pc:awardCriteriaCombination>
-                    <pc:awardCriteriaCombination rdf:about="{$id_awardCriteriaCombination}">
+                    <pc:AwardCriteriaCombination rdf:about="{$id_awardCriteriaCombination}">
                         <!-- nejnizsi cenova nabidka - NejnizsiNabidkovaCena_IV_2_1 form type 2 | KriteriaTyp_IV_2_1 form type 3 -->
                         <xsl:apply-templates select="NejnizsiNabidkovaCena_IV_2_1 | KriteriaTyp_IV_2_1 | Kriteria1_IV_2_1 | Kriteria2_IV_2_1 | Kriteria3_IV_2_1 | Kriteria4_IV_2_1 | Kriteria5_IV_2_1 | Kriteria6_IV_2_1 | Kriteria7_IV_2_1 | Kriteria8_IV_2_1 | Kriteria9_IV_2_1 | Kriteria10_IV_2_1" />
-                    </pc:awardCriteriaCombination>
+                    </pc:AwardCriteriaCombination>
 	            </pc:awardCriteriaCombination>
 	            
 	            <xsl:apply-templates select="NeboZahajeni_II_3 | Dokonceni_II_3 | Datum_IV_3_4 | Datum_IV_3_3" />
@@ -312,7 +312,7 @@
         </xsl:if>
         <rdfs:seeAlso rdf:resource="{$VVZ_FormURL}" />
         <adms:identifier>
-            <adms:identifier rdf:about="{$id_contractNoticeIdentifier}">
+            <adms:Identifier rdf:about="{$id_contractNoticeIdentifier}">
                 <skos:notation>
                     <xsl:value-of select="$VVZ_FormNumber" />
                 </skos:notation>
@@ -320,7 +320,7 @@
                     <xsl:value-of select="$schemeAgency" />
                 </adms:schemeAgency>
                 <dc:creator rdf:resource="{$creator}" />
-            </adms:identifier>
+            </adms:Identifier>
         </adms:identifier>
     </xsl:template>
     
@@ -523,11 +523,11 @@
     
     <xsl:template match="Hpc_Upresneni_I_3 | JinyProsimSpecifikujteB_I_3">
         <pc:activityKind>
-            <pc:activityKind rdf:about="{$id_activityKind}">
+            <skos:Concept rdf:about="{$id_activityKind}">
                 <skos:prefLabel><xsl:value-of select="text()" /></skos:prefLabel>
                 <skos:isScheme rdf:resource="http://purl.org/procurement/public-contracts-activities#" />
                 <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-activities#" />
-            </pc:activityKind>
+            </skos:Concept>
         </pc:activityKind>
     </xsl:template>
 
@@ -785,13 +785,13 @@
     
     <xsl:template match="Dvz_Upresneni_I_2 | ProsimUpresnete_I_2">
         <pc:authorityKind>
-            <pc:authorityKind rdf:about="{$id_authorityKind}">
+            <skos:Concept rdf:about="{$id_authorityKind}">
                 <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-authority-kinds#" />
                 <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-authority-kinds#"></skos:topConceptOf>
                 <skos:prefLabel xml:lang="cs">
                     <xsl:value-of select="text()" />
                 </skos:prefLabel>
-            </pc:authorityKind>
+            </skos:Concept>
         </pc:authorityKind>
     </xsl:template>
 
