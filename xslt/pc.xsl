@@ -269,9 +269,26 @@
     <!-- TENDERS OPENING -->
     
     <xsl:template match="Datum_IV_3_8">
-        <dc:date rdf:datatype="xsd:dateTime">
-            <xsl:value-of select="f:processDateTime(text(),$root/Cas_IV_3_8)" />
-        </dc:date>
+        
+        <xsl:variable name="time">
+            <xsl:choose>
+                <xsl:when test="$root/Cas_IV_3_8">
+                    <xsl:value-of select="$root/Cas_IV_3_8" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'00:00'" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+
+        <xsl:if test="text()">
+           <xsl:variable name="tidyDateTime" select="f:processDateTime(text(),$time)" />
+           <xsl:if test="$tidyDateTime">
+               <dc:date rdf:datatype="xsd:dateTime">
+                   <xsl:value-of select="$tidyDateTime" />
+               </dc:date>    
+           </xsl:if>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="Misto_IV_3_8">
@@ -285,9 +302,14 @@
     </xsl:template>
     
     <xsl:template match="VvzPublished">
-        <pc:publicationDate rdf:datatype="xsd:date">
-            <xsl:value-of select="f:processDate(text())"/>
-        </pc:publicationDate>
+        <xsl:if test="text()">
+            <xsl:variable name="tidyDate" select="f:processDate(text())" />
+            <xsl:if test="$tidyDate">
+            <pc:publicationDate rdf:datatype="xsd:date">
+            <xsl:value-of select="$tidyDate"/>
+            </pc:publicationDate>
+            </xsl:if>
+        </xsl:if>
         <rdfs:seeAlso rdf:resource="{$VVZ_FormURL}" />
         <adms:identifier>
             <adms:identifier rdf:about="{$id_contractNoticeIdentifier}">
@@ -831,27 +853,47 @@
     </xsl:template>
     
     <xsl:template match="NeboZahajeni_II_3">
-        <pc:startDate rdf:datatype="xsd:date">
-            <xsl:value-of select="f:processDate(text())" />
-        </pc:startDate>
+        <xsl:if test="text()">
+           <xsl:variable name="tidyDate" select="f:processDate(text())" />
+           <xsl:if test="$tidyDate">
+           <pc:startDate rdf:datatype="xsd:date">
+               <xsl:value-of select="$tidyDate" />
+           </pc:startDate>
+           </xsl:if>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="Dokonceni_II_3">
-        <pc:estimatedEndDate rdf:datatype="xsd:date">
-            <xsl:value-of select="f:processDate(text())" />
-        </pc:estimatedEndDate>
+        <xsl:if test="text()">
+           <xsl:variable name="tidyDate" select="f:processDate(text())" />
+           <xsl:if test="$tidyDate">
+           <pc:estimatedEndDate rdf:datatype="xsd:date">
+               <xsl:value-of select="$tidyDate" />
+           </pc:estimatedEndDate>
+           </xsl:if>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="Datum_IV_3_4">
-        <pc:tenderDeadline rdf:datatype="xsd:dateTime">
-            <xsl:value-of select="f:processDateTime(text(),$root/Cas_IV_3_4)" />
-        </pc:tenderDeadline>
+        <xsl:if test="text()">
+           <xsl:variable name="tidyDateTime" select="f:processDate(text())" />
+           <xsl:if test="$tidyDateTime">
+           <pc:tenderDeadline rdf:datatype="xsd:dateTime">
+               <xsl:value-of select="$tidyDateTime" />
+           </pc:tenderDeadline>
+           </xsl:if>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="Datum_IV_3_3">
-        <pc:documentationRequestDeadline rdf:datatype="xsd:dateTime">
-            <xsl:value-of select="f:processDateTime(text(),$root/Cas_IV_3_3)" />
-        </pc:documentationRequestDeadline>
+        <xsl:if test="text()">
+           <xsl:variable name="tidyDateTime" select="f:processDate(text())" />
+           <xsl:if test="$tidyDateTime">
+           <pc:documentationRequestDeadline rdf:datatype="xsd:dateTime">
+               <xsl:value-of select="$tidyDateTime" />
+           </pc:documentationRequestDeadline>
+           </xsl:if>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="SpisoveCisloPrideleneVerejnymZadavatelem_IV_3_1 | SpisCislo_IV_3_1">
@@ -910,7 +952,10 @@
     </xsl:template>
 
     <xsl:template match="Datum_V_1">
-        <pc:awardDate rdf:datatype="xsd:date"><xsl:value-of select="f:processDate(text())" /></pc:awardDate>
+        <xsl:variable name="tidyDate" select="f:processDate(text())" />
+        <xsl:if test="$tidyDate">
+        <pc:awardDate rdf:datatype="xsd:date"><xsl:value-of select="$tidyDate" /></pc:awardDate>
+        </xsl:if>
     </xsl:template>
 
     <!-- @param date dd/mm/yyyy -->
@@ -918,26 +963,43 @@
         <xsl:param name="date" as="xsd:string" />
         <xsl:analyze-string select="$date" regex="(\d{{2}})/(\d{{2}})/(\d{{4}})">
             <xsl:matching-substring>
-                <xsl:value-of select="xsd:date(concat(regex-group(3), '-', regex-group(2), '-', regex-group(1)))"/>
+                <xsl:variable name="tidyDate" select="concat(regex-group(3), '-', regex-group(2), '-', regex-group(1))" />
+                
+                <xsl:choose>
+                    <xsl:when test="$tidyDate castable as xsd:date">
+                        <xsl:value-of select="xsd:date($tidyDate)"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <!-- try take off one day -->
+                        <xsl:variable name="dayTakeOf" select="concat(regex-group(3), '-', regex-group(2), '-', number(regex-group(1))-1)" />
+                        <xsl:if test="$dayTakeOf castable as xsd:date">
+                            <xsl:value-of select="xsd:date($dayTakeOf)"/>
+                        </xsl:if>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:matching-substring>
-            <xsl:non-matching-substring>
-                <xsl:value-of select="$date"/>
-            </xsl:non-matching-substring>
         </xsl:analyze-string>
     </xsl:function>
     
     <!-- @param date dd/mm/yyyy -->
     <!-- @param time hh:mm -->
-    <xsl:function name="f:processDateTime" as="xsd:dateTime">
+    <xsl:function name="f:processDateTime">
         <xsl:param name="date" as="xsd:string" />
         <xsl:param name="time" as="xsd:string" />
+        
+        <xsl:variable name="tidyDate" select="f:processDate($date)" />
+        
         <xsl:choose>
-            <xsl:when test="$time">
-                <xsl:value-of select="concat(f:processDate($date),'T',$time,':00')" />
+            <xsl:when  test="$tidyDate">
+                <xsl:choose>
+                    <xsl:when test="$time">
+                        <xsl:value-of select="concat($tidyDate,'T',$time,':00')" />
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="concat($tidyDate,'T00:00:00')" />
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="concat(f:processDate($date),'T00:00:00')" />
-            </xsl:otherwise>
         </xsl:choose>
         
     </xsl:function>
@@ -1072,6 +1134,8 @@
     <xsl:function name="f:stripDashes" as="xsd:string">
         <xsl:param name="text" as="xsd:string" />
         
+        <xsl:value-of select="substring-before($text,'-')" />
+        <!-- 
         <xsl:analyze-string select="$text" regex="(\d*)-.*">
             <xsl:matching-substring>
                 <xsl:value-of select="regex-group(1)"/>
@@ -1080,6 +1144,7 @@
                 <xsl:value-of select="$text"/>
             </xsl:non-matching-substring>
         </xsl:analyze-string>
+         -->
         
     </xsl:function>
     
@@ -1087,17 +1152,23 @@
     <xsl:function name="f:processPrice" as="xsd:decimal">
         <xsl:param name="price" as="xsd:string" />
 
-        <xsl:variable name="tidyPrice" select="translate($price,' -','')" />
+        <xsl:variable name="tidyPrice" select="translate($price,' -.','')" />
         
         <xsl:choose>
-            <xsl:when test="contains($tidyPrice, ',')">
-                <xsl:value-of select="(translate(substring-before($tidyPrice,','),',',''),substring-after($tidyPrice,','))" separator="." />
+            <xsl:when test="contains(substring-after($tidyPrice,','), ',')">
+                <xsl:value-of select="translate(substring($tidyPrice,1, index-of(string-to-codepoints($tidyPrice), string-to-codepoints(','))[last()] -1),',','')" />
+            </xsl:when>
+            <xsl:when test="contains($tidyPrice, ',') and string-length($tidyPrice)>1">
+                <xsl:value-of select="(translate(substring-before($tidyPrice,','),',',''),substring-after($tidyPrice,','))" separator="." />       
+            </xsl:when>
+            <xsl:when test="string(number($tidyPrice)) != 'NaN'">
+                <xsl:value-of select="$tidyPrice" />
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="$tidyPrice" />
+                <xsl:value-of select="0" />
             </xsl:otherwise>
         </xsl:choose>
-
+        
     </xsl:function>
 
     
