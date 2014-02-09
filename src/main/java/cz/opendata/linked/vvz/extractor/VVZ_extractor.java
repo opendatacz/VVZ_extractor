@@ -42,7 +42,7 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 
 	private DPUContext context;
 
-    @OutputDataUnit
+	@OutputDataUnit(description="It contains RDF triples with public contracts, contracting authorities and suppliers according to Public Contracts Ontology.")
     public RDFDataUnit rdfOutput;
 
     public VVZ_extractor() {

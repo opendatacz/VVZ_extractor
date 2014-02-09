@@ -74,22 +74,22 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
         // text field for date from
         input_dateFrom = new TextField();
         input_dateFrom.setNullRepresentation("");
-        input_dateFrom.setCaption("Date From (MM/DD/YYYY):");
+        input_dateFrom.setCaption("Date From (DD.MM.YYYY):");
         input_dateFrom.setImmediate(true);
         input_dateFrom.setWidth("100%");
         input_dateFrom.setHeight("-1px");
-	    input_dateFrom.setDescription("Date to");
+	    input_dateFrom.setDescription("Min publication date from which extractor process public contracts. If date from is not present, extractor will process all public contracts to the past.");
 
         mainLayout.addComponent(input_dateFrom);
 
         // text field for date to
         input_dateTo = new TextField();
         input_dateTo.setNullRepresentation("");
-        input_dateTo.setCaption("Date To (MM/DD/YYYY):");
+        input_dateTo.setCaption("Date To (DD.MM.YYYY):");
         input_dateTo.setImmediate(true);
         input_dateTo.setWidth("100%");
         input_dateTo.setHeight("-1px");
-	    input_dateTo.setDescription("");
+	    input_dateTo.setDescription("Max publication date in which extractor process public contracts. If date to is not present, extractor will process all public contracts to the future.");
 
         mainLayout.addComponent(input_dateTo);
 
@@ -100,7 +100,7 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
         input_context.setImmediate(true);
         input_context.setWidth("100%");
         input_context.setHeight("-1px");
-	    input_context.setDescription("");
+	    input_context.setDescription("Context in which extractor will remember which public contracts has already processed. If configuration does not provide context, extractor will process all public contracts in selected period.");
 
         mainLayout.addComponent(input_context);
 
