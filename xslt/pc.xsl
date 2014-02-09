@@ -26,12 +26,13 @@
     
     <xsl:import href="uuid.xslt" />
     
-    <xsl:output encoding="UTF-8" indent="yes" method="xml" />
+    <xsl:output encoding="UTF-8" indent="yes" method="xml" normalization-form="NFC" />
 
-	<xsl:variable name="nm_lod" select="'http://linked.opendata.cz/resource/'"/>
+    <xsl:variable name="nm_lod">http://linked.opendata.cz/resource/</xsl:variable>
 	<xsl:variable name="nm_vvz" select="concat($nm_lod, 'vestnikverejnychzakazek.cz/')"/>
+    <xsl:variable name="nm_vvz_pc" select="concat($nm_vvz, 'public-contract/')"/>
     <xsl:variable name="nm_cpv" select="concat($nm_lod,'cpv-2008/concept/')" />
-    <xsl:variable name="nm_pcCriteria" select="'http://purl.org/procurement/public-contracts-criteria/'" />
+    <xsl:variable name="nm_pcCriteria">http://purl.org/procurement/public-contracts-criteria/</xsl:variable>
     
     <xsl:variable name="schemeAgency">Ministerstvo pro místní rozvoj</xsl:variable>
     <xsl:variable name="creator">http://linked.opendata.cz/resource/business-entity/CZ66002222</xsl:variable>
@@ -39,8 +40,28 @@
     <xsl:variable name="root" select="root" />
     
     <xsl:variable name="VVZ_FormId" select="$root/skup_priloha/hlavicka/VvzFormId" />
-    <xsl:variable name="VVZ_FormNumber" select="$root/skup_priloha/hlavicka/VvzNumber" />
-    <xsl:variable name="VVZ_PCNumber" select="$root/skup_priloha/hlavicka/CocoCode" />
+    <xsl:variable name="VVZ_FormNumber">
+        <xsl:choose>
+            <xsl:when test="$root/skup_priloha/hlavicka/VvzNumber != ''">
+                <xsl:value-of select="$root/skup_priloha/hlavicka/VvzNumber" />
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="uuid:get-uuid()" />
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    
+    <xsl:variable name="VVZ_PCNumber">
+        <xsl:choose>
+            <xsl:when test="$root/skup_priloha/hlavicka/CocoCode != ''">
+                <xsl:value-of select="$root/skup_priloha/hlavicka/CocoCode" />
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="uuid:get-uuid()" />
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    
     <xsl:variable name="VVZ_SubmitterIC">
         <!-- ICO can be found in two places -->
         <xsl:choose>
@@ -65,7 +86,7 @@
     
     <xsl:variable name="VVZ_FormURL" select="concat('http://www.vestnikverejnychzakazek.cz/cs/Form/Display/', $VVZ_FormId)" />
 
-    <xsl:variable name="PC_URI" select="concat($nm_vvz,'public-contract/',$VVZ_PCNumber,'-',$VVZ_FormNumber)" />
+    <xsl:variable name="PC_URI" select="concat($nm_vvz_pc,$VVZ_PCNumber,'-',$VVZ_FormNumber)" />
     
     <!-- IDENTIFIERS -->
     <xsl:variable name="id_contractNotice" select="concat($nm_vvz,'contract-notice/',$VVZ_FormNumber)" />
@@ -96,9 +117,8 @@
     <xsl:variable name="id_activityKind" select="concat($PC_URI,'/activity-kind/1')" />
     <xsl:variable name="id_authorityKind" select="concat($PC_URI,'/authority-kind/1')" />
     
-	<xsl:template match="root">
+    <xsl:template match="root[verze_formulare='0200' or verze_formulare='0300']">
 	    
-	    <xsl:if test="verze_formulare='0200' or verze_formulare='0300'">
 	    <rdf:RDF>
 	        <xsl:choose>
 	            <xsl:when test="verze_formulare='0200'"> <!-- ContractNotice -->
@@ -219,11 +239,11 @@
 	                    <xsl:with-param name="award" select="skup_priloha/oddil_5" />
 	                    <xsl:with-param name="bussinesEntityURI">
 	                        <xsl:choose>
-	                            <xsl:when test="$root/skup_priloha/IcoDodavatel/text()">
-	                                <xsl:value-of select="concat($nm_businessEntity, $root/skup_priloha/IcoDodavatel)" />
+	                            <xsl:when test="skup_priloha/hlavicka/IcoDodavatel/text()">
+	                                <xsl:value-of select="concat($nm_businessEntity, 'CZ',skup_priloha/hlavicka/IcoDodavatel)" />
 	                            </xsl:when>
-	                            <xsl:when test="NazevDodavatele_V_3/text()">
-	                                <xsl:value-of select="concat($nm_businessEntity, f:slugify(NazevDodavatele_V_3), '-', $VVZ_FormNumber)" />
+	                            <xsl:when test="skup_priloha/oddil_5/NazevDodavatele_V_3/text()">
+	                                <xsl:value-of select="concat($nm_businessEntity, f:slugify(skup_priloha/oddil_5/NazevDodavatele_V_3), '-', $VVZ_FormNumber)" />
 	                            </xsl:when>
 	                            <xsl:otherwise>
 	                                <!-- make UUID -->
@@ -237,7 +257,7 @@
 	        </pc:Contract>
 
 	    </rdf:RDF>
-	    </xsl:if>
+	    
 	       
 	</xsl:template>
     
@@ -403,11 +423,15 @@
     </xsl:template>
     
     <xsl:template match="NazevDodavatele_V_3" mode="businessEntity">
+        <xsl:if test="text()">
         <gr:legalName><xsl:value-of select="text()" /></gr:legalName>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="AdresaURL_V_3">
+        <xsl:if test="text()">
         <foaf:page rdf:resource="{text()}" />
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="NazevDodavatele_V_3" mode="contactPoint">
@@ -427,7 +451,9 @@
     </xsl:template>
     
     <xsl:template match="Adresa_V_3">
+        <xsl:if test="text()">
         <s:streetAddress><xsl:value-of select="text()" /></s:streetAddress>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="Psc_V_3">
@@ -435,17 +461,23 @@
     </xsl:template>
     
     <xsl:template match="Obec_V_3">
+        <xsl:if test="text()">
         <s:addressLocality><xsl:value-of select="text()" /></s:addressLocality>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="Stat_V_3">
+        <xsl:if test="text()">
         <s:addressCountry><xsl:value-of select="text()" /></s:addressCountry>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="KontaktniMista_I_1">
+        <xsl:if test="text()">
         <s:description xml:lang="cs">
             <xsl:value-of select="text()" />
         </s:description>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="KRukam_I_1">
@@ -730,19 +762,25 @@
     
     <!-- ADDITIONAL OBJECTS -->
     <xsl:template match="HlavniSlovnikDp1_II_1_6 | HlavniSlovnikDp2_II_1_6 | HlavniSlovnikDp3_II_1_6 | HlavniSlovnikDp4_II_1_6 | HlavniSlovnikDp1_II_1_5 | HlavniSlovnikDp2_II_1_5 | HlavniSlovnikDp3_II_1_5 | HlavniSlovnikDp4_II_1_5">
+        <xsl:if test="text()">
         <pc:additionalObject rdf:resource="{concat($nm_cpv,f:stripDashes(text()))}" />
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="NazevPridelenyZakazce_II_1_1 | NazevPridelenyZakazceVerejnymZadavatelem_II_1_1">
+        <xsl:if test="text()">
         <dc:title xml:lang="cs">
             <xsl:value-of select="text()" />
         </dc:title> 
+        </xsl:if>
     </xsl:template>
     
-    <xsl:template match="StrucnyPopisZakazky_II_1_5 | StrucnyPopis_II1_4s">
+    <xsl:template match="StrucnyPopisZakazky_II_1_5 | StrucnyPopis_II1_4">
+        <xsl:if test="text()">
         <dc:description xml:lang="cs">
             <xsl:value-of select="text()" />
         </dc:description>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="DruhZakazkyAMistoProvadeniStavebnichPraci_II_1_2 | DruhZakazky_II_1_2">
@@ -755,21 +793,29 @@
     </xsl:template>
     
     <xsl:template match="UredniNazev_I_1 | Nazev_I_1" mode="legalName">
+        <xsl:if test="text()">
         <gr:legalName xml:lang="cs">
             <xsl:value-of select="text()" />
         </gr:legalName>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="ObecnaAdresaVerejnehoZadavatele_I_1">
+        <xsl:if test="text()">
         <foaf:page rdf:resource="{text()}" />
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="AdresaProfiluKupujiciho_I_1">
+        <xsl:if test="text()">
         <pc:profile rdf:resource="{text()}" />
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="AdresaProfiluZadavatele_I_1">
+        <xsl:if test="text()">
         <pc:profile rdf:resource="{text()}" />
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="Dvz_DruhVerejnehoZadavatele_I_2 | DruhVerejnehoZadavatele_I_2">
@@ -797,29 +843,37 @@
 
     <xsl:template match="DruhRizeni_IV_1_1">
         <xsl:if test="DruhRizeni_IV_1_1/text()">
-            <pc:procedureType rdf:resource="{f:getProcedureType(text())}" />
+        <pc:procedureType rdf:resource="{f:getProcedureType(text())}" />
         </xsl:if>
     </xsl:template>
     
     <xsl:template match="PostovniAdresa_I_1 | Adresa_I_1">
+        <xsl:if test="text()">
         <s:streetAddress><xsl:value-of select="text()" /></s:streetAddress>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="Psc_I_1">
+        <xsl:if test="text()">
         <s:postalCode><xsl:value-of select="text()" /></s:postalCode>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="Obec_I_1">
+        <xsl:if test="text()">
         <s:addressLocality><xsl:value-of select="text()" /></s:addressLocality>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="Stat_I_1">
+        <xsl:if test="text()">
         <s:addressCountry><xsl:value-of select="text()" /></s:addressCountry>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="HlavniSlovnikHp_II_1_6 | HlavniSlovnikHp_II_1_5">
         <xsl:if test="text()">
-            <pc:mainObject rdf:resource="{concat($nm_cpv,f:stripDashes(text()))}" />
+        <pc:mainObject rdf:resource="{concat($nm_cpv,f:stripDashes(text()))}" />
         </xsl:if>
     </xsl:template>
     
@@ -899,7 +953,9 @@
     <xsl:template match="SpisoveCisloPrideleneVerejnymZadavatelem_IV_3_1 | SpisCislo_IV_3_1">
         <adms:identifier>
             <adms:Identifier rdf:about="{$id_pcIdentifier1}">
+                <xsl:if test="text()">
                 <skos:notation><xsl:value-of select="text()" /></skos:notation>
+                </xsl:if>
                 <dc:creator rdf:resource="{$id_contractingAuthority}" />
                 <!--<dc:type rdf:resource="http://purl.org/procurement/public-contracts#ContractIdentifierIssuedByContractingAuthority" /> -->
                 <xsl:apply-templates select="$root/UredniNazev_I_1 | $root/Nazev_I_1" mode="schemeAgency" />
@@ -940,11 +996,15 @@
     </xsl:template>
 
     <xsl:template match="ZakazkaNazev_V">
+        <xsl:if test="text()">
         <gr:legalName><xsl:value-of select="text()" /></gr:legalName>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="Strucpopis_V_5">
+        <xsl:if test="text()">
         <dc:description><xsl:value-of select="text()" /></dc:description>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="PocetNabidek_V_2">
