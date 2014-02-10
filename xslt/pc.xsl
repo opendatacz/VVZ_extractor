@@ -92,6 +92,7 @@
     <xsl:variable name="id_contractNotice" select="concat($nm_vvz,'contract-notice/',$VVZ_FormNumber)" />
     <xsl:variable name="id_contractNoticeIdentifier" select="concat($nm_vvz,'contract-notice/',$VVZ_FormNumber,'/identifier/1')" />
     <xsl:variable name="id_publicContract" select="$PC_URI" />
+    <xsl:variable name="nm_publicContractLot" select="concat($PC_URI,'/lot/')" />
     <xsl:variable name="id_tendersOpening" select="concat($PC_URI,'/tenders-opening/1')" />
     <xsl:variable name="id_tendersOpeningPlace" select="concat($PC_URI,'/tenders-opening-place/1')" />
     <xsl:variable name="id_PCContactPoint" select="concat($PC_URI,'/pc-contact-point/1')" />
@@ -106,12 +107,14 @@
     <xsl:variable name="id_contractingAuthority" select="concat($nm_businessEntity,$VVZ_SubmitterIC)" />
     <xsl:variable name="id_pcPlace" select="concat($PC_URI,'/place/1')" />
     <xsl:variable name="id_estimatedPrice" select="concat($PC_URI,'/estimated-price/1')" />
+    <xsl:variable name="nm_lotEstimatedPrice" select="concat($PC_URI,'/lot-estimated-price/')" />
     <xsl:variable name="id_awardCriteriaCombination" select="concat($PC_URI,'/combination-of-contract-award-criteria/')" />
     <xsl:variable name="nm_contractAwardCriterion" select="concat($PC_URI,'/contract-award-criterion/')" />
     <xsl:variable name="nm_publicContractCriteria" select="concat($PC_URI,'/public-contract-criteria/')" />
     <xsl:variable name="id_pcIdentifier1" select="concat($PC_URI,'/identifier/1')" />
     <xsl:variable name="id_pcIdentifier2" select="concat($PC_URI,'/identifier/2')" />
     <xsl:variable name="id_contractingAuthAddress" select="concat($PC_URI,'/postal-address/1')" />
+    <xsl:variable name="nm_behalfOfAddress" select="concat($PC_URI,'/behalf-of-postal-address/')" />
     <xsl:variable name="id_documentsPrice" select="concat($PC_URI,'/documents-price/1')" />
     <xsl:variable name="id_agreedPrice" select="concat($PC_URI,'/agreed-price/1')" />
     <xsl:variable name="id_activityKind" select="concat($PC_URI,'/activity-kind/1')" />
@@ -209,6 +212,13 @@
 	            
 	            <xsl:apply-templates select="UvedteCenu_IV_3_3 | Hodnota_II_2_1" />
 	            
+	            <!-- information about parts of contract -->
+	            <xsl:apply-templates select="skup_priloha/priloha_B" />
+	            
+	            <!-- behalf of -->
+	            <xsl:apply-templates select="skup_priloha/priloha_A/skup_priloha/oddil_4" />
+	            
+	            
 	            <!-- TENDERS -->
 	            <xsl:if test="count(skup_priloha/oddil_5) &gt; 1">
 	                <xsl:for-each select="skup_priloha/oddil_5">
@@ -261,6 +271,82 @@
 	       
 	</xsl:template>
     
+    <xsl:template match="oddil_4">
+        
+        <xsl:variable name="submitterIC">
+            <!-- ICO can be found in two places -->
+            <xsl:choose>
+                <xsl:when test="Ico_IV/text()">
+                    <xsl:value-of select="concat('CZ',Ico_IV)" />
+                </xsl:when>
+                <xsl:when test="UredniNazev_IV/text()">
+                    <xsl:value-of select="concat(f:slugify(UredniNazev_IV),'-',$VVZ_FormNumber)" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <!-- make UUID -->
+                    <xsl:value-of select="concat(uuid:get-uuid(),'-',$VVZ_FormNumber)" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <pc:onBehalfOf>
+            <gr:BusinessEntity rdf:about="{concat($nm_businessEntity,$submitterIC)}">
+                <xsl:apply-templates select="UredniNazev_IV" mode="legalName" />
+                <xsl:apply-templates select=".[Adresa_IV | Psc_IV | Obec_IV | Stat_IV]" mode="contractingAuthorityAddress" />
+            </gr:BusinessEntity>
+        </pc:onBehalfOf>
+        
+    </xsl:template>
+    
+    <xsl:template match="priloha_B">
+        
+        <xsl:variable name="count" as="xsd:integer">
+            <xsl:number/>
+        </xsl:variable>
+        
+        <pc:lot>
+            <pc:Contract rdf:about="{concat($nm_publicContractLot,$count)}">
+                <xsl:apply-templates select="Nazev_0_0 | StrucnyPopis_1" />
+                
+                <xsl:apply-templates select="HlavniSlovnikHp_2 | HlavniSlovnikDp1_2 | HlavniSlovnikDp2_2 | HlavniSlovnikDp3_2 | HlavniSlovnikDp4_2" />
+                
+                <xsl:apply-templates select="PredpokladaneDatumZahajeniStavebnichPraci_4 | PredpokladaneDatumDokonceniStavebnichPraci_4" />
+
+                <xsl:apply-templates select=".[OdhadovanaHodnotaBezDph_3 | RozsahOd_3 | RozsahDo_3]" mode="pcEstimatedPrice" />
+                
+                <xsl:apply-templates select="DobaTrvaniVMesicich_4 | Dnech_4" />
+                
+            </pc:Contract>
+        </pc:lot>
+        
+    </xsl:template>
+    
+    <xsl:template match="priloha_B" mode="pcEstimatedPrice">
+        <xsl:variable name="count" as="xsd:integer">
+            <xsl:number/>
+        </xsl:variable>
+        
+        <pc:estimatedPrice>
+            <gr:PriceSpecification rdf:about="{concat($nm_lotEstimatedPrice,$count)}">
+                <xsl:apply-templates select="OdhadovanaHodnotaBezDph_3 | RozsahOd_3 | RozsahDo_3 | MenaRozsah_3 | MenaOdhadovanaHodnota_3" />
+                <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
+            </gr:PriceSpecification>
+        </pc:estimatedPrice>
+    </xsl:template>
+    
+    <xsl:template match="oddil_4" mode="contractingAuthorityAddress">
+        
+        <xsl:variable name="count" as="xsd:integer">
+            <xsl:number/>
+        </xsl:variable>
+        
+        <s:address>
+            <s:PostalAddress rdf:about="{concat($nm_behalfOfAddress,$count)}">
+                <xsl:apply-templates select="Adresa_IV | Psc_IV | Obec_IV | Stat_IV" />
+            </s:PostalAddress>
+        </s:address>
+    </xsl:template>
+    
     <xsl:template match="root" mode="pcContactPoint">
         <pc:contact>
             <s:ContactPoint rdf:about="{$id_PCContactPoint}">
@@ -280,7 +366,7 @@
     <xsl:template match="root" mode="pcEstimatedPrice">
         <pc:estimatedPrice>
             <gr:PriceSpecification rdf:about="{$id_estimatedPrice}">
-                <xsl:apply-templates select="UvedtePredpokladanouHodnotuBezDph_II_2_1 | RozsahOd_II_2_1 | RozsahDo_II_2_1 | MenaHodnota_II_2_1" />
+                <xsl:apply-templates select="UvedtePredpokladanouHodnotuBezDph_II_2_1 | RozsahOd_II_2_1 | RozsahDo_II_2_1 | MenaHodnota_II_2_1 | MenaRozsah_II_1_4" />
                 <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
             </gr:PriceSpecification>
         </pc:estimatedPrice>
@@ -410,13 +496,13 @@
         </pc:awardedTender>
     </xsl:template>
     
-    <xsl:template match="VMesicich_II_3">
+    <xsl:template match="VMesicich_II_3 | DobaTrvaniVMesicich_4">
         <pc:duration rdf:datatype="xsd:duration">
             <xsl:value-of select="f:getDuration(text(),'M')" />
         </pc:duration>
     </xsl:template>
     
-    <xsl:template match="NeboDnech_II_3">
+    <xsl:template match="NeboDnech_II_3 | Dnech_4">
         <pc:duration rdf:datatype="xsd:duration">
             <xsl:value-of select="f:getDuration(text(),'D')" />
         </pc:duration>
@@ -761,13 +847,14 @@
     </xsl:template>
     
     <!-- ADDITIONAL OBJECTS -->
-    <xsl:template match="HlavniSlovnikDp1_II_1_6 | HlavniSlovnikDp2_II_1_6 | HlavniSlovnikDp3_II_1_6 | HlavniSlovnikDp4_II_1_6 | HlavniSlovnikDp1_II_1_5 | HlavniSlovnikDp2_II_1_5 | HlavniSlovnikDp3_II_1_5 | HlavniSlovnikDp4_II_1_5">
+    <xsl:template match="HlavniSlovnikDp1_II_1_6 | HlavniSlovnikDp2_II_1_6 | HlavniSlovnikDp3_II_1_6 | HlavniSlovnikDp4_II_1_6 | HlavniSlovnikDp1_II_1_5 | 
+                         HlavniSlovnikDp2_II_1_5 | HlavniSlovnikDp3_II_1_5 | HlavniSlovnikDp4_II_1_5 | HlavniSlovnikDp1_2 | HlavniSlovnikDp2_2 | HlavniSlovnikDp3_2 | HlavniSlovnikDp4_2">
         <xsl:if test="text()">
         <pc:additionalObject rdf:resource="{concat($nm_cpv,f:stripDashes(text()))}" />
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="NazevPridelenyZakazce_II_1_1 | NazevPridelenyZakazceVerejnymZadavatelem_II_1_1">
+    <xsl:template match="NazevPridelenyZakazce_II_1_1 | NazevPridelenyZakazceVerejnymZadavatelem_II_1_1 | Nazev_0_0">
         <xsl:if test="text()">
         <dc:title xml:lang="cs">
             <xsl:value-of select="text()" />
@@ -775,7 +862,7 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="StrucnyPopisZakazky_II_1_5 | StrucnyPopis_II1_4">
+    <xsl:template match="StrucnyPopisZakazky_II_1_5 | StrucnyPopis_II1_4 | StrucnyPopis_1">
         <xsl:if test="text()">
         <dc:description xml:lang="cs">
             <xsl:value-of select="text()" />
@@ -792,7 +879,7 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="UredniNazev_I_1 | Nazev_I_1" mode="legalName">
+    <xsl:template match="UredniNazev_I_1 | Nazev_I_1 | UredniNazev_IV" mode="legalName">
         <xsl:if test="text()">
         <gr:legalName xml:lang="cs">
             <xsl:value-of select="text()" />
@@ -847,31 +934,31 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="PostovniAdresa_I_1 | Adresa_I_1">
+    <xsl:template match="PostovniAdresa_I_1 | Adresa_I_1 | Adresa_IV">
         <xsl:if test="text()">
         <s:streetAddress><xsl:value-of select="text()" /></s:streetAddress>
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="Psc_I_1">
+    <xsl:template match="Psc_I_1 | Psc_IV">
         <xsl:if test="text()">
         <s:postalCode><xsl:value-of select="text()" /></s:postalCode>
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="Obec_I_1">
+    <xsl:template match="Obec_I_1 | Obec_IV">
         <xsl:if test="text()">
         <s:addressLocality><xsl:value-of select="text()" /></s:addressLocality>
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="Stat_I_1">
+    <xsl:template match="Stat_I_1 | Stat_IV">
         <xsl:if test="text()">
         <s:addressCountry><xsl:value-of select="text()" /></s:addressCountry>
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="HlavniSlovnikHp_II_1_6 | HlavniSlovnikHp_II_1_5">
+    <xsl:template match="HlavniSlovnikHp_II_1_6 | HlavniSlovnikHp_II_1_5 | HlavniSlovnikHp_2">
         <xsl:if test="text()">
         <pc:mainObject rdf:resource="{concat($nm_cpv,f:stripDashes(text()))}" />
         </xsl:if>
@@ -890,23 +977,23 @@
         <pceu:hasParentRegion rdf:resource="{concat('http://ec.europa.eu/eurostat/ramon/rdfdata/nuts2008/',text())}" />
     </xsl:template>
     
-    <xsl:template match="UvedtePredpokladanouHodnotuBezDph_II_2_1">
+    <xsl:template match="UvedtePredpokladanouHodnotuBezDph_II_2_1 | OdhadovanaHodnotaBezDph_3">
         <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasCurrencyValue>
     </xsl:template>
     
-    <xsl:template match="RozsahOd_II_2_1">
+    <xsl:template match="RozsahOd_II_2_1 | RozsahOd_3">
         <gr:hasMinCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasMinCurrencyValue>
     </xsl:template>
     
-    <xsl:template match="RozsahDo_II_2_1">
+    <xsl:template match="RozsahDo_II_2_1 | RozsahDo_3">
         <gr:hasMaxCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasMaxCurrencyValue>
     </xsl:template>
     
-    <xsl:template match="MenaHodnota_II_2_1">
+    <xsl:template match="MenaHodnota_II_2_1 | MenaRozsah_II_1_4 | MenaRozsah_3 | MenaOdhadovanaHodnota_3">
         <gr:hasCurrency><xsl:value-of select="text()" /></gr:hasCurrency>
     </xsl:template>
     
-    <xsl:template match="NeboZahajeni_II_3">
+    <xsl:template match="NeboZahajeni_II_3 | PredpokladaneDatumZahajeniStavebnichPraci_4">
         <xsl:if test="text()">
            <xsl:variable name="tidyDate" select="f:processDate(text())" />
            <xsl:if test="$tidyDate">
@@ -917,7 +1004,7 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="Dokonceni_II_3">
+    <xsl:template match="Dokonceni_II_3 | PredpokladaneDatumDokonceniStavebnichPraci_4">
         <xsl:if test="text()">
            <xsl:variable name="tidyDate" select="f:processDate(text())" />
            <xsl:if test="$tidyDate">
