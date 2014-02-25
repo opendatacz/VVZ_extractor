@@ -66,10 +66,10 @@
         <!-- ICO can be found in two places -->
         <xsl:choose>
             <xsl:when test="$root/Ic_I_1/text()">
-                <xsl:value-of select="concat('CZ',$root/Ic_I_1)" />
+                <xsl:value-of select="f:processIC($root/Ic_I_1)" />
             </xsl:when>
             <xsl:when test="$root/skup_priloha/hlavicka/IcoZadavatel/text()">
-                <xsl:value-of select="concat('CZ',$root/skup_priloha/hlavicka/IcoZadavatel)" />
+                <xsl:value-of select="f:processIC($root/skup_priloha/hlavicka/IcoZadavatel)" />
             </xsl:when>
             <xsl:when test="$root/Nazev_I_1/text()">
                 <xsl:value-of select="concat(f:slugify($root/Nazev_I_1),'-',$VVZ_FormNumber)" />
@@ -250,7 +250,7 @@
 	                    <xsl:with-param name="bussinesEntityURI">
 	                        <xsl:choose>
 	                            <xsl:when test="skup_priloha/hlavicka/IcoDodavatel/text()">
-	                                <xsl:value-of select="concat($nm_businessEntity, 'CZ',skup_priloha/hlavicka/IcoDodavatel)" />
+	                                <xsl:value-of select="concat($nm_businessEntity, f:processIC(skup_priloha/hlavicka/IcoDodavatel))" />
 	                            </xsl:when>
 	                            <xsl:when test="skup_priloha/oddil_5/NazevDodavatele_V_3/text()">
 	                                <xsl:value-of select="concat($nm_businessEntity, f:slugify(skup_priloha/oddil_5/NazevDodavatele_V_3), '-', $VVZ_FormNumber)" />
@@ -277,7 +277,7 @@
             <!-- ICO can be found in two places -->
             <xsl:choose>
                 <xsl:when test="Ico_IV/text()">
-                    <xsl:value-of select="concat('CZ',Ico_IV)" />
+                    <xsl:value-of select="f:processIC(Ico_IV)" />
                 </xsl:when>
                 <xsl:when test="UredniNazev_IV/text()">
                     <xsl:value-of select="concat(f:slugify(UredniNazev_IV),'-',$VVZ_FormNumber)" />
@@ -1357,6 +1357,52 @@
         <xsl:param name="text" as="xsd:string"/>
         <xsl:value-of select="encode-for-uri(translate(replace(lower-case(normalize-unicode($text, 'NFKD')), '\P{IsBasicLatin}', ''), ' ', '-'))" />
         <!--  <xsl:value-of select="encode-for-uri(translate(replace(lower-case(normalize-space($text)), '\s', '-'),'áàâäéèêëěíìîïóòôöúùûüůýžščřďňť','aaaaeeeeeiiiioooouuuuuyzscrdnt'))"/>-->
+    </xsl:function>
+    
+    
+    <xsl:function name="f:processIC" as="xsd:string">
+        <xsl:param name="_ic" />
+        <xsl:variable name="ic" select="translate($_ic,' ','')" />
+        
+        <xsl:choose>
+            
+            <xsl:when test="string-length($ic) = 0">
+                <xsl:value-of select="concat(uuid:get-uuid(),'-',$VVZ_FormNumber)" />
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:analyze-string select="$ic" regex="^([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])$">		
+                    <xsl:matching-substring>
+                        
+                        <xsl:variable name="n8" select="number(regex-group(1))" />
+                        <xsl:variable name="n7" select="number(regex-group(2))" />
+                        <xsl:variable name="n6" select="number(regex-group(3))" />
+                        <xsl:variable name="n5" select="number(regex-group(4))" />
+                        <xsl:variable name="n4" select="number(regex-group(5))" />
+                        <xsl:variable name="n3" select="number(regex-group(6))" />
+                        <xsl:variable name="n2" select="number(regex-group(7))" />
+                        <xsl:variable name="checkNumber" select="number(regex-group(8))" />
+                        
+                        <xsl:variable name="checkSum" select="$n8*8 + $n7*7 + $n6*6 + $n5*5 + $n4*4 + $n3*3 + $n2*2" />
+                        
+                        <xsl:variable name="checkSumMod" select="(11 - ($checkSum mod 11)) mod 10" />
+                        
+                        <xsl:choose>
+                            <xsl:when test="$checkNumber = $checkSumMod">
+                                <xsl:value-of select="concat('CZ',$ic)" />
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="concat(uuid:get-uuid(),'-',$VVZ_FormNumber)" />
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        
+                    </xsl:matching-substring>
+                    <xsl:non-matching-substring>
+                        <xsl:value-of select="concat(uuid:get-uuid(),'-',$VVZ_FormNumber)" />
+                    </xsl:non-matching-substring>
+                </xsl:analyze-string>
+            </xsl:otherwise>
+        </xsl:choose>
+        
     </xsl:function>
     
 </xsl:stylesheet>
