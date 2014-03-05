@@ -128,6 +128,7 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 		    try {
 			    this.unpackXSLT("pc.xsl");
 			    this.unpackXSLT("uuid.xslt");
+			    this.unpackXSLT("functions.xsl");
 
 			    File stylesheet = new File(context.getGlobalDirectory() + File.separator + "xslt","pc.xsl");
 
