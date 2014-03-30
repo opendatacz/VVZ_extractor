@@ -16,7 +16,9 @@ public class VVZ_extractorConfig implements DPUConfigObject {
     @Override
     public boolean isValid() {
 
-        return !dateFrom.isEmpty() && !dateTo.isEmpty() && !context.isEmpty();
+	    // no need to pass valid configuration. Invalid parameters only cause, that no public contracts will be found via soap api.
+	    return true;
+        //return !dateFrom.isEmpty() && !dateTo.isEmpty() && !context.isEmpty();
     }
 
 }

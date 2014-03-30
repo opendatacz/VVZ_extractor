@@ -190,10 +190,6 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 				    break;
 			    }
 
-			    if(parsed==5) {
-				    break;
-			    }
-
 		    }
 
 		    this.logger.info(
@@ -254,6 +250,9 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 	}
 
     @Override
-    public void cleanUp() {	}
+    public void cleanUp() {
+
+
+    }
 
 }
