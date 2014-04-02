@@ -1,6 +1,7 @@
 package cz.opendata.linked.vvz.extractor;
 
 import org.junit.Test;
+import org.junit.Assert;
 
 import cz.cuni.mff.xrg.odcs.dataunit.file.handlers.DirectoryHandler;
 import cz.cuni.mff.xrg.odcs.commons.configuration.ConfigException;
@@ -35,6 +36,8 @@ public class VVZ_extractorTest {
 				env.run(extractor);
 				DirectoryHandler root = output.getRootDir();
 				System.out.println("Resulting directory: " + output.getRootDir().size());
+
+				Assert.assertTrue(output.getRootDir().size() > 0);
 
 			} catch (Exception e) {
 				e.printStackTrace();
