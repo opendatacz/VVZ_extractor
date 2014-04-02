@@ -2,11 +2,6 @@ package cz.opendata.linked.vvz.extractor;
 
 import cz.cuni.mff.xrg.odcs.commons.configuration.*;
 import cz.cuni.mff.xrg.odcs.commons.module.dialog.BaseConfigDialog;
-
-import com.vaadin.data.Property;
-import com.vaadin.data.Validator.EmptyValueException;
-import com.vaadin.data.Validator.InvalidValueException;
-import com.vaadin.data.Validator;
 import com.vaadin.ui.*;
 
 /**
@@ -47,8 +42,6 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
         conf.context = input_context.getValue().trim();
 
         return conf;
-
-
 	}
 
     /**
@@ -103,7 +96,6 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
 	    input_context.setDescription("Context in which extractor will remember which public contracts has already processed. If configuration does not provide context, extractor will process all public contracts in selected period.");
 
         mainLayout.addComponent(input_context);
-
 
         return mainLayout;
     }

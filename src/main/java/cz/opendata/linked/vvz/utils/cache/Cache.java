@@ -82,7 +82,7 @@ public class Cache extends cz.opendata.linked.vvz.utils.Object {
 	}
 
 	/**
-	 * @param documentId
+	 * @param documentId id off PC form
 	 * @throws CacheException
 	 * @return cached document by id
 	 */
@@ -107,17 +107,35 @@ public class Cache extends cz.opendata.linked.vvz.utils.Object {
 	}
 
 	/**
-	 * Store document in document cache
+	 * @param documentId id off PC form
+	 * @throws CacheException
+	 * @return cached file by id
+	 */
+	public File getFile(String documentId) throws CacheException {
+
+		File xml = null;
+
+		if(this.isCached(documentId)) {
+			xml = new File(this.getCacheDir(), documentId + ".xml");
+		}
+
+		return xml;
+	}
+
+	/**
+	 * Stores XML document in document cache and returns cached file
 	 * @param doc
 	 * @param documentId
 	 * @throws CacheException
 	 */
-	public void storeDocument(Document doc, String documentId) throws CacheException {
+	public File storeDocument(Document doc, String documentId) throws CacheException {
+
+		File newDoc = null;
 
 		try {
 
 			this.getCacheDir().mkdirs();
-			File newDoc = new File(this.getCacheDir(), documentId + ".xml");
+			newDoc = new File(this.getCacheDir(), documentId + ".xml");
 
 			newDoc.createNewFile();
 
@@ -130,7 +148,7 @@ public class Cache extends cz.opendata.linked.vvz.utils.Object {
 		} catch(Exception e) {
 			throw new CacheException("Could not store document " + e.getMessage(), e);
 		}
-
+		return newDoc;
 
 	}
 

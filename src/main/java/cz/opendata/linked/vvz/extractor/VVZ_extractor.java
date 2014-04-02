@@ -8,10 +8,10 @@ import cz.cuni.mff.xrg.odcs.commons.dpu.annotation.*;
 import cz.cuni.mff.xrg.odcs.commons.module.dpu.ConfigurableBase;
 import cz.cuni.mff.xrg.odcs.commons.web.AbstractConfigDialog;
 import cz.cuni.mff.xrg.odcs.commons.web.ConfigDialogProvider;
-import cz.cuni.mff.xrg.odcs.rdf.interfaces.RDFDataUnit;
-import cz.cuni.mff.xrg.odcs.commons.module.utils.DataUnitUtils;
+import cz.cuni.mff.xrg.odcs.dataunit.file.FileDataUnit;
+import cz.cuni.mff.xrg.odcs.dataunit.file.handlers.DirectoryHandler;
+import cz.cuni.mff.xrg.odcs.dataunit.file.options.OptionsAdd;
 
-import cz.cuni.mff.xrg.odcs.commons.message.MessageType;
 import cz.opendata.linked.vvz.forms.PCReceiveException;
 import cz.opendata.linked.vvz.forms.PCReceiver;
 import cz.opendata.linked.vvz.forms.QueryParameters;
@@ -19,14 +19,10 @@ import cz.opendata.linked.vvz.utils.cache.Cache;
 import cz.opendata.linked.vvz.utils.cache.CacheException;
 import cz.opendata.linked.vvz.utils.journal.Journal;
 import cz.opendata.linked.vvz.utils.journal.JournalException;
-import cz.opendata.linked.vvz.utils.xslt.XML2RDF;
+
 import org.w3c.dom.Document;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -42,8 +38,8 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 
 	private DPUContext context;
 
-	@OutputDataUnit(description="It contains RDF triples with public contracts, contracting authorities and suppliers according to Public Contracts Ontology.")
-    public RDFDataUnit rdfOutput;
+	@OutputDataUnit(name="downloadedFiles",description="It contains public contracts XML files.")
+    public FileDataUnit filesOutput;
 
     public VVZ_extractor() {
         super(VVZ_extractorConfig.class);
@@ -55,23 +51,10 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
     }
 
     @Override
-    public void execute(DPUContext context) throws DPUException, DataUnitException {
+    public void execute(DPUContext context) throws DPUException {
 
 	    this.context = context;
 
-	    //get working dir
-	    File workingDir = context.getWorkingDir();
-	    workingDir.mkdirs();
-
-
-	    String pathToWorkingDir = null;
-	    try {
-		    pathToWorkingDir = workingDir.getCanonicalPath();
-	    } catch (IOException e) {
-		    logger.error("Cannot get path to working dir");
-		    logger.debug(e.getLocalizedMessage());
-		    context.sendMessage(MessageType.ERROR, "Cannot get path to working dir "+ e.getLocalizedMessage());
-	    }
 
 	    Cache cache = Cache.getInstance();
 	    cache.setLogger(this.logger);
@@ -118,37 +101,24 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 		    Integer parsed = 0, alreadyParsed = 0, cached = 0, alreadyCached = 0, failures=0;
 
 		    List<String> PCIds = pcr.loadPublicContractsList(params);
-		    this.logger.info(PCIds.size() + " public contracts is going to be downloaded and parsed");
+		    this.logger.info(PCIds.size() + " public contracts is going to be downloaded");
 
-		    Document inputFile;
+		    File inputFile;
+		    Document pcDoc;
 		    Boolean parse = false;
-
-		    XML2RDF xsl;
-
-		    try {
-			    this.unpackXSLT("pc.xsl");
-			    this.unpackXSLT("uuid.xslt");
-			    this.unpackXSLT("functions.xsl");
-
-			    File stylesheet = new File(context.getGlobalDirectory() + File.separator + "xslt","pc.xsl");
-
-			    xsl = new XML2RDF(stylesheet);
-			    xsl.setLogger(this.logger);
-		    } catch(IOException e) {
-				throw new DPUException("Could not get pc.xslt");
-		    }
+		    DirectoryHandler outputRoot = filesOutput.getRootDir();
 
 		    for(String id : PCIds) {
 
 			    try {
 				    if(cache.isCached(id)) {
 					    this.logger.info(id + " file is already cached");
-					    inputFile = cache.getDocument(id);
+					    inputFile = cache.getFile(id);
 					    alreadyCached++;
 				    } else {
 					    this.logger.info(id + " file is going to be downloaded");
-					    inputFile = pcr.loadPublicContractForm(id);
-					    cache.storeDocument(inputFile,id);
+					    pcDoc = pcr.loadPublicContractForm(id);
+					    inputFile = cache.storeDocument(pcDoc,id);
 					    cached++;
 				    }
 
@@ -169,14 +139,11 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 				    }
 
 				    try {
-					    if(parse) {
-					        String output = xsl.executeXSLT(inputFile);
+					    if(parse) { // is XML document going to be parsed?
 
-						    String outputPath = pathToWorkingDir + File.separator + "out"  + File.separator + String.valueOf(id) + ".rdf";
-						    DataUnitUtils.checkExistanceOfDir(pathToWorkingDir + File.separator + "out" + File.separator);
-						    DataUnitUtils.storeStringToTempFile(output, outputPath);
+						    // return xml File
+							outputRoot.addExistingFile(inputFile, new OptionsAdd(false,true));
 
-						    rdfOutput.addFromRDFXMLFile(new File(outputPath));
 						    parsed++;
 					    }
 
@@ -197,7 +164,7 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 				    "Failures: " + failures + "\n" +
 				    "Downloaded: " + cached + "\n" +
 				    "Already cached: " + alreadyCached + "\n" +
-				    "Parsed: " + parsed + "\n" +
+				    "Going to be parsed: " + parsed + "\n" +
 				    "Already parsed: " + alreadyParsed
 		    );
 
@@ -210,47 +177,6 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 		} catch (Exception e) {
 		    throw new DPUException(e);
 	    }
-
-    }
-
-	public void unpackXSLT(String stylesheet) {
-
-		File xsltDir = new File(this.context.getGlobalDirectory(),"xslt");
-		File xsltFile = new File(xsltDir, stylesheet);
-
-		if(!xsltFile.exists()) {
-
-			this.logger.debug("Unpacking XSLT " + stylesheet + " to global directory");
-
-			try {
-
-				xsltDir.mkdirs();
-
-				xsltFile.createNewFile();
-
-				InputStream input = getClass().getResourceAsStream("/xslt/" + stylesheet);
-				FileOutputStream out = new FileOutputStream(xsltFile);
-
-				byte[] buffer = new byte[1024];
-				int len;
-				while ((len = input.read(buffer)) != -1) {
-					out.write(buffer, 0, len);
-				}
-
-				this.logger.debug("XSLT " + stylesheet + " has been stored in global working dir successfully.");
-
-			} catch(IOException e) {
-
-			}
-
-		} else {
-			this.logger.debug("XSLT " + stylesheet + " is already stored in global working dir.");
-		}
-
-	}
-
-    @Override
-    public void cleanUp() {
 
 
     }

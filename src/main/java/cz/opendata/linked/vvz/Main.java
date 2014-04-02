@@ -1,33 +1,19 @@
 package cz.opendata.linked.vvz;
 
 
-import cz.opendata.linked.vvz.forms.PCReceiveException;
 import cz.opendata.linked.vvz.forms.PCReceiver;
 import cz.opendata.linked.vvz.forms.QueryParameters;
 import cz.opendata.linked.vvz.utils.cache.Cache;
 
-import cz.opendata.linked.vvz.utils.cache.CacheException;
 import cz.opendata.linked.vvz.utils.journal.Journal;
 import cz.opendata.linked.vvz.utils.journal.JournalException;
-import cz.opendata.linked.vvz.utils.xslt.XML2RDF;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+
 import java.text.SimpleDateFormat;
 
-import java.util.List;
-
-
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamSource;
-import net.sf.saxon.s9api.Processor;
-import net.sf.saxon.s9api.SaxonApiException;
-import net.sf.saxon.s9api.Serializer;
-import net.sf.saxon.s9api.XsltCompiler;
-import net.sf.saxon.s9api.XsltExecutable;
-import net.sf.saxon.s9api.XsltTransformer;
-import org.w3c.dom.Document;
 
 
 public class Main {
@@ -73,14 +59,6 @@ public class Main {
 			}
 		}
 
-		try {
-			File stylesheet = new File("/home/cammeron/Java-Workspace/VVZ_extractor/xslt","pc.xsl");
-			XML2RDF xsl = new XML2RDF(stylesheet);
-			xsl.setLogger(logger);
-			//unpackXSLT();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
 
 		/*
 		try {

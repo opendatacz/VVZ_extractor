@@ -11,44 +11,20 @@
     <packaging>bundle</packaging>
     <version>0.0.1</version>
 	<description>
-		Receiving XML forms with public contracts from vestnikverejnychzakazek.cz using SOAP Web Services and extracting them to RDF.
+		Receiving XML forms with public contracts from vestnikverejnychzakazek.cz using SOAP Web Services.
 	</description>
 
     <properties>
-        <dpu.description>My first DPU implementation.</dpu.description>
         <dpu.package>cz.opendata.linked.vvz.extractor</dpu.package>
         <dpu.mainClass>VVZ_extractor</dpu.mainClass>
     </properties>
 
-	<build>
-		<resources>
-			<resource>
-				<directory>xslt</directory>
-				<targetPath>xslt</targetPath>
-				<includes>
-					<include>pc.xsl</include>
-					<include>uuid.xslt</include>
-					<include>functions.xsl</include>
-				</includes>
-			</resource>
-		</resources>
-	</build>
-
 	<dependencies>
-
-		<dependency>
-			<groupId>net.sourceforge.saxon</groupId>
-			<artifactId>saxonhe</artifactId>
-			<version>9.2.1.5</version>
-			<scope>runtime</scope>
-		</dependency>
-
 
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
 			<version>10.9.1.0</version>
-			<scope>runtime</scope>
 		</dependency>
 
 	</dependencies>
