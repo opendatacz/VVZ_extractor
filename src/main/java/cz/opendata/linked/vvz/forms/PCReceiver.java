@@ -47,7 +47,7 @@ public class PCReceiver extends Object {
 
 	/**
 	 * Makes SOAP connection to vestnikverejnychzakazek.cz and receive list of public contracts by given parameters
-	 * @param params dateTo, dateFrom, context, formType
+	 * @param params dateTo, dateFrom, formType
 	 * @return list of public contracts
 	 * @throws PCReceiveException
 	 */

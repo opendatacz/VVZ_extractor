@@ -11,18 +11,19 @@ public class VVZ_extractorConfig extends DPUConfigObjectBase {
 
     public String dateFrom;
     public String dateTo;
-    public String context;
+    public Boolean onlyGain;
 
 	public VVZ_extractorConfig() {
 		this.dateFrom= "";
 		this.dateTo = "";
-		this.context = "";
+		this.onlyGain = true;
+
 	}
 
-	public VVZ_extractorConfig(String dateFrom, String dateTo, String context) {
+	public VVZ_extractorConfig(String dateFrom, String dateTo, Boolean onlyGain) {
 		this.dateFrom = dateFrom;
 		this.dateTo = dateTo;
-		this.context = context;
+		this.onlyGain = onlyGain;
 	}
 
     @Override

@@ -14,9 +14,7 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
 
     private TextField input_dateFrom;
     private TextField input_dateTo;
-    private TextField input_context;
-
-    private boolean formValid = false;
+    private CheckBox input_gain;
 
     public VVZ_extractorDialog() {
         super(VVZ_extractorConfig.class);
@@ -29,7 +27,7 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
 	public void setConfiguration(VVZ_extractorConfig conf) throws ConfigException {
 		input_dateFrom.setValue(conf.dateFrom);
         input_dateTo.setValue(conf.dateTo);
-        input_context.setValue(conf.context);
+        input_gain.setValue(conf.onlyGain);
 	}
 
 	@Override
@@ -39,7 +37,7 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
         VVZ_extractorConfig conf = new VVZ_extractorConfig();
         conf.dateFrom = input_dateFrom.getValue().trim();
         conf.dateTo = input_dateTo.getValue().trim();
-        conf.context = input_context.getValue().trim();
+        conf.onlyGain = input_gain.getValue();
 
         return conf;
 	}
@@ -86,16 +84,13 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
 
         mainLayout.addComponent(input_dateTo);
 
-        // text field for date to
-        input_context = new TextField();
-        input_context.setNullRepresentation("");
-        input_context.setCaption("Context string:");
-        input_context.setImmediate(true);
-        input_context.setWidth("100%");
-        input_context.setHeight("-1px");
-	    input_context.setDescription("Context in which extractor will remember which public contracts has already processed. If configuration does not provide context, extractor will process all public contracts in selected period.");
+        // text field for onlyGain
+        input_gain = new CheckBox();
+        input_gain.setCaption("Process gain only:");
+        input_gain.setWidth("100%");
+	    input_gain.setDescription(".");
 
-        mainLayout.addComponent(input_context);
+        mainLayout.addComponent(input_gain);
 
         return mainLayout;
     }

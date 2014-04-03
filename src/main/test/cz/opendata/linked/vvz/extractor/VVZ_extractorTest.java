@@ -9,13 +9,7 @@ import cz.cuni.mff.xrg.odcs.dataunit.file.FileDataUnit;
 import cz.cuni.mff.xrg.odcs.dpu.test.TestEnvironment;
 import java.io.IOException;
 
-/**
- * Created with IntelliJ IDEA.
- * User: cammeron
- * Date: 4/2/14
- * Time: 11:28 AM
- * To change this template use File | Settings | File Templates.
- */
+
 public class VVZ_extractorTest {
 
 	@Test
@@ -24,7 +18,7 @@ public class VVZ_extractorTest {
 		try {
 
 			VVZ_extractor extractor = new VVZ_extractor();
-			VVZ_extractorConfig config = new VVZ_extractorConfig("2.1.2014","2.1.2014","");
+			VVZ_extractorConfig config = new VVZ_extractorConfig("2.1.2014","2.1.2014",false);
 
 			extractor.configureDirectly(config);
 
@@ -34,7 +28,6 @@ public class VVZ_extractorTest {
 			try {
 				// run the execution
 				env.run(extractor);
-				DirectoryHandler root = output.getRootDir();
 				System.out.println("Resulting directory: " + output.getRootDir().size());
 
 				Assert.assertTrue(output.getRootDir().size() > 0);
