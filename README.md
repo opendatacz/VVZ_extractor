@@ -9,7 +9,7 @@ Soap request further contains query parameters, which specify what public contra
 The parameters include date from and date to, which specifies period in which public contracts have been published.
 If date from or date to is not present, extractor will process all public contracts to the past or to the future.
 When extractor get public contracts list, which contains identificators of individual contracts, he will start sending requests for each form from the given list.
-Received form has XML format and must be transformed to XML/RDF.
+Received form has XML format and must be transformed to RDF/XML.
 
 using:
 
