@@ -34,7 +34,6 @@
     <xsl:variable name="nm_vvz_pc" select="concat($nm_vvz, 'public-contract/')"/>
     <xsl:variable name="nm_cpv" select="concat($nm_lod,'cpv-2008/concept/')" />
     <xsl:variable name="nm_pcCriteria">http://purl.org/procurement/public-contracts-criteria/</xsl:variable>
-    
     <xsl:variable name="schemeAgency">Ministerstvo pro místní rozvoj</xsl:variable>
     <xsl:variable name="creator">http://linked.opendata.cz/resource/business-entity/CZ66002222</xsl:variable>
     
