@@ -930,7 +930,7 @@
     </xsl:template>
 
     <xsl:template match="DruhRizeni_IV_1_1">
-        <xsl:if test="DruhRizeni_IV_1_1/text()">
+        <xsl:if test="text()">
         <pc:procedureType rdf:resource="{f:getProcedureType(text())}" />
         </xsl:if>
     </xsl:template>
