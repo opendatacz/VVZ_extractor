@@ -329,7 +329,7 @@
         <pc:estimatedPrice>
             <gr:PriceSpecification rdf:about="{concat($nm_lotEstimatedPrice,$count)}">
                 <xsl:apply-templates select="OdhadovanaHodnotaBezDph_3 | RozsahOd_3 | RozsahDo_3 | MenaRozsah_3 | MenaOdhadovanaHodnota_3" />
-                <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
+                <gr:valueAddedTaxIncluded rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</gr:valueAddedTaxIncluded>
             </gr:PriceSpecification>
         </pc:estimatedPrice>
     </xsl:template>
@@ -367,7 +367,7 @@
         <pc:estimatedPrice>
             <gr:PriceSpecification rdf:about="{$id_estimatedPrice}">
                 <xsl:apply-templates select="UvedtePredpokladanouHodnotuBezDph_II_2_1 | RozsahOd_II_2_1 | RozsahDo_II_2_1 | MenaHodnota_II_2_1 | MenaRozsah_II_1_4" />
-                <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
+                <gr:valueAddedTaxIncluded rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</gr:valueAddedTaxIncluded>
             </gr:PriceSpecification>
         </pc:estimatedPrice>
     </xsl:template>
@@ -390,7 +390,7 @@
         <xsl:if test="text()">
            <xsl:variable name="tidyDateTime" select="f:processDateTime(text(),$time)" />
            <xsl:if test="$tidyDateTime">
-               <dc:date rdf:datatype="xsd:dateTime">
+               <dc:date rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">
                    <xsl:value-of select="$tidyDateTime" />
                </dc:date>    
            </xsl:if>
@@ -411,7 +411,7 @@
         <xsl:if test="text()">
             <xsl:variable name="tidyDate" select="f:processDate(text())" />
             <xsl:if test="$tidyDate">
-            <pc:publicationDate rdf:datatype="xsd:date">
+            <pc:publicationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">
             <xsl:value-of select="$tidyDate"/>
             </pc:publicationDate>
             </xsl:if>
@@ -469,12 +469,12 @@
                 <xsl:if test="$award/Hodnota2_V_4">
                     <pc:offeredPrice>
                         <gr:PriceSpecification rdf:about="{concat($nm_tendersOfferedPrice,$count)}">
-                            <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice($award/Hodnota2_V_4)" /></gr:hasCurrencyValue>
+                            <gr:hasCurrencyValue rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"><xsl:value-of select="f:processPrice($award/Hodnota2_V_4)" /></gr:hasCurrencyValue>
                             <xsl:if test="$award/Mena2_V_4">
                             <gr:hasCurrency><xsl:value-of select="$award/Mena2_V_4" /></gr:hasCurrency>
                             </xsl:if>
                             <xsl:if test="$award/Dph2_V_4">
-                            <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean"><xsl:value-of select="$award/Dph2_V_4" /></gr:valueAddedTaxIncluded>
+                            <gr:valueAddedTaxIncluded rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"><xsl:value-of select="$award/Dph2_V_4" /></gr:valueAddedTaxIncluded>
                             </xsl:if>
                         </gr:PriceSpecification>
                     </pc:offeredPrice>
@@ -482,12 +482,12 @@
                 <xsl:if test="$award/Hodnota1_V_4">
                 <pc:estimatedPrice>
                     <gr:PriceSpecification rdf:about="{concat($nm_tendersEstimatedPrice,$count)}">
-                        <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice($award/Hodnota1_V_4)" /></gr:hasCurrencyValue>
+                        <gr:hasCurrencyValue rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"><xsl:value-of select="f:processPrice($award/Hodnota1_V_4)" /></gr:hasCurrencyValue>
                         <xsl:if test="$award/Mena1_V_4">
                         <gr:hasCurrency><xsl:value-of select="$award/Mena1_V_4" /></gr:hasCurrency>
                         </xsl:if>
                         <xsl:if test="$award/Dph1_V_4">
-                        <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean"><xsl:value-of select="$award/Dph1_V_4" /></gr:valueAddedTaxIncluded>
+                        <gr:valueAddedTaxIncluded rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean"><xsl:value-of select="$award/Dph1_V_4" /></gr:valueAddedTaxIncluded>
                         </xsl:if>
                     </gr:PriceSpecification>
                 </pc:estimatedPrice>
@@ -659,7 +659,7 @@
         <pc:awardCriterion>
             <pc:CriterionWeighting rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <pc:weightedCriterion rdf:resource="http://purl.org/procurement/public-contracts-criteria#LowestPrice"></pc:weightedCriterion>
-                <pc:criterionWeight rdf:datatype="pcdt:percentage">100</pc:criterionWeight>
+                <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage">100</pc:criterionWeight>
             </pc:CriterionWeighting>
         </pc:awardCriterion>
         </xsl:if>
@@ -671,7 +671,7 @@
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha1_IV_2_1/text()">
-                <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha1_IV_2_1" /></pc:criterionWeight>
+                <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha1_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
                 <pc:weightedCriterion>
                     <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
@@ -689,7 +689,7 @@
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha2_IV_2_1/text()">
-                <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha2_IV_2_1" /></pc:criterionWeight>
+                <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha2_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
                 <pc:weightedCriterion>
                     <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
@@ -707,7 +707,7 @@
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha3_IV_2_1">
-                <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha3_IV_2_1" /></pc:criterionWeight>
+                <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha3_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
                 <pc:weightedCriterion>
                     <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
@@ -725,7 +725,7 @@
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha4_IV_2_1">
-                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha4_IV_2_1" /></pc:criterionWeight>
+                    <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha4_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
                 <pc:weightedCriterion>
                     <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
@@ -743,7 +743,7 @@
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha5_IV_2_1">
-                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha5_IV_2_1" /></pc:criterionWeight>
+                    <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha5_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
                 <pc:weightedCriterion>
                     <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
@@ -761,7 +761,7 @@
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha6_IV_2_1">
-                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha6_IV_2_1" /></pc:criterionWeight>
+                    <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha6_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
                 <pc:weightedCriterion>
                     <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
@@ -779,7 +779,7 @@
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha7_IV_2_1">
-                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha7_IV_2_1" /></pc:criterionWeight>
+                    <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha7_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
                 <pc:weightedCriterion>
                     <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
@@ -797,7 +797,7 @@
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha8_IV_2_1">
-                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha8_IV_2_1" /></pc:criterionWeight>
+                    <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha8_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
                 <pc:weightedCriterion>
                     <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
@@ -815,7 +815,7 @@
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha9_IV_2_1">
-                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha9_IV_2_1" /></pc:criterionWeight>
+                    <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha9_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
                 <pc:weightedCriterion>
                     <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
@@ -833,7 +833,7 @@
         <pc:awardCriterion>
             <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha10_IV_2_1">
-                    <pc:criterionWeight rdf:datatype="pcdt:percentage"><xsl:value-of select="$root/Vaha10_IV_2_1" /></pc:criterionWeight>
+                    <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha10_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
                 <pc:weightedCriterion>
                     <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
@@ -854,7 +854,7 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="NazevPridelenyZakazce_II_1_1 | NazevPridelenyZakazceVerejnymZadavatelem_II_1_1 | Nazev_0_0">
+    <xsl:template match="NazevPridelenyZakazce_II_1_1 | NazevPridelenyZakazceVerejnymZadavatelem_II_1_1 | Nazev_0_0 | ZakazkaNazev_V">
         <xsl:if test="text()">
         <dc:title xml:lang="cs">
             <xsl:value-of select="text()" />
@@ -881,9 +881,9 @@
     
     <xsl:template match="UredniNazev_I_1 | Nazev_I_1 | UredniNazev_IV" mode="legalName">
         <xsl:if test="text()">
-        <gr:legalName xml:lang="cs">
+        <dc:legalName xml:lang="cs">
             <xsl:value-of select="text()" />
-        </gr:legalName>
+        </dc:legalName>
         </xsl:if>
     </xsl:template>
     
@@ -978,15 +978,15 @@
     </xsl:template>
     
     <xsl:template match="UvedtePredpokladanouHodnotuBezDph_II_2_1 | OdhadovanaHodnotaBezDph_3">
-        <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasCurrencyValue>
+        <gr:hasCurrencyValue rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasCurrencyValue>
     </xsl:template>
     
     <xsl:template match="RozsahOd_II_2_1 | RozsahOd_3">
-        <gr:hasMinCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasMinCurrencyValue>
+        <gr:hasMinCurrencyValue rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasMinCurrencyValue>
     </xsl:template>
     
     <xsl:template match="RozsahDo_II_2_1 | RozsahDo_3">
-        <gr:hasMaxCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasMaxCurrencyValue>
+        <gr:hasMaxCurrencyValue rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasMaxCurrencyValue>
     </xsl:template>
     
     <xsl:template match="MenaHodnota_II_2_1 | MenaRozsah_II_1_4 | MenaRozsah_3 | MenaOdhadovanaHodnota_3">
@@ -997,7 +997,7 @@
         <xsl:if test="text()">
            <xsl:variable name="tidyDate" select="f:processDate(text())" />
            <xsl:if test="$tidyDate">
-           <pc:startDate rdf:datatype="xsd:date">
+           <pc:startDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">
                <xsl:value-of select="$tidyDate" />
            </pc:startDate>
            </xsl:if>
@@ -1008,7 +1008,7 @@
         <xsl:if test="text()">
            <xsl:variable name="tidyDate" select="f:processDate(text())" />
            <xsl:if test="$tidyDate">
-           <pc:estimatedEndDate rdf:datatype="xsd:date">
+           <pc:estimatedEndDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">
                <xsl:value-of select="$tidyDate" />
            </pc:estimatedEndDate>
            </xsl:if>
@@ -1019,7 +1019,7 @@
         <xsl:if test="text()">
            <xsl:variable name="tidyDateTime" select="f:processDate(text())" />
            <xsl:if test="$tidyDateTime">
-           <pc:tenderDeadline rdf:datatype="xsd:dateTime">
+           <pc:tenderDeadline rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">
                <xsl:value-of select="$tidyDateTime" />
            </pc:tenderDeadline>
            </xsl:if>
@@ -1030,7 +1030,7 @@
         <xsl:if test="text()">
            <xsl:variable name="tidyDateTime" select="f:processDate(text())" />
            <xsl:if test="$tidyDateTime">
-           <pc:documentationRequestDeadline rdf:datatype="xsd:dateTime">
+           <pc:documentationRequestDeadline rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">
                <xsl:value-of select="$tidyDateTime" />
            </pc:documentationRequestDeadline>
            </xsl:if>
@@ -1057,9 +1057,9 @@
     <xsl:template match="UvedteCenu_IV_3_3">
         <pc:documentsPrice>
             <gr:PriceSpecification rdf:about="{$id_documentsPrice}">
-                <gr:hasCurrencyValue rdf:datatype="xsd:decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasCurrencyValue>
+                <gr:hasCurrencyValue rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal"><xsl:value-of select="f:processPrice(text())" /></gr:hasCurrencyValue>
                 <xsl:apply-templates select="$root/Mena_IV_3_3" />
-                <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
+                <gr:valueAddedTaxIncluded rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</gr:valueAddedTaxIncluded>
             </gr:PriceSpecification>
         </pc:documentsPrice>
     </xsl:template>
@@ -1073,19 +1073,13 @@
             <gr:PriceSpecification rdf:about="{$id_agreedPrice}">
                 <gr:hasCurrencyValue><xsl:value-of select="f:processPrice(text())" /></gr:hasCurrencyValue>
                 <xsl:apply-templates select="$root/Mena_II_2_1" />
-                <gr:valueAddedTaxIncluded rdf:datatype="xsd:boolean">false</gr:valueAddedTaxIncluded>
+                <gr:valueAddedTaxIncluded rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</gr:valueAddedTaxIncluded>
             </gr:PriceSpecification>
         </pc:agreedPrice>
     </xsl:template>
     
     <xsl:template match="Mena_II_2_1">
         <gr:hasCurrency><xsl:value-of select="text()" /></gr:hasCurrency>
-    </xsl:template>
-
-    <xsl:template match="ZakazkaNazev_V">
-        <xsl:if test="text()">
-        <gr:legalName><xsl:value-of select="text()" /></gr:legalName>
-        </xsl:if>
     </xsl:template>
     
     <xsl:template match="Strucpopis_V_5">
@@ -1095,13 +1089,13 @@
     </xsl:template>
     
     <xsl:template match="PocetNabidek_V_2">
-        <pc:numberOfTenders rdf:datatype="xsd:integer"><xsl:value-of select="text()" /></pc:numberOfTenders>
+        <pc:numberOfTenders rdf:datatype="http://www.w3.org/2001/XMLSchema#integer"><xsl:value-of select="text()" /></pc:numberOfTenders>
     </xsl:template>
 
     <xsl:template match="Datum_V_1">
         <xsl:variable name="tidyDate" select="f:processDate(text())" />
         <xsl:if test="$tidyDate">
-        <pc:awardDate rdf:datatype="xsd:date"><xsl:value-of select="$tidyDate" /></pc:awardDate>
+        <pc:awardDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date"><xsl:value-of select="$tidyDate" /></pc:awardDate>
         </xsl:if>
     </xsl:template>
     

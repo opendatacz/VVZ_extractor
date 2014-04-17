@@ -178,6 +178,15 @@
             <xsl:when test="matches($type,'COMPETITIVE_DIALOGUE')">
                 <xsl:value-of select="'http://purl.org/procurement/public-contracts-procedure-types#CompetitiveDialogue'" />
             </xsl:when>
+            <xsl:when test="matches($type,'NEGOTIATED_WITH_COMPETITION')">
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-procedure-types#NegotiatedWithCompetition'" />
+            </xsl:when>
+            <xsl:when test="matches($type,'NEGOTIATED_WITHOUT_COMPETITION')">
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-procedure-types#NegotiatedWithoutCompetition'" />
+            </xsl:when>
+            <xsl:when test="matches($type,'AWARD_WITHOUT_PRIOR_PUBLICATION')">
+                <xsl:value-of select="'http://purl.org/procurement/public-contracts-procedure-types#AwardWithoutPriorPublication'" />
+            </xsl:when>
         </xsl:choose>
     </xsl:function>
     
