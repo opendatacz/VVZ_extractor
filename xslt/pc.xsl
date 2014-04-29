@@ -2,7 +2,7 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:i="http://www.ness.cz/schemas/isvzus/v11.1"
     xmlns:f="http://opendata.cz/xslt/functions#"
-    xmlns:uuid="http://www.uuid.org"
+    xmlns:uuid="java:java.util.UUID"
     exclude-result-prefixes="f i uuid"
     xpath-default-namespace="http://www.ness.cz/schemas/isvzus/v11.1"
     
@@ -22,9 +22,9 @@
     xmlns:authkinds="http://purl.org/procurement/public-contracts-authority-kinds#"
     xmlns:kinds="http://purl.org/procurement/public-contracts-kinds#"
     xmlns:proctypes="http://purl.org/procurement/public-contracts-procedure-types#"
-    xmlns:criteria="http://purl.org/procurement/public-contracts-criteria#">
+    xmlns:criteria="http://purl.org/procurement/public-contracts-criteria#"
+    xmlns:prov="http://www.w3.org/ns/prov#">
     
-    <xsl:import href="uuid.xslt" />
     <xsl:import href="functions.xsl" />
     
     <xsl:output encoding="UTF-8" indent="yes" method="xml" normalization-form="NFC" />
@@ -46,7 +46,7 @@
                 <xsl:value-of select="$root/skup_priloha/hlavicka/VvzNumber" />
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="uuid:get-uuid()" />
+                <xsl:value-of select="uuid:randomUUID()" />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -57,29 +57,7 @@
                 <xsl:value-of select="$root/skup_priloha/hlavicka/CocoCode" />
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="uuid:get-uuid()" />
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:variable>
-    
-    <xsl:variable name="VVZ_SubmitterIC">
-        <!-- ICO can be found in two places -->
-        <xsl:choose>
-            <xsl:when test="$root/Ic_I_1/text()">
-                <xsl:value-of select="f:processIC($root/Ic_I_1,$VVZ_FormNumber)" />
-            </xsl:when>
-            <xsl:when test="$root/skup_priloha/hlavicka/IcoZadavatel/text()">
-                <xsl:value-of select="f:processIC($root/skup_priloha/hlavicka/IcoZadavatel,$VVZ_FormNumber)" />
-            </xsl:when>
-            <xsl:when test="$root/Nazev_I_1/text()">
-                <xsl:value-of select="concat(f:slugify($root/Nazev_I_1),'-',$VVZ_FormNumber)" />
-            </xsl:when>
-            <xsl:when test="$root/UredniNazev_I_1/text()">
-                <xsl:value-of select="concat(f:slugify($root/UredniNazev_I_1),'-',$VVZ_FormNumber)" />
-            </xsl:when>
-            <xsl:otherwise>
-                <!-- make UUID -->
-                <xsl:value-of select="concat(uuid:get-uuid(),'-',$VVZ_FormNumber)" />
+                <xsl:value-of select="uuid:randomUUID()" />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -104,7 +82,7 @@
     <xsl:variable name="nm_supplier" select="concat($PC_URI,'/supplier/')" />
     <xsl:variable name="nm_tendersPlace" select="concat($PC_URI,'/tenders-place/')" />
     <xsl:variable name="nm_businessEntity" select="concat($nm_lod,'business-entity/')" />
-    <xsl:variable name="id_contractingAuthority" select="concat($nm_businessEntity,$VVZ_SubmitterIC)" />
+    <xsl:variable name="id_contractingAuthority" select="concat($nm_businessEntity,uuid:randomUUID())" />
     <xsl:variable name="id_pcPlace" select="concat($PC_URI,'/place/1')" />
     <xsl:variable name="id_estimatedPrice" select="concat($PC_URI,'/estimated-price/1')" />
     <xsl:variable name="nm_lotEstimatedPrice" select="concat($PC_URI,'/lot-estimated-price/')" />
@@ -119,6 +97,8 @@
     <xsl:variable name="id_agreedPrice" select="concat($PC_URI,'/agreed-price/1')" />
     <xsl:variable name="id_activityKind" select="concat($PC_URI,'/activity-kind/1')" />
     <xsl:variable name="id_authorityKind" select="concat($PC_URI,'/authority-kind/1')" />
+    <xsl:variable name="nm_businessEntityIdentifier" select="concat($PC_URI,'/business-entity-identifier/')" />
+    <xsl:variable name="id_cz_ico_check_digit" select="'http://linked.opendata.cz/resource/validation/CZ-ICO-check-digit'" />
     
     <xsl:template match="root[verze_formulare='0200' or verze_formulare='0300']">
 	    
@@ -168,6 +148,21 @@
 	                    <xsl:apply-templates select="JinyProsimSpecifikujte_I_3" />
 	                    
 	                    <xsl:apply-templates select=".[PostovniAdresa_I_1 | Psc_I_1 | Obec_I_1 | Stat_I_1]" mode="contractingAuthorityAddress" />
+	                    
+	                    
+	                    <!-- submitter ICO can be found in two places -->
+	                    <xsl:choose>
+	                        <xsl:when test="$root/Ic_I_1">
+	                            <xsl:call-template name="BE_indentifier">
+	                                <xsl:with-param name="ico"><xsl:value-of select="$root/Ic_I_1" /></xsl:with-param>
+	                            </xsl:call-template>
+	                        </xsl:when>
+	                        <xsl:when test="$root/skup_priloha/hlavicka/IcoZadavatel">
+	                            <xsl:call-template name="BE_indentifier">
+	                                <xsl:with-param name="ico"><xsl:value-of select="$root/skup_priloha/hlavicka/IcoZadavatel" /></xsl:with-param>
+	                            </xsl:call-template>
+	                        </xsl:when>
+	                    </xsl:choose>
 	                    
 	                </gr:BusinessEntity>
 	            </pc:contractingAuthority>
@@ -228,17 +223,7 @@
 	                            
 	                            <xsl:call-template name="contractAward">
 	                                <xsl:with-param name="award" select="." />
-	                                <xsl:with-param name="bussinesEntityURI">
-	                                    <xsl:choose>
-	                                        <xsl:when test="NazevDodavatele_V_3/text()">
-	                                            <xsl:value-of select="concat($nm_businessEntity, f:slugify(NazevDodavatele_V_3), '-', $VVZ_FormNumber)" />
-	                                        </xsl:when>
-	                                        <xsl:otherwise>
-	                                            <!-- make UUID -->
-	                                            <xsl:value-of select="concat($nm_businessEntity, uuid:get-uuid(), '-', $VVZ_FormNumber)" />
-	                                        </xsl:otherwise>
-	                                    </xsl:choose>
-	                                </xsl:with-param>
+	                                <xsl:with-param name="icoZadavatel"><xsl:value-of select="''" /></xsl:with-param>
 	                            </xsl:call-template>
 	                        </pc:Contract>
 	                    </pc:lot>
@@ -247,55 +232,49 @@
 	            <xsl:if test="count(skup_priloha/oddil_5) = 1">
 	                <xsl:call-template name="contractAward">
 	                    <xsl:with-param name="award" select="skup_priloha/oddil_5" />
-	                    <xsl:with-param name="bussinesEntityURI">
-	                        <xsl:choose>
-	                            <xsl:when test="skup_priloha/hlavicka/IcoDodavatel/text()">
-	                                <xsl:value-of select="concat($nm_businessEntity, f:processIC(skup_priloha/hlavicka/IcoDodavatel,$VVZ_FormNumber))" />
-	                            </xsl:when>
-	                            <xsl:when test="skup_priloha/oddil_5/NazevDodavatele_V_3/text()">
-	                                <xsl:value-of select="concat($nm_businessEntity, f:slugify(skup_priloha/oddil_5/NazevDodavatele_V_3), '-', $VVZ_FormNumber)" />
-	                            </xsl:when>
-	                            <xsl:otherwise>
-	                                <!-- make UUID -->
-	                                <xsl:value-of select="concat($nm_businessEntity, uuid:get-uuid(), '-', $VVZ_FormNumber)" />
-	                            </xsl:otherwise>
-	                        </xsl:choose>
+	                    <xsl:with-param name="icoZadavatel">
+	                        <xsl:value-of select="skup_priloha/hlavicka/IcoDodavatel" />
 	                    </xsl:with-param>
 	                </xsl:call-template>
-	            </xsl:if>
-	            
+	            </xsl:if>       
 	        </pc:Contract>
 
 	    </rdf:RDF>
-	    
 	       
 	</xsl:template>
     
     <xsl:template match="oddil_4">
-        
-        <xsl:variable name="submitterIC">
-            <!-- ICO can be found in two places -->
-            <xsl:choose>
-                <xsl:when test="Ico_IV/text()">
-                    <xsl:value-of select="f:processIC(Ico_IV,$VVZ_FormNumber)" />
-                </xsl:when>
-                <xsl:when test="UredniNazev_IV/text()">
-                    <xsl:value-of select="concat(f:slugify(UredniNazev_IV),'-',$VVZ_FormNumber)" />
-                </xsl:when>
-                <xsl:otherwise>
-                    <!-- make UUID -->
-                    <xsl:value-of select="concat(uuid:get-uuid(),'-',$VVZ_FormNumber)" />
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        
         <pc:onBehalfOf>
-            <gr:BusinessEntity rdf:about="{concat($nm_businessEntity,$submitterIC)}">
+            <gr:BusinessEntity rdf:about="{concat($nm_businessEntity,uuid:randomUUID())}">
                 <xsl:apply-templates select="UredniNazev_IV" mode="legalName" />
                 <xsl:apply-templates select=".[Adresa_IV | Psc_IV | Obec_IV | Stat_IV]" mode="contractingAuthorityAddress" />
+                
+                <xsl:if test="Ico_IV/text()">
+                    <xsl:call-template name="BE_indentifier">
+                        <xsl:with-param name="ico"><xsl:value-of select="Ico_IV" /></xsl:with-param>
+                    </xsl:call-template>
+                </xsl:if>
             </gr:BusinessEntity>
         </pc:onBehalfOf>
+    </xsl:template>
+    
+    <xsl:template name="BE_indentifier">
+        <xsl:param name="ico" />
         
+        <xsl:variable name="count" as="xsd:integer">
+            <xsl:number level="any" />
+        </xsl:variable>
+        
+        <xsl:if test="f:validateIC($ico)">
+        <adms:identifier>
+            <adms:Identifier rdf:about="{concat($nm_businessEntityIdentifier,$count)}">
+                <skos:notation><xsl:value-of select="$ico" /></skos:notation>
+                <prov:wasInvalidatedBy>
+                    <prov:Activity rdf:about="{$id_cz_ico_check_digit}" />
+                </prov:wasInvalidatedBy>
+            </adms:Identifier>
+        </adms:identifier>
+        </xsl:if>
     </xsl:template>
     
     <xsl:template match="priloha_B">
@@ -433,7 +412,7 @@
     <!-- TENDERS -->
     <xsl:template name="contractAward">
         <xsl:param name="award" as="node()" />
-        <xsl:param name="bussinesEntityURI" as="xsd:string" />
+        <xsl:param name="icoZadavatel" as="xsd:string" />
         
         <xsl:variable name="count" as="xsd:integer">
             <xsl:number/>
@@ -444,7 +423,7 @@
         <pc:awardedTender>
             <pc:Tender rdf:about="{concat($nm_tender,$count)}">
                 <pc:supplier>
-                    <gr:BusinessEntity rdf:about="{$bussinesEntityURI}">
+                    <gr:BusinessEntity rdf:about="{concat($nm_businessEntity,uuid:randomUUID())}">
                         <xsl:apply-templates select="$award/NazevDodavatele_V_3" mode="businessEntity" />
                         <xsl:apply-templates select="$award/AdresaURL_V_3" />
                         
@@ -462,6 +441,12 @@
                                 <xsl:apply-templates select="$award/Adresa_V_3 | $award/Psc_V_3 | $award/Obec_V_3 | $award/Stat_V_3" />
                             </s:PostalAddress>
                         </s:address>
+                        </xsl:if>
+                        
+                        <xsl:if test="$icoZadavatel">
+                            <xsl:call-template name="BE_indentifier">
+                                <xsl:with-param name="ico"><xsl:value-of select="$icoZadavatel" /></xsl:with-param>
+                            </xsl:call-template>
                         </xsl:if>
                     </gr:BusinessEntity>
                 </pc:supplier>
@@ -669,7 +654,7 @@
     <xsl:template match="Kriteria1_IV_2_1">
         <xsl:variable name="id" as="xsd:integer">2</xsl:variable>
         <pc:awardCriterion>
-            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+            <pc:CriterionWeighting rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha1_IV_2_1/text()">
                 <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha1_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
@@ -677,10 +662,10 @@
                     <skos:Concept rdf:about="{concat($nm_publicContractCriteria,$id)}">
                         <skos:prefLabel xml:lang="cs"><xsl:value-of select="text()" /></skos:prefLabel>
                         <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
-                        <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
+                        <gr:valueAddedTaxIncluded rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                     </skos:Concept>
                 </pc:weightedCriterion>                    
-            </pc:AwardCriterion>
+            </pc:CriterionWeighting>
         </pc:awardCriterion>
     </xsl:template>
     
@@ -881,9 +866,9 @@
     
     <xsl:template match="UredniNazev_I_1 | Nazev_I_1 | UredniNazev_IV" mode="legalName">
         <xsl:if test="text()">
-        <dc:legalName xml:lang="cs">
+        <gr:legalName xml:lang="cs">
             <xsl:value-of select="text()" />
-        </dc:legalName>
+        </gr:legalName>
         </xsl:if>
     </xsl:template>
     
