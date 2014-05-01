@@ -155,11 +155,13 @@
 	                        <xsl:when test="$root/Ic_I_1">
 	                            <xsl:call-template name="BE_indentifier">
 	                                <xsl:with-param name="ico"><xsl:value-of select="$root/Ic_I_1" /></xsl:with-param>
+	                                <xsl:with-param name="BE_id"><xsl:value-of select="$id_contractingAuthority" /></xsl:with-param>
 	                            </xsl:call-template>
 	                        </xsl:when>
 	                        <xsl:when test="$root/skup_priloha/hlavicka/IcoZadavatel">
 	                            <xsl:call-template name="BE_indentifier">
 	                                <xsl:with-param name="ico"><xsl:value-of select="$root/skup_priloha/hlavicka/IcoZadavatel" /></xsl:with-param>
+	                                <xsl:with-param name="BE_id"><xsl:value-of select="$id_contractingAuthority" /></xsl:with-param>
 	                            </xsl:call-template>
 	                        </xsl:when>
 	                    </xsl:choose>
@@ -245,13 +247,19 @@
     
     <xsl:template match="oddil_4">
         <pc:onBehalfOf>
-            <gr:BusinessEntity rdf:about="{concat($nm_businessEntity,uuid:randomUUID())}">
+            
+            <xsl:variable name="BE_id">
+                <xsl:value-of select="concat($nm_businessEntity,uuid:randomUUID())" />
+            </xsl:variable>
+            
+            <gr:BusinessEntity rdf:about="{$BE_id}">
                 <xsl:apply-templates select="UredniNazev_IV" mode="legalName" />
                 <xsl:apply-templates select=".[Adresa_IV | Psc_IV | Obec_IV | Stat_IV]" mode="contractingAuthorityAddress" />
                 
                 <xsl:if test="Ico_IV/text()">
                     <xsl:call-template name="BE_indentifier">
                         <xsl:with-param name="ico"><xsl:value-of select="Ico_IV" /></xsl:with-param>
+                        <xsl:with-param name="BE_id"><xsl:value-of select="$BE_id" /></xsl:with-param>
                     </xsl:call-template>
                 </xsl:if>
             </gr:BusinessEntity>
@@ -260,14 +268,11 @@
     
     <xsl:template name="BE_indentifier">
         <xsl:param name="ico" />
-        
-        <xsl:variable name="count" as="xsd:integer">
-            <xsl:number level="any" />
-        </xsl:variable>
+        <xsl:param name="BE_id" />
         
         <xsl:if test="f:validateIC($ico)">
         <adms:identifier>
-            <adms:Identifier rdf:about="{concat($nm_businessEntityIdentifier,$count)}">
+            <adms:Identifier rdf:about="{concat($BE_id,'/business-entity-identifier')}">
                 <skos:notation><xsl:value-of select="$ico" /></skos:notation>
                 <prov:wasInvalidatedBy>
                     <prov:Activity rdf:about="{$id_cz_ico_check_digit}" />
@@ -423,7 +428,12 @@
         <pc:awardedTender>
             <pc:Tender rdf:about="{concat($nm_tender,$count)}">
                 <pc:supplier>
-                    <gr:BusinessEntity rdf:about="{concat($nm_businessEntity,uuid:randomUUID())}">
+                    
+                    <xsl:variable name="BE_id">
+                        <xsl:value-of select="concat($nm_businessEntity,uuid:randomUUID())" />
+                    </xsl:variable>
+                    
+                    <gr:BusinessEntity rdf:about="{$BE_id}">
                         <xsl:apply-templates select="$award/NazevDodavatele_V_3" mode="businessEntity" />
                         <xsl:apply-templates select="$award/AdresaURL_V_3" />
                         
@@ -446,6 +456,7 @@
                         <xsl:if test="$icoZadavatel">
                             <xsl:call-template name="BE_indentifier">
                                 <xsl:with-param name="ico"><xsl:value-of select="$icoZadavatel" /></xsl:with-param>
+                                <xsl:with-param name="BE_id"><xsl:value-of select="$BE_id" /></xsl:with-param>
                             </xsl:call-template>
                         </xsl:if>
                     </gr:BusinessEntity>
