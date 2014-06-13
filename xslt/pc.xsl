@@ -520,7 +520,7 @@
     
     <xsl:template match="AdresaURL_V_3">
         <xsl:if test="text()">
-        <foaf:page rdf:resource="{text()}" />
+        <foaf:page><xsl:value-of select="text()"/></foaf:page>
         </xsl:if>
     </xsl:template>
     
@@ -893,7 +893,7 @@
     
     <xsl:template match="ObecnaAdresaVerejnehoZadavatele_I_1">
         <xsl:if test="text()">
-        <foaf:page rdf:resource="{text()}" />
+	        <foaf:page><xsl:value-of select="text()"/></foaf:page>
         </xsl:if>
     </xsl:template>
     
