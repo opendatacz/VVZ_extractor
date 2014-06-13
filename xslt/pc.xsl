@@ -2,7 +2,7 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:i="http://www.ness.cz/schemas/isvzus/v11.1"
     xmlns:f="http://opendata.cz/xslt/functions#"
-    xmlns:uuid="java:java.util.UUID"
+    xmlns:uuid="http://linked.opendata.cz/xslt-functions"
     exclude-result-prefixes="f i uuid"
     xpath-default-namespace="http://www.ness.cz/schemas/isvzus/v11.1"
     

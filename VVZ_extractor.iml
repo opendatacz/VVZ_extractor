@@ -6,13 +6,13 @@
         <additionalProperties>
           <property key="Bundle-Description" value="Receiving XML forms with public contracts from vestnikverejnychzakazek.cz using SOAP Web Services." />
           <property key="Bundle-Name" value="VVZ_extractor" />
-          <property key="Export-Package" value="cz.opendata.linked.vvz.extractor;version=&quot;0.0.1&quot;" />
+          <property key="Export-Package" value="vvz.extractor;version=&quot;0.0.1&quot;" />
           <property key="Import-Package" value="cz.cuni.mff.xrg.odcs.*;version=&quot;1.0.0&quot;,com.vaadin.*;version=&quot;[7.1.8, 8.0.0)&quot;,*" />
           <property key="Embed-Dependency" value="*;scope=compile|system" />
           <property key="Embed-Transitive" value="false" />
           <property key="Embed-Directory" value="dependency" />
           <property key="Embed-StripGroup" value="false" />
-          <property key="DPU-Package" value="cz.opendata.linked.vvz.extractor" />
+          <property key="DPU-Package" value="vvz.extractor" />
           <property key="DPU-MainClass" value="VVZ_extractor" />
           <property key="Vaadin-Version" value="7.1.8" />
           <property key="ODCS-Version" value="1.0.0" />
@@ -35,8 +35,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="derby-10.9.1.0" level="project" />
-    <orderEntry type="library" name="saxonhe-9.2.1.5" level="project" />
     <orderEntry type="library" name="Maven: cz.cuni.mff.xrg.odcs:commons-web:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: cz.cuni.mff.xrg.odcs:commons:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: cz.cuni.mff.xrg.odcs:ontology:1.0.0" level="project" />

@@ -15,7 +15,7 @@
 	</description>
 
     <properties>
-        <dpu.package>cz.opendata.linked.vvz.extractor</dpu.package>
+        <dpu.package>vvz.extractor</dpu.package>
         <dpu.mainClass>VVZ_extractor</dpu.mainClass>
     </properties>
 

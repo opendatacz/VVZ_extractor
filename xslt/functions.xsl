@@ -2,11 +2,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     xmlns:f="http://opendata.cz/xslt/functions#"
-    xmlns:uuid="http://www.uuid.org"
     
     version="2.0">
-    
-    <xsl:import href="uuid.xslt" />
     
     <!-- @param date dd/mm/yyyy -->
     <xsl:function name="f:processDate">
@@ -273,7 +270,6 @@
     </xsl:function>
     
     
-    
     <!--
     The MIT License (MIT)
     
@@ -341,22 +337,5 @@
         
     </xsl:function>
     
-    
-    <xsl:function name="f:processIC" as="xsd:string">
-        <xsl:param name="_ic" />
-        <xsl:param name="VVZ_FormNumber" />
-        
-        <xsl:variable name="ic" select="translate($_ic,' ','')" />
-        
-        <xsl:choose>
-            <xsl:when test="f:validateIC($ic)">
-                <xsl:value-of select="concat('CZ',$ic)" />
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="concat(uuid:get-uuid(),'-',$VVZ_FormNumber)" />
-            </xsl:otherwise>
-        </xsl:choose>
-        
-    </xsl:function>
     
 </xsl:stylesheet>
