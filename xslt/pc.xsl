@@ -899,13 +899,13 @@
     
     <xsl:template match="AdresaProfiluKupujiciho_I_1">
         <xsl:if test="text()">
-        <pc:profile rdf:resource="{text()}" />
+        <pc:profile><xsl:value-of select="text()"/></pc:profile>
         </xsl:if>
     </xsl:template>
     
     <xsl:template match="AdresaProfiluZadavatele_I_1">
         <xsl:if test="text()">
-        <pc:profile rdf:resource="{text()}" />
+        <pc:profile><xsl:value-of select="text()"/></pc:profile>
         </xsl:if>
     </xsl:template>
     
