@@ -647,7 +647,7 @@
         <pc:activityKind>
             <skos:Concept rdf:about="{$id_activityKind}">
                 <skos:prefLabel><xsl:value-of select="text()" /></skos:prefLabel>
-                <skos:isScheme rdf:resource="http://purl.org/procurement/public-contracts-activities#" />
+                <skos:inScheme rdf:resource="http://purl.org/procurement/public-contracts-activities#" />
                 <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-activities#" />
             </skos:Concept>
         </pc:activityKind>
