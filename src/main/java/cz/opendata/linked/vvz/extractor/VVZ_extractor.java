@@ -61,6 +61,7 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 		    if(!config.dateTo.isEmpty()) {
 			    params.setDateTo(new SimpleDateFormat("dd.MM.yyyy").parse(config.dateTo));
 		    }
+		    params.setGUID(config.GUID);
 
 		    Integer[] formTypes = {2,3};
 		    params.setSelectedFormTypes(formTypes);
@@ -69,14 +70,14 @@ public class VVZ_extractor extends ConfigurableBase<VVZ_extractorConfig>
 		    throw new DPUException("Error while setting query parameters.", e);
 	    }
 
-	    PCReceiver pcr = new PCReceiver();
+	    PCReceiver pcr = new PCReceiver(params);
 	    pcr.setLogger(this.logger);
 
 	    try {
 
 		    Integer parsed=0, downloaded = 0, alreadyCached = 0, failures=0;
 
-		    List<String> PCIds = pcr.loadPublicContractsList(params);
+		    List<String> PCIds = pcr.loadPublicContractsList();
 		    this.logger.info(PCIds.size() + " public contracts is going to be downloaded");
 
 		    File inputFile;

@@ -24,12 +24,17 @@ import cz.opendata.linked.vvz.utils.Object;
 public class PCReceiver extends Object {
 
 	private SOAPConnection connection;
+	QueryParameters params;
 
 	private String serverURL = "http://import.vestnikverejnychzakazek.cz/ExportForms.svc";
-	private String userId = "396b47ba-0246-469f-9f29-b550976d7d65";
+
 
 	private String URLExportForms = "http://www.ness.cz/schemas/isvzus/ExportForms";
 	private String URLisvzus = "http://www.ness.cz/schemas/isvzus";
+
+	public PCReceiver(QueryParameters params) {
+		this.params = params;
+	}
 
 	private SOAPConnection getConnection() throws SOAPException {
 
@@ -47,11 +52,10 @@ public class PCReceiver extends Object {
 
 	/**
 	 * Makes SOAP connection to vestnikverejnychzakazek.cz and receive list of public contracts by given parameters
-	 * @param params dateTo, dateFrom, formType
 	 * @return list of public contracts
 	 * @throws PCReceiveException
 	 */
-	public List<String> loadPublicContractsList(QueryParameters params) throws PCReceiveException {
+	public List<String> loadPublicContractsList() throws PCReceiveException {
 
 		List<String> PCIds = new ArrayList<>();
 
@@ -73,7 +77,7 @@ public class PCReceiver extends Object {
 			SOAPElement requestEl = getFormDocumentEl.addChildElement("request","ex");
 
 			SOAPElement userIdEl = requestEl.addChildElement("UserId","isv");
-			userIdEl.addTextNode(this.userId);
+			userIdEl.addTextNode(params.getGUID());
 
 			SOAPElement queryParamsEl = requestEl.addChildElement("QueryParameters","isv");
 			SOAPElement formTypeEl;
@@ -175,7 +179,7 @@ public class PCReceiver extends Object {
 			SOAPElement formIdEl = requestEl.addChildElement("FormId","isv");
 			SOAPElement formatVersionEl = requestEl.addChildElement("FormatVersion","isv");
 
-			userIdEl.addTextNode(this.userId);
+			userIdEl.addTextNode(params.getGUID());
 			formIdEl.addTextNode(id);
 			formatVersionEl.addTextNode("7.2");
 

@@ -14,6 +14,7 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
 
     private TextField input_dateFrom;
     private TextField input_dateTo;
+	private TextField input_GUID;
     private CheckBox input_gain;
 
     public VVZ_extractorDialog() {
@@ -28,6 +29,7 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
 		input_dateFrom.setValue(conf.dateFrom);
         input_dateTo.setValue(conf.dateTo);
         input_gain.setValue(conf.onlyGain);
+		input_GUID.setValue(conf.GUID);
 	}
 
 	@Override
@@ -38,6 +40,7 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
         conf.dateFrom = input_dateFrom.getValue().trim();
         conf.dateTo = input_dateTo.getValue().trim();
         conf.onlyGain = input_gain.getValue();
+		conf.GUID = input_GUID.getValue().trim();
 
         return conf;
 	}
@@ -61,7 +64,18 @@ public class VVZ_extractorDialog extends BaseConfigDialog<VVZ_extractorConfig> {
         // top-level component properties
         setWidth("100%");
         setHeight("100%");
-        
+
+	    // text field for GUID
+	    input_GUID = new TextField();
+	    input_GUID.setNullRepresentation("");
+	    input_GUID.setCaption("GUID");
+	    input_GUID.setImmediate(true);
+	    input_GUID.setWidth("100%");
+	    input_GUID.setHeight("-1px");
+	    input_GUID.setDescription("GUID string for access to vestnikverejnychzakazek.cz SOAP API");
+
+	    mainLayout.addComponent(input_GUID);
+
         // text field for date from
         input_dateFrom = new TextField();
         input_dateFrom.setNullRepresentation("");

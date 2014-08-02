@@ -10,6 +10,7 @@ public class QueryParameters {
 	private String dateFrom = "";
 	private String dateTo = "";
 	private String context = "";
+	private String GUID = "";
 
 	public void setSelectedFormTypes(Integer[] formTypes) throws Exception{
 
@@ -35,6 +36,10 @@ public class QueryParameters {
 		this.dateFrom = new SimpleDateFormat("MM/dd/yyyy").format(dateFrom);
 	}
 
+	public void setGUID(String GUID) {
+		this.GUID = GUID;
+	}
+
 	public String getDateFrom() {
 		return this.dateFrom;
 	}
@@ -45,6 +50,10 @@ public class QueryParameters {
 
 	public String getDateTo() {
 		return this.dateTo;
+	}
+
+	public String getGUID() {
+		return this.GUID;
 	}
 
 
