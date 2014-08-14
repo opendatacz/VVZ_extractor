@@ -502,7 +502,7 @@
     
     <xsl:template match="RocniHodnota_V_4">
         <pc:duration rdf:datatype="http://www.w3.org/2001/XMLSchema#duration">
-            <xsl:value-of select="f:getDuration(text(),'R')" />
+            <xsl:value-of select="f:getDuration(text(),'Y')" />
         </pc:duration>
     </xsl:template>
     
