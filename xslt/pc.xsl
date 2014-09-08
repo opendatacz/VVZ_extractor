@@ -30,7 +30,7 @@
     <xsl:output encoding="UTF-8" indent="yes" method="xml" normalization-form="NFC" />
 
     <xsl:variable name="nm_lod">http://linked.opendata.cz/resource/</xsl:variable>
-	<xsl:variable name="nm_vvz" select="concat($nm_lod, 'vestnikverejnychzakazek.cz/')"/>
+    <xsl:variable name="nm_vvz" select="concat($nm_lod, 'vestnikverejnychzakazek.cz/')"/>
     <xsl:variable name="nm_vvz_pc" select="concat($nm_vvz, 'public-contract/')"/>
     <xsl:variable name="nm_cpv" select="concat($nm_lod,'cpv-2008/concept/')" />
     <xsl:variable name="nm_pcCriteria">http://purl.org/procurement/public-contracts-criteria/</xsl:variable>
@@ -79,7 +79,6 @@
     <xsl:variable name="nm_tendersContract" select="concat($PC_URI,'/tenders-contract/')" />
     <xsl:variable name="nm_tendersOfferedPrice" select="concat($PC_URI,'/tenders-offered-price/')" />
     <xsl:variable name="nm_tendersEstimatedPrice" select="concat($PC_URI,'/tenders-estimated-price/')" />
-    <xsl:variable name="nm_supplier" select="concat($PC_URI,'/supplier/')" />
     <xsl:variable name="nm_tendersPlace" select="concat($PC_URI,'/tenders-place/')" />
     <xsl:variable name="nm_businessEntity" select="concat($nm_lod,'business-entity/')" />
     <xsl:variable name="id_contractingAuthority" select="concat($nm_businessEntity,uuid:randomUUID())" />
@@ -429,7 +428,7 @@
         
         <pc:awardedTender>
             <pc:Tender rdf:about="{concat($nm_tender,$count)}">
-                <pc:supplier>
+                <pc:bidder>
                     
                     <xsl:variable name="BE_id">
                         <xsl:value-of select="concat($nm_businessEntity,uuid:randomUUID())" />
@@ -462,7 +461,7 @@
                             </xsl:call-template>
                         </xsl:if>
                     </gr:BusinessEntity>
-                </pc:supplier>
+                </pc:bidder>
 
                 <xsl:if test="$award/Hodnota2_V_4">
                 <pc:offeredPrice>
