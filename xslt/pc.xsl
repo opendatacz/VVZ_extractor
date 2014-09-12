@@ -31,7 +31,7 @@
     <xsl:output encoding="UTF-8" indent="yes" method="xml" normalization-form="NFC" />
 
     <xsl:variable name="nm_lod">http://linked.opendata.cz/resource/</xsl:variable>
-	<xsl:variable name="nm_vvz" select="concat($nm_lod, 'vestnikverejnychzakazek.cz/')"/>
+    <xsl:variable name="nm_vvz" select="concat($nm_lod, 'vestnikverejnychzakazek.cz/')"/>
     <xsl:variable name="nm_vvz_pc" select="concat($nm_vvz, 'public-contract/')"/>
     <xsl:variable name="nm_cpv" select="concat($nm_lod,'cpv-2008/concept/')" />
     <xsl:variable name="nm_pcCriteria">http://purl.org/procurement/public-contracts-criteria/</xsl:variable>
@@ -80,7 +80,6 @@
     <xsl:variable name="nm_tendersContract" select="concat($PC_URI,'/tenders-contract/')" />
     <xsl:variable name="nm_tendersOfferedPrice" select="concat($PC_URI,'/tenders-offered-price/')" />
     <xsl:variable name="nm_tendersEstimatedPrice" select="concat($PC_URI,'/tenders-estimated-price/')" />
-    <xsl:variable name="nm_supplier" select="concat($PC_URI,'/supplier/')" />
     <xsl:variable name="nm_tendersPlace" select="concat($PC_URI,'/tenders-place/')" />
     <xsl:variable name="nm_businessEntity" select="concat($nm_lod,'business-entity/')" />
     <xsl:variable name="id_contractingAuthority" select="concat($nm_businessEntity,uuid:randomUUID())" />
@@ -430,7 +429,7 @@
         
         <pc:awardedTender>
             <pc:Tender rdf:about="{concat($nm_tender,$count)}">
-                <pc:supplier>
+                <pc:bidder>
                     
                     <xsl:variable name="BE_id">
                         <xsl:value-of select="concat($nm_businessEntity,uuid:randomUUID())" />
@@ -463,7 +462,7 @@
                             </xsl:call-template>
                         </xsl:if>
                     </gr:BusinessEntity>
-                </pc:supplier>
+                </pc:bidder>
 
                 <xsl:if test="$award/Hodnota2_V_4">
                 <pc:offeredPrice>
@@ -692,7 +691,7 @@
     <xsl:template match="Kriteria2_IV_2_1">
         <xsl:variable name="id" as="xsd:integer">3</xsl:variable>
         <pc:awardCriterion>
-            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+            <pc:CriterionWeighting rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha2_IV_2_1/text()">
                 <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha2_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
@@ -703,14 +702,14 @@
                         <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                     </skos:Concept>
                 </pc:weightedCriterion>                    
-            </pc:AwardCriterion>
+            </pc:CriterionWeighting>
         </pc:awardCriterion>
     </xsl:template>
     
     <xsl:template match="Kriteria3_IV_2_1">
         <xsl:variable name="id" as="xsd:integer">4</xsl:variable>
         <pc:awardCriterion>
-            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+            <pc:CriterionWeighting rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha3_IV_2_1">
                 <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha3_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
@@ -721,14 +720,14 @@
                         <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                     </skos:Concept>
                 </pc:weightedCriterion>                    
-            </pc:AwardCriterion>
+            </pc:CriterionWeighting>
         </pc:awardCriterion>
     </xsl:template>
     
     <xsl:template match="Kriteria4_IV_2_1">
         <xsl:variable name="id" as="xsd:integer">5</xsl:variable>
         <pc:awardCriterion>
-            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+            <pc:CriterionWeighting rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha4_IV_2_1">
                     <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha4_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
@@ -739,14 +738,14 @@
                         <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                     </skos:Concept>
                 </pc:weightedCriterion>                    
-            </pc:AwardCriterion>
+            </pc:CriterionWeighting>
         </pc:awardCriterion>
     </xsl:template>
     
     <xsl:template match="Kriteria5_IV_2_1">
         <xsl:variable name="id" as="xsd:integer">6</xsl:variable>
         <pc:awardCriterion>
-            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+            <pc:CriterionWeighting rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha5_IV_2_1">
                     <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha5_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
@@ -757,14 +756,14 @@
                         <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                     </skos:Concept>
                 </pc:weightedCriterion>                    
-            </pc:AwardCriterion>
+            </pc:CriterionWeighting>
         </pc:awardCriterion>
     </xsl:template>
     
     <xsl:template match="Kriteria6_IV_2_1">
         <xsl:variable name="id" as="xsd:integer">7</xsl:variable>
         <pc:awardCriterion>
-            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+            <pc:CriterionWeighting rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha6_IV_2_1">
                     <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha6_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
@@ -775,14 +774,14 @@
                         <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                     </skos:Concept>
                 </pc:weightedCriterion>                    
-            </pc:AwardCriterion>
+            </pc:CriterionWeighting>
         </pc:awardCriterion>
     </xsl:template>
     
     <xsl:template match="Kriteria7_IV_2_1">
         <xsl:variable name="id" as="xsd:integer">8</xsl:variable>
         <pc:awardCriterion>
-            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+            <pc:CriterionWeighting rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha7_IV_2_1">
                     <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha7_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
@@ -793,14 +792,14 @@
                         <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                     </skos:Concept>
                 </pc:weightedCriterion>                    
-            </pc:AwardCriterion>
+            </pc:CriterionWeighting>
         </pc:awardCriterion>
     </xsl:template>
     
     <xsl:template match="Kriteria8_IV_2_1">
         <xsl:variable name="id" as="xsd:integer">9</xsl:variable>
         <pc:awardCriterion>
-            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+            <pc:CriterionWeighting rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha8_IV_2_1">
                     <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha8_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
@@ -811,14 +810,14 @@
                         <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                     </skos:Concept>
                 </pc:weightedCriterion>                    
-            </pc:AwardCriterion>
+            </pc:CriterionWeighting>
         </pc:awardCriterion>
     </xsl:template>
     
     <xsl:template match="Kriteria9_IV_2_1">
         <xsl:variable name="id" as="xsd:integer">10</xsl:variable>
         <pc:awardCriterion>
-            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+            <pc:CriterionWeighting rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha9_IV_2_1">
                     <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha9_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
@@ -829,14 +828,14 @@
                         <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                     </skos:Concept>
                 </pc:weightedCriterion>                    
-            </pc:AwardCriterion>
+            </pc:CriterionWeighting>
         </pc:awardCriterion>
     </xsl:template>
     
     <xsl:template match="Kriteria10_IV_2_1">
         <xsl:variable name="id" as="xsd:integer">11</xsl:variable>
         <pc:awardCriterion>
-            <pc:AwardCriterion rdf:about="{concat($nm_contractAwardCriterion,$id)}">
+            <pc:CriterionWeighting rdf:about="{concat($nm_contractAwardCriterion,$id)}">
                 <xsl:if test="$root/Vaha10_IV_2_1">
                     <pc:criterionWeight rdf:datatype="http://purl.org/procurement/public-contracts-datatypes#percentage"><xsl:value-of select="$root/Vaha10_IV_2_1" /></pc:criterionWeight>
                 </xsl:if>
@@ -847,7 +846,7 @@
                         <skos:topConceptOf rdf:resource="http://purl.org/procurement/public-contracts-criteria#" />
                     </skos:Concept>
                 </pc:weightedCriterion>                    
-            </pc:AwardCriterion>
+            </pc:CriterionWeighting>
         </pc:awardCriterion>
     </xsl:template>
     
