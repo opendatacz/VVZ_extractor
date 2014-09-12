@@ -2,7 +2,8 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:i="http://www.ness.cz/schemas/isvzus/v11.1"
     xmlns:f="http://opendata.cz/xslt/functions#"
-    xmlns:uuid="http://linked.opendata.cz/xslt-functions"
+    xmlns:uuid="java:java.util.UUID"
+    
     exclude-result-prefixes="f i uuid"
     xpath-default-namespace="http://www.ness.cz/schemas/isvzus/v11.1"
     
@@ -502,7 +503,7 @@
     
     <xsl:template match="RocniHodnota_V_4">
         <pc:duration rdf:datatype="http://www.w3.org/2001/XMLSchema#duration">
-            <xsl:value-of select="f:getDuration(text(),'R')" />
+            <xsl:value-of select="f:getDuration(text(),'Y')" />
         </pc:duration>
     </xsl:template>
     
@@ -978,7 +979,7 @@
     </xsl:template>
     
     <xsl:template match="KodNuts1_II_1_2 | NUTS1_II_1_2">
-        <pceu:hasParentRegion rdf:resource="{concat('http://ec.europa.eu/eurostat/ramon/rdfdata/nuts2008/',text())}" />
+        <pceu:hasParentRegion rdf:resource="{concat('http://ec.europa.eu/eurostat/ramon/rdfdata/nuts2008/',encode-for-uri(translate(text(),' ','')))}" />
     </xsl:template>
     
     <xsl:template match="UvedtePredpokladanouHodnotuBezDph_II_2_1 | OdhadovanaHodnotaBezDph_3">
