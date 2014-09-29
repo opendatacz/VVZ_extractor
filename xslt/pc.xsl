@@ -854,7 +854,7 @@
     <xsl:template match="HlavniSlovnikDp1_II_1_6 | HlavniSlovnikDp2_II_1_6 | HlavniSlovnikDp3_II_1_6 | HlavniSlovnikDp4_II_1_6 | HlavniSlovnikDp1_II_1_5 | 
                          HlavniSlovnikDp2_II_1_5 | HlavniSlovnikDp3_II_1_5 | HlavniSlovnikDp4_II_1_5 | HlavniSlovnikDp1_2 | HlavniSlovnikDp2_2 | HlavniSlovnikDp3_2 | HlavniSlovnikDp4_2">
         <xsl:if test="text()">
-        <pc:additionalObject rdf:resource="{concat($nm_cpv,f:stripDashes(text()))}" />
+            <pc:additionalObject rdf:resource="{concat($nm_cpv,f:stripDashes(translate(text(),' ','')))}" />
         </xsl:if>
     </xsl:template>
 
@@ -964,7 +964,7 @@
 
     <xsl:template match="HlavniSlovnikHp_II_1_6 | HlavniSlovnikHp_II_1_5 | HlavniSlovnikHp_2">
         <xsl:if test="text()">
-        <pc:mainObject rdf:resource="{concat($nm_cpv,f:stripDashes(text()))}" />
+        <pc:mainObject rdf:resource="{concat($nm_cpv,f:stripDashes(translate(text(),' ','')))}" />
         </xsl:if>
     </xsl:template>
     
